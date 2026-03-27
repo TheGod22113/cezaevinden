@@ -9,7 +9,6 @@ import {
   HiHeart,
   HiCheckCircle,
   HiClock,
-  HiFireIcon,
   HiMagnifyingGlass,
   HiPlus,
   HiFire,
