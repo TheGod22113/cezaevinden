@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import {
   HiBell, HiHeart, HiChatBubbleOvalLeft, HiUserPlus,
-  HiScale, HiSpeakerphone, HiCheckCircle, HiArrowLeft,
+  HiScale, HiMegaphone, HiCheckCircle, HiArrowLeft,
   HiEllipsisHorizontal,
 } from 'react-icons/hi2'
 
@@ -38,7 +38,7 @@ const iconMap: Record<NotifType, { icon: any; bg: string; color: string }> = {
   COMMENT:      { icon: HiChatBubbleOvalLeft, bg: 'bg-blue-100',   color: 'text-blue-500'   },
   FOLLOW:       { icon: HiUserPlus,           bg: 'bg-green-100',  color: 'text-green-500'  },
   LEGAL_ANSWER: { icon: HiScale,              bg: 'bg-navy-100',   color: 'text-navy-700'   },
-  MENTION:      { icon: HiSpeakerphone,       bg: 'bg-yellow-100', color: 'text-yellow-600' },
+  MENTION:      { icon: HiMegaphone,           bg: 'bg-yellow-100', color: 'text-yellow-600' },
   SYSTEM:       { icon: HiBell,               bg: 'bg-gray-100',   color: 'text-gray-500'   },
 }
 

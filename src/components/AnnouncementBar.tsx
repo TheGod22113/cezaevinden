@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { HiXMark, HiSpeakerphone } from 'react-icons/hi2'
+import { HiXMark, HiMegaphone } from 'react-icons/hi2'
 
 const announcements = [
   { id: '1', text: '🎉 Platform beta sürümünde! Geri bildirimleriniz için ', link: '/iletisim', linkText: 'tıklayın', color: 'bg-gold-500 text-navy-800' },
@@ -17,7 +17,7 @@ export default function AnnouncementBar() {
 
   return (
     <div className={`${active.color} text-sm py-2 px-4 flex items-center justify-center gap-2 relative`}>
-      <HiSpeakerphone className="w-4 h-4 flex-shrink-0" />
+      <HiMegaphone className="w-4 h-4 flex-shrink-0" />
       <span>
         {active.text}
         <Link href={active.link} className="font-bold underline underline-offset-2">{active.linkText}</Link>
