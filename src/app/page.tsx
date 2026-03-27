@@ -1,0 +1,160 @@
+'use client'
+
+import { useState, useEffect, useCallback } from 'react'
+import Sidebar from '@/components/Sidebar'
+import RightSidebar from '@/components/RightSidebar'
+import PostCard, { PostData } from '@/components/PostCard'
+import PostComposer from '@/components/PostComposer'
+import { PostSkeleton } from '@/components/Skeleton'
+import { HiScale, HiNewspaper, HiHandRaised, HiStar } from 'react-icons/hi2'
+
+const filterTabs = [
+  { label: 'Tümü',       category: undefined },
+  { label: 'Hukuki',     category: 'Hukuki' },
+  { label: 'Deneyim',    category: 'Deneyim' },
+  { label: 'Soru',       category: 'Soru' },
+  { label: 'Destek',     category: 'Destek' },
+  { label: 'Haber',      category: 'Haber' },
+]
+
+export default function HomePage() {
+  const [activeFilter, setActiveFilter] = useState(0)
+  const [posts, setPosts]     = useState<PostData[]>([])
+  const [loading, setLoading] = useState(true)
+  const [page, setPage]       = useState(1)
+  const [hasMore, setHasMore] = useState(true)
+
+  const loadPosts = useCallback(async (pageNum: number, catIdx: number, replace = false) => {
+    setLoading(true)
+    const cat = filterTabs[catIdx].category
+    const url = `/api/posts?page=${pageNum}${cat ? `&category=${encodeURIComponent(cat)}` : ''}`
+    const res = await fetch(url)
+    const data = await res.json()
+    const arr: PostData[] = Array.isArray(data) ? data : []
+    setPosts(prev => replace ? arr : [...prev, ...arr])
+    setHasMore(arr.length === 20)
+    setLoading(false)
+  }, [])
+
+  useEffect(() => {
+    setPage(1)
+    loadPosts(1, activeFilter, true)
+  }, [activeFilter, loadPosts])
+
+  const loadMore = () => {
+    const next = page + 1
+    setPage(next)
+    loadPosts(next, activeFilter, false)
+  }
+
+  const onPost = (post: PostData) => {
+    setPosts(prev => [post, ...prev])
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-6">
+      {/* Hero Banner */}
+      <div className="hero-gradient rounded-2xl p-6 mb-6 text-white">
+        <div className="max-w-2xl">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="bg-gold-500 text-navy-800 text-xs font-bold px-2.5 py-1 rounded-full">BETA</span>
+            <span className="text-blue-200 text-sm">Türkiye'nin ceza adaleti dayanışma platformu</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2">Yalnız değilsiniz.</h1>
+          <p className="text-blue-100 text-sm sm:text-base mb-4">
+            Tutuklu ve hükümlüler, aileler ve gönüllü avukatlar bir arada —
+            paylaşmak, destek olmak ve birlikte güçlenmek için.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <a href="/kayit" className="bg-crimson-600 hover:bg-crimson-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm">
+              Hemen Üye Ol — Ücretsiz
+            </a>
+            <a href="/hakkimizda" className="bg-white/10 hover:bg-white/20 text-white font-medium px-5 py-2.5 rounded-xl transition-colors text-sm">
+              Nasıl Çalışır?
+            </a>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-6 mt-6 pt-5 border-t border-white/20">
+          {[
+            { icon: '👥', value: '24.5K', label: 'Üye' },
+            { icon: '⚖️', value: '380',   label: 'Gönüllü Avukat' },
+            { icon: '✅', value: '8.2K',  label: 'Yanıtlanan Soru' },
+            { icon: '🤝', value: '1.4K',  label: 'Aktif Tartışma' },
+          ].map(({ icon, value, label }) => (
+            <div key={label} className="text-center">
+              <p className="text-lg font-bold">{icon} {value}</p>
+              <p className="text-xs text-blue-200">{label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex gap-6">
+        <div className="hidden lg:block">
+          <Sidebar active="/" />
+        </div>
+
+        <div className="flex-1 min-w-0">
+          {/* Quick access */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+            {[
+              { href: '/hukuki-yardim', icon: HiScale,     label: 'Hukuki Yardım', color: 'bg-blue-500',    desc: 'Avukata sor' },
+              { href: '/haberler',      icon: HiNewspaper,  label: 'Son Haberler',  color: 'bg-crimson-600', desc: 'Güncel gelişmeler' },
+              { href: '/destek',        icon: HiHandRaised, label: 'Destek Ağı',    color: 'bg-green-500',   desc: 'Yardım bul' },
+              { href: '/forum',         icon: HiStar,       label: 'Forum',         color: 'bg-gold-500',    desc: 'Tartışmalar' },
+            ].map(({ href, icon: Icon, label, color, desc }) => (
+              <a key={href} href={href}
+                className="card p-4 flex flex-col items-center text-center hover:shadow-md transition-all group">
+                <div className={`w-10 h-10 ${color} rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform`}>
+                  <Icon className="w-5 h-5 text-white" />
+                </div>
+                <p className="text-sm font-semibold text-gray-800">{label}</p>
+                <p className="text-xs text-gray-400 mt-0.5">{desc}</p>
+              </a>
+            ))}
+          </div>
+
+          {/* Composer */}
+          <PostComposer onPost={onPost} />
+
+          {/* Filter Tabs */}
+          <div className="flex gap-2 overflow-x-auto pb-1 mb-4">
+            {filterTabs.map((tab, i) => (
+              <button key={i} onClick={() => setActiveFilter(i)}
+                className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                  activeFilter === i
+                    ? 'bg-navy-700 text-white shadow-sm'
+                    : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-100'
+                }`}>
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Posts */}
+          <div className="space-y-3">
+            {posts.map(post => <PostCard key={post.id} post={post} />)}
+            {loading && <><PostSkeleton /><PostSkeleton /></>}
+          </div>
+
+          {!loading && hasMore && (
+            <button onClick={loadMore}
+              className="w-full card py-3 mt-3 text-sm font-medium text-navy-700 hover:bg-gray-50 transition-colors">
+              Daha fazla göster
+            </button>
+          )}
+
+          {!loading && posts.length === 0 && (
+            <div className="text-center py-16 text-gray-400">
+              <p className="text-sm">Henüz gönderi yok. İlk paylaşımı siz yapın!</p>
+            </div>
+          )}
+        </div>
+
+        <div className="hidden xl:block">
+          <RightSidebar />
+        </div>
+      </div>
+    </div>
+  )
+}

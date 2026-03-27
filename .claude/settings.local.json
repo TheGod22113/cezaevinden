@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /c/sosyal)",
+      "Bash(npm install:*)",
+      "Bash(dir C:sosyal)",
+      "Bash(cmd /c \"dir C:\\\\sosyal\")",
+      "Bash(powershell -Command \"Get-ChildItem C:\\\\sosyal\")",
+      "Bash(npm run:*)",
+      "Bash(npm --version)",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" --version)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" --version)",
+      "Bash(where npm:*)",
+      "Read(//c/Users/mobil/AppData/Roaming/npm//**)",
+      "Read(//c/Program Files/nodejs//**)",
+      "Bash(export PATH=\"$PATH:/c/Program Files/nodejs\")",
+      "Bash(PATH=\"/c/Program Files/nodejs:$PATH\" npm --version)",
+      "Bash(echo $SHELL)",
+      "Bash(echo $PATH)"
+    ]
+  }
+}

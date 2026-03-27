@@ -1,0 +1,325 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── KULLANICI ───────────────────────────────────────────────
+enum Role {
+  MAHKUM    // Tutuklu / Hükümlü
+  AILE      // Aile Üyesi
+  TAHLIYE   // Tahliye Olmuş
+  AVUKAT    // Gönüllü Avukat
+  GONULLU   // Gönüllü
+  ADMIN     // Yönetici
+}
+
+enum UserStatus {
+  ACTIVE
+  PENDING    // Onay bekliyor (avukatlar)
+  SUSPENDED  // Askıya alındı
+  BANNED
+}
+
+model User {
+  id            String     @id @default(cuid())
+  email         String     @unique
+  emailVerified DateTime?
+  name          String
+  username      String     @unique
+  password      String?
+  role          Role       @default(AILE)
+  status        UserStatus @default(ACTIVE)
+  bio           String?
+  city          String?
+  avatar        String?
+  coverImage    String?
+  website       String?
+  verified      Boolean    @default(false)   // Avukat doğrulaması
+  baroNo        String?                       // Sadece avukatlar
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  // İlişkiler
+  posts            Post[]
+  comments         Comment[]
+  likes            Like[]
+  bookmarks        Bookmark[]
+  sentMessages     Message[]       @relation("SentMessages")
+  receivedMessages Message[]       @relation("ReceivedMessages")
+  followers        Follow[]        @relation("Followed")
+  following        Follow[]        @relation("Following")
+  questions        LegalQuestion[]
+  answers          LegalAnswer[]
+  reports          Report[]        @relation("Reporter")
+  reportedPosts    Report[]        @relation("ReportedUser")
+  notifications    Notification[]
+  forumTopics      ForumTopic[]
+  forumReplies     ForumReply[]
+  news             News[]
+
+  @@index([email])
+  @@index([username])
+}
+
+// ─── TAKİP ───────────────────────────────────────────────────
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+
+  follower  User @relation("Following", fields: [followerId],  references: [id], onDelete: Cascade)
+  following User @relation("Followed",  fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+}
+
+// ─── GÖNDERİ ─────────────────────────────────────────────────
+model Post {
+  id          String   @id @default(cuid())
+  authorId    String
+  content     String
+  category    String   @default("Genel")
+  isAnonymous Boolean  @default(false)
+  isPinned    Boolean  @default(false)
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author    User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+  likes     Like[]
+  bookmarks Bookmark[]
+  reports   Report[]
+
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+// ─── YORUM ───────────────────────────────────────────────────
+model Comment {
+  id          String   @id @default(cuid())
+  postId      String
+  authorId    String
+  content     String
+  isAnonymous Boolean  @default(false)
+  parentId    String?
+  createdAt   DateTime @default(now())
+
+  post    Post      @relation(fields: [postId],   references: [id], onDelete: Cascade)
+  author  User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  parent  Comment?  @relation("Replies", fields: [parentId], references: [id])
+  replies Comment[] @relation("Replies")
+  likes   Like[]
+
+  @@index([postId])
+}
+
+// ─── BEĞENİ ──────────────────────────────────────────────────
+model Like {
+  id           String   @id @default(cuid())
+  userId       String
+  postId       String?
+  commentId    String?
+  forumReplyId String?
+  createdAt    DateTime @default(now())
+
+  user       User        @relation(fields: [userId],       references: [id], onDelete: Cascade)
+  post       Post?       @relation(fields: [postId],       references: [id], onDelete: Cascade)
+  comment    Comment?    @relation(fields: [commentId],    references: [id], onDelete: Cascade)
+  forumReply ForumReply? @relation(fields: [forumReplyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@unique([userId, commentId])
+  @@unique([userId, forumReplyId])
+}
+
+// ─── KAYDEDİLENLER ───────────────────────────────────────────
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+}
+
+// ─── FORUM ───────────────────────────────────────────────────
+model ForumTopic {
+  id          String   @id @default(cuid())
+  authorId    String
+  title       String
+  content     String
+  category    String   @default("Genel")
+  isAnonymous Boolean  @default(false)
+  isPinned    Boolean  @default(false)
+  isSolved    Boolean  @default(false)
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author  User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  replies ForumReply[]
+
+  @@index([category])
+  @@index([createdAt])
+}
+
+model ForumReply {
+  id          String   @id @default(cuid())
+  topicId     String
+  authorId    String
+  content     String
+  isAnonymous Boolean  @default(false)
+  isSolution  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  topic  ForumTopic @relation(fields: [topicId],  references: [id], onDelete: Cascade)
+  author User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes  Like[]
+
+  @@index([topicId])
+}
+
+// ─── HUKUKİ YARDIM ───────────────────────────────────────────
+model LegalQuestion {
+  id          String   @id @default(cuid())
+  authorId    String
+  title       String
+  content     String
+  category    String   @default("Diğer")
+  isAnonymous Boolean  @default(false)
+  isAnswered  Boolean  @default(false)
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author  User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  answers LegalAnswer[]
+
+  @@index([category])
+  @@index([isAnswered])
+}
+
+model LegalAnswer {
+  id         String   @id @default(cuid())
+  questionId String
+  authorId   String
+  content    String
+  isOfficial Boolean  @default(false)
+  helpful    Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  question LegalQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  author   User          @relation(fields: [authorId],   references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+// ─── MESAJLAŞMA ──────────────────────────────────────────────
+model Message {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  content    String
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  sender   User @relation("SentMessages",     fields: [senderId],   references: [id], onDelete: Cascade)
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@index([senderId, receiverId])
+  @@index([createdAt])
+}
+
+// ─── ŞİKAYET ─────────────────────────────────────────────────
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+  DISMISSED
+}
+
+model Report {
+  id             String       @id @default(cuid())
+  reporterId     String
+  reportedUserId String?
+  postId         String?
+  reason         String
+  status         ReportStatus @default(PENDING)
+  createdAt      DateTime     @default(now())
+
+  reporter     User  @relation("Reporter",     fields: [reporterId],     references: [id], onDelete: Cascade)
+  reportedUser User? @relation("ReportedUser", fields: [reportedUserId], references: [id])
+  post         Post? @relation(fields: [postId], references: [id])
+
+  @@index([status])
+}
+
+// ─── BİLDİRİM ────────────────────────────────────────────────
+enum NotificationType {
+  LIKE
+  COMMENT
+  FOLLOW
+  MENTION
+  LEGAL_ANSWER
+  SYSTEM
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType @default(SYSTEM)
+  message   String
+  link      String?
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+}
+
+// ─── HABER ───────────────────────────────────────────────────
+model News {
+  id        String   @id @default(cuid())
+  title     String
+  summary   String
+  content   String
+  imageUrl  String?
+  category  String   @default("Haber")
+  published Boolean  @default(false)
+  authorId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author User? @relation(fields: [authorId], references: [id])
+
+  @@index([category])
+  @@index([published])
+  @@index([createdAt])
+}
+
+// ─── DESTEK AĞI ──────────────────────────────────────────────
+model SupportResource {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  category    String
+  city        String?
+  phone       String?
+  email       String?
+  website     String?
+  verified    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([city])
+  @@index([category])
+}
