@@ -21,11 +21,12 @@ export async function POST(req: NextRequest) {
   const base     = name.toLowerCase().replace(/\s+/g, '.').replace(/[^a-z0-9.]/g, '')
   const username = `${base}.${Math.floor(Math.random() * 9999)}`
 
-  const hash   = await bcrypt.hash(password, 12)
-  const status = role === 'AVUKAT' ? 'PENDING' : 'ACTIVE'
+  const hash         = await bcrypt.hash(password, 12)
+  const normalizedRole = ((role as string) || 'AILE').toUpperCase()
+  const status         = normalizedRole === 'AVUKAT' ? 'PENDING' : 'ACTIVE'
 
   const user = await prisma.user.create({
-    data: { name, email, password: hash, username, role: role || 'AILE', status, baroNo },
+    data: { name, email, password: hash, username, role: normalizedRole as any, status: status as any, baroNo },
     select: { id: true, name: true, email: true, username: true, role: true, status: true },
   })
 
