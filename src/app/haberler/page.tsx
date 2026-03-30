@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import Sidebar from '@/components/Sidebar'
 import {
   HiNewspaper,
@@ -109,6 +110,27 @@ export default function HaberlerPage() {
   const featured = haberler[0]
   const rest = haberler.slice(1)
 
+  const toggleSave = (e: React.MouseEvent, id: string) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setSaved(prev => {
+      const s = new Set(prev)
+      s.has(id) ? s.delete(id) : s.add(id)
+      return s
+    })
+  }
+
+  const handleShare = (e: React.MouseEvent, title: string) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (navigator.share) {
+      navigator.share({ title, url: window.location.href })
+    } else {
+      navigator.clipboard.writeText(window.location.href)
+      alert('Bağlantı kopyalandı!')
+    }
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
       {/* Başlık */}
@@ -148,7 +170,7 @@ export default function HaberlerPage() {
 
           {/* Öne Çıkan Haber */}
           {activeCategory === 'Tümü' && (
-            <div className={`card overflow-hidden animate-fade-in`}>
+            <Link href={`/haberler/${featured.id}`} className="card overflow-hidden animate-fade-in block hover:shadow-md transition-shadow">
               <div className={`h-48 bg-gradient-to-br ${featured.color} flex items-end p-5`}>
                 <div>
                   <span className="bg-crimson-600 text-white text-xs font-bold px-2.5 py-1 rounded-full mb-2 inline-block">
@@ -167,24 +189,30 @@ export default function HaberlerPage() {
                     <span className="flex items-center gap-1"><HiEye className="w-3.5 h-3.5" /> {featured.views.toLocaleString('tr')}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-navy-700 transition-colors px-2 py-1.5 hover:bg-gray-50 rounded-lg">
+                    <button
+                      onClick={e => handleShare(e, featured.title)}
+                      className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-navy-700 transition-colors px-2 py-1.5 hover:bg-gray-50 rounded-lg"
+                    >
                       <HiShare className="w-4 h-4" /> Paylaş
                     </button>
-                    <button className="flex items-center gap-1.5 text-xs bg-navy-700 text-white hover:bg-navy-800 px-3 py-1.5 rounded-lg transition-colors font-medium">
+                    <span className="flex items-center gap-1.5 text-xs bg-navy-700 text-white px-3 py-1.5 rounded-lg font-medium">
                       Devamını Oku <HiArrowTopRightOnSquare className="w-3.5 h-3.5" />
-                    </button>
+                    </span>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           )}
 
           {/* Haber Listesi */}
           <div className="space-y-3">
             {(activeCategory === 'Tümü' ? rest : filtered).map(haber => (
-              <article key={haber.id} className="card p-4 hover:shadow-md transition-all group cursor-pointer animate-fade-in">
+              <Link
+                key={haber.id}
+                href={`/haberler/${haber.id}`}
+                className="card p-4 hover:shadow-md transition-all group cursor-pointer animate-fade-in block"
+              >
                 <div className="flex gap-4">
-                  {/* Görsel Placeholder */}
                   {haber.image && (
                     <div className={`w-24 h-24 bg-gradient-to-br ${haber.color} rounded-xl flex items-center justify-center text-2xl flex-shrink-0`}>
                       📰
@@ -207,11 +235,7 @@ export default function HaberlerPage() {
                       <span className="flex items-center gap-0.5"><HiClock className="w-3 h-3" /> {haber.time}</span>
                       <span className="flex items-center gap-0.5"><HiEye className="w-3 h-3" /> {haber.views.toLocaleString('tr')}</span>
                       <button
-                        onClick={() => setSaved(prev => {
-                          const s = new Set(prev)
-                          s.has(haber.id) ? s.delete(haber.id) : s.add(haber.id)
-                          return s
-                        })}
+                        onClick={e => toggleSave(e, haber.id)}
                         className={`ml-auto transition-colors ${saved.has(haber.id) ? 'text-navy-700' : 'hover:text-navy-700'}`}
                       >
                         {saved.has(haber.id) ? <HiBookmark className="w-4 h-4" /> : <HiOutlineBookmark className="w-4 h-4" />}
@@ -219,7 +243,7 @@ export default function HaberlerPage() {
                     </div>
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
@@ -244,11 +268,11 @@ export default function HaberlerPage() {
             <h3 className="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">Haber Kaynakları</h3>
             <div className="space-y-2">
               {[
-                { name: 'Adalet Bakanlığı', url: '#', count: 234 },
-                { name: 'AİHM Kararları',   url: '#', count: 89  },
-                { name: 'İnfaz İzleme',     url: '#', count: 67  },
-                { name: 'Baro Haberleri',   url: '#', count: 45  },
-                { name: 'TÜİK Verileri',    url: '#', count: 34  },
+                { name: 'Adalet Bakanlığı', count: 234 },
+                { name: 'AİHM Kararları',   count: 89  },
+                { name: 'İnfaz İzleme',     count: 67  },
+                { name: 'Baro Haberleri',   count: 45  },
+                { name: 'TÜİK Verileri',    count: 34  },
               ].map(({ name, count }) => (
                 <div key={name} className="flex items-center justify-between text-sm">
                   <span className="text-gray-600 hover:text-navy-700 cursor-pointer transition-colors flex items-center gap-1">

@@ -1,8 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { HiArrowLeft, HiUsers, HiChatBubbleLeftRight } from 'react-icons/hi2'
+import { HiArrowLeft, HiUsers, HiChatBubbleLeftRight, HiUserPlus, HiCheck, HiHeart } from 'react-icons/hi2'
 
 // Static community data — can be replaced with DB
 const communities: Record<string, {
@@ -26,6 +27,8 @@ const samplePosts = [
 export default function CommunityDetailPage() {
   const { slug } = useParams<{ slug: string }>()
   const community = communities[slug]
+  const [joined, setJoined] = useState(false)
+  const [liked, setLiked] = useState<Set<string>>(new Set())
 
   if (!community) return (
     <div className="max-w-2xl mx-auto px-4 py-16 text-center">
@@ -51,7 +54,14 @@ export default function CommunityDetailPage() {
                 <h1 className="text-xl font-black text-gray-900">{community.name}</h1>
                 <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{community.category}</span>
               </div>
-              <button className="btn-primary text-sm px-4 py-2">Katıl</button>
+              <button
+                onClick={() => setJoined(!joined)}
+                className={`flex items-center gap-1.5 text-sm px-4 py-2 rounded-xl font-semibold transition-all ${
+                  joined ? 'bg-gray-100 text-gray-600 hover:bg-gray-200' : 'bg-navy-700 text-white hover:bg-navy-800'
+                }`}
+              >
+                {joined ? <><HiCheck className="w-4 h-4" /> Katıldın</> : <><HiUserPlus className="w-4 h-4" /> Katıl</>}
+              </button>
             </div>
             <p className="text-gray-600 text-sm mt-2">{community.desc}</p>
             <div className="flex gap-4 mt-3 text-sm text-gray-500">
@@ -76,7 +86,13 @@ export default function CommunityDetailPage() {
             </div>
             <p className="text-sm text-gray-700">{p.content}</p>
             <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
-              <span>❤️ {p.likes}</span>
+              <button
+                onClick={() => setLiked(prev => { const s = new Set(prev); s.has(p.id) ? s.delete(p.id) : s.add(p.id); return s })}
+                className={`flex items-center gap-1 transition-colors ${liked.has(p.id) ? 'text-red-500' : 'hover:text-red-400'}`}
+              >
+                <HiHeart className="w-3.5 h-3.5" />
+                {p.likes + (liked.has(p.id) ? 1 : 0)}
+              </button>
             </div>
           </div>
         ))}
