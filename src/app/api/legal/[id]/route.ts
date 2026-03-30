@@ -15,6 +15,12 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
         },
         orderBy: { createdAt: 'asc' },
       },
+      comments: {
+        include: {
+          author: { select: { name: true, username: true, role: true } },
+        },
+        orderBy: { createdAt: 'asc' },
+      },
       _count: { select: { answers: true } },
     },
   })

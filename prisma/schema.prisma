@@ -54,6 +54,7 @@ model User {
   following        Follow[]        @relation("Following")
   questions        LegalQuestion[]
   answers          LegalAnswer[]
+  legalComments    LegalComment[]
   reports          Report[]        @relation("Reporter")
   reportedPosts    Report[]        @relation("ReportedUser")
   notifications    Notification[]
@@ -201,8 +202,9 @@ model LegalQuestion {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  author  User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  answers LegalAnswer[]
+  author   User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  answers  LegalAnswer[]
+  comments LegalComment[]
 
   @@index([category])
   @@index([isAnswered])
@@ -215,6 +217,19 @@ model LegalAnswer {
   content    String
   isOfficial Boolean  @default(false)
   helpful    Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  question LegalQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  author   User          @relation(fields: [authorId],   references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+model LegalComment {
+  id         String   @id @default(cuid())
+  questionId String
+  authorId   String
+  content    String
   createdAt  DateTime @default(now())
 
   question LegalQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
