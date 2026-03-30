@@ -41,6 +41,21 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState('Genel Bakış')
   const [approved, setApproved] = useState<Set<string>>(new Set())
   const [rejected, setRejected] = useState<Set<string>>(new Set())
+  const [reports, setReports] = useState(reportedPosts)
+  const [reportLoading, setReportLoading] = useState<string | null>(null)
+
+  const handleReport = async (id: string, action: 'resolve' | 'dismiss') => {
+    setReportLoading(id)
+    try {
+      await fetch('/api/admin/reports', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, action }),
+      })
+      setReports(prev => prev.filter(r => r.id !== id))
+    } catch { /* ignore */ }
+    setReportLoading(null)
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
@@ -188,7 +203,13 @@ export default function AdminPage() {
       {/* ŞİKAYETLER */}
       {activeTab === 'Şikayetler' && (
         <div className="space-y-3">
-          {reportedPosts.map(post => (
+          {reports.length === 0 && (
+            <div className="card p-8 text-center text-gray-400">
+              <HiCheckCircle className="w-10 h-10 mx-auto mb-2 text-green-400" />
+              <p className="font-medium">Bekleyen şikayet yok</p>
+            </div>
+          )}
+          {reports.map(post => (
             <div key={post.id} className="card p-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
@@ -200,14 +221,19 @@ export default function AdminPage() {
                 </div>
               </div>
               <div className="flex gap-2 pt-3 border-t border-gray-50">
-                <button className="flex items-center gap-1.5 px-4 py-2 bg-green-50 text-green-700 hover:bg-green-100 rounded-xl text-sm font-medium transition-all">
-                  <HiCheckCircle className="w-4 h-4" /> Onayla
+                <button
+                  onClick={() => handleReport(post.id, 'resolve')}
+                  disabled={reportLoading === post.id}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-green-50 text-green-700 hover:bg-green-100 disabled:opacity-50 rounded-xl text-sm font-medium transition-all"
+                >
+                  <HiCheckCircle className="w-4 h-4" /> {reportLoading === post.id ? '...' : 'Onayla (Kaldır)'}
                 </button>
-                <button className="flex items-center gap-1.5 px-4 py-2 bg-red-50 text-red-700 hover:bg-red-100 rounded-xl text-sm font-medium transition-all">
-                  <HiXCircle className="w-4 h-4" /> Kaldır
-                </button>
-                <button className="flex items-center gap-1.5 px-4 py-2 bg-gray-50 text-gray-600 hover:bg-gray-100 rounded-xl text-sm font-medium transition-all">
-                  <HiEye className="w-4 h-4" /> İncele
+                <button
+                  onClick={() => handleReport(post.id, 'dismiss')}
+                  disabled={reportLoading === post.id}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-red-50 text-red-700 hover:bg-red-100 disabled:opacity-50 rounded-xl text-sm font-medium transition-all"
+                >
+                  <HiXCircle className="w-4 h-4" /> {reportLoading === post.id ? '...' : 'Reddet'}
                 </button>
               </div>
             </div>
