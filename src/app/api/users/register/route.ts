@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 import { generateVerifyToken } from '@/lib/token'
-import { sendVerificationEmail } from '@/lib/email'
+import { sendVerificationEmail, sendAdminNewUserNotification } from '@/lib/email'
 
 export async function POST(req: NextRequest) {
   const { name, email, password, role, baroNo } = await req.json()
@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
     if (process.env.RESEND_API_KEY) {
       const token = generateVerifyToken(user.id, user.email)
       await sendVerificationEmail(user.email, user.name, token)
+      await sendAdminNewUserNotification(user.name, user.email, user.role)
     }
   } catch (err) {
     console.error('Doğrulama e-postası gönderilemedi:', err)

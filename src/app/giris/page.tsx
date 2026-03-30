@@ -24,7 +24,11 @@ export default function GirisPage() {
         redirect: false,
       })
       if (res?.error) {
-        setError('E-posta veya şifre hatalı.')
+        if (res.error.includes('doğrulamadan')) {
+          setError('Giriş yapabilmek için e-posta adresinizi doğrulamanız gerekmektedir. Lütfen gelen kutunuzu kontrol edin.')
+        } else {
+          setError('E-posta veya şifre hatalı.')
+        }
       } else {
         router.push('/')
         router.refresh()

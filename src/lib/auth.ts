@@ -44,6 +44,10 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Hesabınız askıya alınmıştır.')
         }
 
+        if (!user.emailVerified && user.role !== 'ADMIN') {
+          throw new Error('E-posta adresinizi doğrulamadan giriş yapamazsınız.')
+        }
+
         return {
           id:       user.id,
           email:    user.email,
