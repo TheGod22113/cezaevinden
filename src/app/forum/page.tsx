@@ -122,9 +122,100 @@ export default function ForumPage() {
   const [activeSort, setActiveSort] = useState('En Yeni')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [search, setSearch] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [newTopic, setNewTopic] = useState({ title: '', category: '', content: '' })
+  const [submitting, setSubmitting] = useState(false)
+  const [topicList, setTopicList] = useState(topics)
+
+  const handleCreateTopic = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!newTopic.title.trim() || !newTopic.content.trim()) return
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/forum', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newTopic),
+      })
+      if (res.ok) {
+        const created = await res.json()
+        setTopicList(prev => [{
+          id: created.id,
+          title: newTopic.title,
+          category: newTopic.category || 'Genel',
+          author: 'Siz',
+          authorRole: 'mahkum',
+          replies: 0,
+          views: 1,
+          likes: 0,
+          time: 'Az önce',
+          answered: false,
+          hot: false,
+          pinned: false,
+          excerpt: newTopic.content.slice(0, 120) + '...',
+        }, ...prev])
+        setNewTopic({ title: '', category: '', content: '' })
+        setShowModal(false)
+      }
+    } catch { /* ignore */ }
+    setSubmitting(false)
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
+
+      {/* Yeni Konu Modalı */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg">
+            <div className="flex items-center justify-between p-5 border-b">
+              <h2 className="text-lg font-bold text-navy-700">Yeni Konu Aç</h2>
+              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+            </div>
+            <form onSubmit={handleCreateTopic} className="p-5 space-y-4">
+              <div>
+                <label className="text-sm font-semibold text-gray-700 block mb-1">Başlık</label>
+                <input
+                  className="input-field"
+                  placeholder="Konunuzun başlığını yazın..."
+                  value={newTopic.title}
+                  onChange={e => setNewTopic(p => ({...p, title: e.target.value}))}
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-sm font-semibold text-gray-700 block mb-1">Kategori</label>
+                <select
+                  className="input-field"
+                  value={newTopic.category}
+                  onChange={e => setNewTopic(p => ({...p, category: e.target.value}))}
+                >
+                  <option value="">Kategori seçin</option>
+                  {categories.map(c => <option key={c.id} value={c.label}>{c.label}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-semibold text-gray-700 block mb-1">İçerik</label>
+                <textarea
+                  className="input-field resize-none"
+                  rows={5}
+                  placeholder="Konunuzu detaylı açıklayın..."
+                  value={newTopic.content}
+                  onChange={e => setNewTopic(p => ({...p, content: e.target.value}))}
+                  required
+                />
+              </div>
+              <div className="flex gap-3 pt-1">
+                <button type="button" onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-300 rounded-xl text-gray-600 hover:bg-gray-50 font-medium text-sm">İptal</button>
+                <button type="submit" disabled={submitting} className="flex-1 py-2.5 bg-crimson-600 hover:bg-crimson-700 disabled:opacity-60 text-white rounded-xl font-semibold text-sm">
+                  {submitting ? 'Gönderiliyor...' : 'Konuyu Yayınla'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* Sayfa Başlığı */}
       <div className="hero-gradient rounded-2xl p-6 mb-6 text-white">
         <div className="flex items-center justify-between flex-wrap gap-4">
@@ -135,7 +226,7 @@ export default function ForumPage() {
             </div>
             <p className="text-blue-100 text-sm">Sorularınızı sorun, deneyimlerinizi paylaşın, birbirinize destek olun.</p>
           </div>
-          <button className="flex items-center gap-2 bg-crimson-600 hover:bg-crimson-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors">
+          <button onClick={() => setShowModal(true)} className="flex items-center gap-2 bg-crimson-600 hover:bg-crimson-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors">
             <HiPlus className="w-5 h-5" /> Yeni Konu Aç
           </button>
         </div>
@@ -199,9 +290,10 @@ export default function ForumPage() {
 
           {/* Konu Listesi */}
           <div className="space-y-3">
-            {topics.map(topic => (
+            {topicList.map(topic => (
               <article
                 key={topic.id}
+                onClick={() => window.location.href = `/forum/${topic.id}`}
                 className="card p-4 hover:shadow-md transition-all cursor-pointer group animate-fade-in"
               >
                 {/* Üst Satır */}

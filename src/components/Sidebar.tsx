@@ -104,9 +104,15 @@ export default function Sidebar({ active }: { active?: string }) {
       {/* Alt Linkler */}
       <div className="px-2">
         <div className="flex flex-wrap gap-x-3 gap-y-1">
-          {['Hakkımızda', 'Gizlilik', 'Kullanım Koşulları', 'Yardım', 'İletişim'].map(link => (
-            <Link key={link} href="#" className="text-xs text-gray-400 hover:text-gray-600 transition-colors">
-              {link}
+          {[
+            { label: 'Hakkımızda',       href: '/hakkimizda'         },
+            { label: 'Gizlilik',         href: '/gizlilik'           },
+            { label: 'Kullanım Koşulları', href: '/kullanim-kosullari' },
+            { label: 'Yardım',           href: '/yardim'             },
+            { label: 'İletişim',         href: '/iletisim'           },
+          ].map(({ label, href }) => (
+            <Link key={label} href={href} className="text-xs text-gray-400 hover:text-gray-600 transition-colors">
+              {label}
             </Link>
           ))}
         </div>

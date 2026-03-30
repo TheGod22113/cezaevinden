@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
   HiScale,
@@ -24,12 +26,35 @@ const roles = [
 ]
 
 export default function KayitPage() {
+  const router = useRouter()
   const [step, setStep] = useState(1)
   const [role, setRole] = useState<Role>('')
   const [showPass, setShowPass] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const [form, setForm] = useState({
     name: '', email: '', password: '', baroNo: '', kvkk: false,
   })
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!form.kvkk) { setError('KVKK metnini onaylamanız gerekiyor.'); return }
+    setError('')
+    setLoading(true)
+    try {
+      const res = await fetch('/api/users/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, role }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setError(data.error || 'Kayıt başarısız.'); setLoading(false); return }
+      // Auto login after register
+      await signIn('credentials', { identifier: form.email, password: form.password, redirect: false })
+      setStep(3)
+    } catch { setError('Bir hata oluştu.') }
+    setLoading(false)
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -124,7 +149,8 @@ export default function KayitPage() {
           {step === 2 && (
             <div>
               <h2 className="text-lg font-bold text-gray-800 mb-4 text-center">Hesap Bilgileriniz</h2>
-              <form className="space-y-4" onSubmit={e => { e.preventDefault(); setStep(3) }}>
+              <form className="space-y-4" onSubmit={handleRegister}>
+                {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3">{error}</div>}
                 <div>
                   <label className="text-sm font-semibold text-gray-700 block mb-1.5">Ad Soyad</label>
                   <div className="relative">
@@ -212,8 +238,8 @@ export default function KayitPage() {
                   <button type="button" onClick={() => setStep(1)} className="btn-secondary flex-shrink-0 px-4">
                     ← Geri
                   </button>
-                  <button type="submit" className="flex-1 bg-navy-700 hover:bg-navy-800 text-white font-bold py-3 rounded-xl transition-colors">
-                    Hesap Oluştur
+                  <button type="submit" disabled={loading} className="flex-1 bg-navy-700 hover:bg-navy-800 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-colors">
+                    {loading ? 'Kaydediliyor...' : 'Hesap Oluştur'}
                   </button>
                 </div>
               </form>

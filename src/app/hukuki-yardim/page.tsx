@@ -136,6 +136,25 @@ const categories = [
 export default function HukukiYardimPage() {
   const [activeTab, setActiveTab] = useState<'sorular' | 'avukatlar'>('sorular')
   const [showAskForm, setShowAskForm] = useState(false)
+  const [questionForm, setQF] = useState({ title: '', category: '', content: '', isAnonymous: false })
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleAskSubmit = async () => {
+    if (!questionForm.title.trim() || !questionForm.content.trim()) return
+    setSubmitting(true)
+    try {
+      await fetch('/api/legal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(questionForm),
+      })
+      setSubmitted(true)
+      setShowAskForm(false)
+      setQF({ title: '', category: '', content: '', isAnonymous: false })
+    } catch { /* ignore */ }
+    setSubmitting(false)
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
@@ -207,24 +226,31 @@ export default function HukukiYardimPage() {
               <div className="space-y-3">
                 <div>
                   <label className="text-sm font-medium text-gray-700 block mb-1">Soru Başlığı</label>
-                  <input type="text" className="input-field" placeholder="Sorunuzu kısaca özetleyin..." />
+                  <input type="text" className="input-field" placeholder="Sorunuzu kısaca özetleyin..."
+                    value={questionForm.title} onChange={e => setQF(p => ({...p, title: e.target.value}))} />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700 block mb-1">Kategori</label>
-                  <select className="input-field">
+                  <select className="input-field" value={questionForm.category} onChange={e => setQF(p => ({...p, category: e.target.value}))}>
+                    <option value="">Kategori seçin</option>
                     {categories.map(c => <option key={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700 block mb-1">Detaylı Açıklama</label>
-                  <textarea className="input-field min-h-[120px] resize-none" placeholder="Durumunuzu detaylı anlatın. Tarihler, cezaevi adı ve diğer önemli bilgileri ekleyin..." />
+                  <textarea className="input-field min-h-[120px] resize-none" placeholder="Durumunuzu detaylı anlatın..."
+                    value={questionForm.content} onChange={e => setQF(p => ({...p, content: e.target.value}))} />
                 </div>
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" id="anon" className="w-4 h-4" />
+                  <input type="checkbox" id="anon" className="w-4 h-4"
+                    checked={questionForm.isAnonymous} onChange={e => setQF(p => ({...p, isAnonymous: e.target.checked}))} />
                   <label htmlFor="anon" className="text-sm text-gray-600">Anonim olarak sor (kimliğin gizli kalır)</label>
                 </div>
+                {submitted && <p className="text-green-600 text-sm font-medium">✅ Sorunuz gönderildi! Avukatlar en kısa sürede yanıtlayacak.</p>}
                 <div className="flex gap-3 pt-2">
-                  <button className="btn-primary flex-1">Soruyu Gönder</button>
+                  <button onClick={handleAskSubmit} disabled={submitting} className="btn-primary flex-1">
+                    {submitting ? 'Gönderiliyor...' : 'Soruyu Gönder'}
+                  </button>
                   <button onClick={() => setShowAskForm(false)} className="btn-secondary">İptal</button>
                 </div>
               </div>
