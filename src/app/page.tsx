@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import Sidebar from '@/components/Sidebar'
 import RightSidebar from '@/components/RightSidebar'
-import PostCard, { PostData } from '@/components/PostCard'
+import PostCard, { type PostData } from '@/components/PostCard'
 import PostComposer from '@/components/PostComposer'
 import { PostSkeleton } from '@/components/Skeleton'
 import { HiScale, HiNewspaper, HiHandRaised, HiStar } from 'react-icons/hi2'

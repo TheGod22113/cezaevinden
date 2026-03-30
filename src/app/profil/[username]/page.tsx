@@ -1,7 +1,7 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
-import PostCard, { Post } from '@/components/PostCard'
+import PostCard, { type PostData } from '@/components/PostCard'
 import {
   HiCheckBadge, HiMapPin, HiCalendar, HiUserPlus, HiUserMinus,
   HiChatBubbleLeftRight, HiShare, HiEllipsisHorizontal,
@@ -10,11 +10,11 @@ import {
 import Link from 'next/link'
 
 const roleInfo: Record<string, { label: string; color: string; bg: string }> = {
-  mahkum:  { label: 'Tutuklu/Hükümlü', color: 'text-orange-700', bg: 'bg-orange-100' },
-  aile:    { label: 'Aile Üyesi',       color: 'text-green-700',  bg: 'bg-green-100'  },
+  mahkum:  { label: 'Tutuklu/HÃ¼kÃ¼mlÃ¼', color: 'text-orange-700', bg: 'bg-orange-100' },
+  aile:    { label: 'Aile Ãœyesi',       color: 'text-green-700',  bg: 'bg-green-100'  },
   avukat:  { label: 'Avukat',           color: 'text-blue-700',   bg: 'bg-blue-100'   },
-  tahliye: { label: 'Tahliye Olmuş',    color: 'text-teal-700',   bg: 'bg-teal-100'   },
-  gonullu: { label: 'Gönüllü',          color: 'text-purple-700', bg: 'bg-purple-100' },
+  tahliye: { label: 'Tahliye OlmuÅŸ',    color: 'text-teal-700',   bg: 'bg-teal-100'   },
+  gonullu: { label: 'GÃ¶nÃ¼llÃ¼',          color: 'text-purple-700', bg: 'bg-purple-100' },
 }
 
 const sampleUser = {
@@ -22,7 +22,7 @@ const sampleUser = {
   name:      'Ahmet Kaya',
   role:      'tahliye',
   verified:  true,
-  bio:       '6 yıl sonra tahliye oldum. Şimdi tahliye olan insanlara yardımcı olmaya çalışıyorum. Birlikte daha güçlüyüz.',
+  bio:       '6 yÄ±l sonra tahliye oldum. Åimdi tahliye olan insanlara yardÄ±mcÄ± olmaya Ã§alÄ±ÅŸÄ±yorum. Birlikte daha gÃ¼Ã§lÃ¼yÃ¼z.',
   city:      'Ankara',
   joinDate:  'Ocak 2024',
   followers: 342,
@@ -33,32 +33,32 @@ const sampleUser = {
   avatarColor: 'bg-teal-500',
 }
 
-const samplePosts: Post[] = [
+const samplePosts: PostData[] = [
   {
     id: '1',
     author: { name: 'Ahmet Kaya', role: 'tahliye', verified: true },
-    content: '6 yıl sonra tahliye oldum. İş bulmak gerçekten çok zor. Benzer deneyim yaşayan var mı?',
-    category: 'Tahliye Sonrası',
+    content: '6 yÄ±l sonra tahliye oldum. Ä°ÅŸ bulmak gerÃ§ekten Ã§ok zor. Benzer deneyim yaÅŸayan var mÄ±?',
+    category: 'Tahliye SonrasÄ±',
     likes: 47, comments: 23, shares: 8,
-    time: '2 saat önce',
-    tags: ['tahliyesonrası', 'istihdam'],
+    time: '2 saat Ã¶nce',
+    tags: ['tahliyesonrasÄ±', 'istihdam'],
   },
   {
     id: '2',
     author: { name: 'Ahmet Kaya', role: 'tahliye', verified: true },
-    content: 'Adli sicil affı başvurusunu tamamladım. Süreç hakkında merak edenlere anlatayım...',
+    content: 'Adli sicil affÄ± baÅŸvurusunu tamamladÄ±m. SÃ¼reÃ§ hakkÄ±nda merak edenlere anlatayÄ±m...',
     category: 'Hukuki Bilgi',
     likes: 89, comments: 31, shares: 24,
-    time: '3 gün önce',
+    time: '3 gÃ¼n Ã¶nce',
     tags: ['adlisicil', 'hukuk'],
   },
 ]
 
-const tabs = ['Gönderiler', 'Yorumlar', 'Kaydedilenler', 'Hakkında']
+const tabs = ['GÃ¶nderiler', 'Yorumlar', 'Kaydedilenler', 'HakkÄ±nda']
 
 export default function ProfilPage({ params }: { params: { username: string } }) {
   const [following, setFollowing] = useState(false)
-  const [activeTab, setActiveTab] = useState('Gönderiler')
+  const [activeTab, setActiveTab] = useState('GÃ¶nderiler')
   const user = sampleUser
   const role = roleInfo[user.role]
 
@@ -69,9 +69,9 @@ export default function ProfilPage({ params }: { params: { username: string } })
         <HiArrowLeft className="w-4 h-4" /> Ana Sayfa
       </Link>
 
-      {/* Profil Kartı */}
+      {/* Profil KartÄ± */}
       <div className="card overflow-hidden mb-4">
-        {/* Kapak Fotoğrafı */}
+        {/* Kapak FotoÄŸrafÄ± */}
         <div className="h-32 bg-gradient-to-br from-navy-700 via-navy-600 to-blue-500" />
 
         {/* Avatar + Aksiyonlar */}
@@ -95,12 +95,12 @@ export default function ProfilPage({ params }: { params: { username: string } })
                     : 'bg-navy-700 text-white hover:bg-navy-800'
                 }`}
               >
-                {following ? <><HiUserMinus className="w-4 h-4" /> Takipten Çık</> : <><HiUserPlus className="w-4 h-4" /> Takip Et</>}
+                {following ? <><HiUserMinus className="w-4 h-4" /> Takipten Ã‡Ä±k</> : <><HiUserPlus className="w-4 h-4" /> Takip Et</>}
               </button>
             </div>
           </div>
 
-          {/* İsim + Rol */}
+          {/* Ä°sim + Rol */}
           <div className="mb-3">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-xl font-bold text-gray-900">{user.name}</h1>
@@ -118,14 +118,14 @@ export default function ProfilPage({ params }: { params: { username: string } })
           {/* Meta */}
           <div className="flex flex-wrap gap-4 text-xs text-gray-400 mb-4">
             <span className="flex items-center gap-1"><HiMapPin className="w-3.5 h-3.5" /> {user.city}</span>
-            <span className="flex items-center gap-1"><HiCalendar className="w-3.5 h-3.5" /> {user.joinDate}'da katıldı</span>
+            <span className="flex items-center gap-1"><HiCalendar className="w-3.5 h-3.5" /> {user.joinDate}'da katÄ±ldÄ±</span>
           </div>
 
-          {/* İstatistikler */}
+          {/* Ä°statistikler */}
           <div className="flex gap-6">
             {[
-              { value: user.posts,     label: 'Gönderi' },
-              { value: user.followers, label: 'Takipçi' },
+              { value: user.posts,     label: 'GÃ¶nderi' },
+              { value: user.followers, label: 'TakipÃ§i' },
               { value: user.following, label: 'Takip' },
             ].map(({ value, label }) => (
               <button key={label} className="text-center hover:opacity-75 transition-opacity">
@@ -142,8 +142,8 @@ export default function ProfilPage({ params }: { params: { username: string } })
         <div className="card p-4 mb-4 flex items-center gap-3 bg-blue-50 border border-blue-100">
           <HiScale className="w-8 h-8 text-blue-600 flex-shrink-0" />
           <div>
-            <p className="font-semibold text-blue-800 text-sm">Doğrulanmış Gönüllü Avukat</p>
-            <p className="text-xs text-blue-600">Bu üye, platformda ücretsiz hukuki danışmanlık sağlamaktadır.</p>
+            <p className="font-semibold text-blue-800 text-sm">DoÄŸrulanmÄ±ÅŸ GÃ¶nÃ¼llÃ¼ Avukat</p>
+            <p className="text-xs text-blue-600">Bu Ã¼ye, platformda Ã¼cretsiz hukuki danÄ±ÅŸmanlÄ±k saÄŸlamaktadÄ±r.</p>
           </div>
         </div>
       )}
@@ -163,22 +163,22 @@ export default function ProfilPage({ params }: { params: { username: string } })
         ))}
       </div>
 
-      {/* Tab İçeriği */}
-      {activeTab === 'Gönderiler' && (
+      {/* Tab Ä°Ã§eriÄŸi */}
+      {activeTab === 'GÃ¶nderiler' && (
         <div className="space-y-4">
           {samplePosts.map(post => <PostCard key={post.id} post={post} />)}
         </div>
       )}
 
-      {activeTab === 'Hakkında' && (
+      {activeTab === 'HakkÄ±nda' && (
         <div className="card p-5 space-y-4">
           <h2 className="font-bold text-gray-800">Profil Bilgileri</h2>
           <div className="space-y-3 text-sm">
             {[
-              { label: 'Üyelik Türü', value: role.label },
-              { label: 'Şehir',       value: user.city },
-              { label: 'Katılım',     value: user.joinDate },
-              { label: 'Toplam Gönderi', value: `${user.posts} gönderi` },
+              { label: 'Ãœyelik TÃ¼rÃ¼', value: role.label },
+              { label: 'Åehir',       value: user.city },
+              { label: 'KatÄ±lÄ±m',     value: user.joinDate },
+              { label: 'Toplam GÃ¶nderi', value: `${user.posts} gÃ¶nderi` },
             ].map(({ label, value }) => (
               <div key={label} className="flex justify-between py-2 border-b border-gray-50">
                 <span className="text-gray-500">{label}</span>
@@ -191,12 +191,14 @@ export default function ProfilPage({ params }: { params: { username: string } })
 
       {(activeTab === 'Yorumlar' || activeTab === 'Kaydedilenler') && (
         <div className="card p-10 text-center text-gray-400">
-          <p className="text-4xl mb-3">🔒</p>
-          <p className="font-medium">Giriş yapmanız gerekiyor</p>
-          <p className="text-sm mt-1">Bu içerikleri görmek için üye olun.</p>
-          <Link href="/kayit" className="inline-block mt-4 btn-primary text-sm">Üye Ol</Link>
+          <p className="text-4xl mb-3">ğŸ”’</p>
+          <p className="font-medium">GiriÅŸ yapmanÄ±z gerekiyor</p>
+          <p className="text-sm mt-1">Bu iÃ§erikleri gÃ¶rmek iÃ§in Ã¼ye olun.</p>
+          <Link href="/kayit" className="inline-block mt-4 btn-primary text-sm">Ãœye Ol</Link>
         </div>
       )}
     </div>
   )
 }
+
+

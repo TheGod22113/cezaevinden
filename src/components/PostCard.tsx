@@ -26,6 +26,7 @@ export interface PostData {
   _count?: {
     likes?: number
     comments?: number
+    shares?: number
     bookmarks?: number
   }
 }
