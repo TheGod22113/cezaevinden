@@ -16,117 +16,42 @@ import {
   HiChevronRight,
 } from 'react-icons/hi2'
 
-const haberler = [
-  {
-    id: '1',
-    title: 'Denetimli Serbestlik Süreleri Uzatıldı — Yeni Düzenleme Yürürlükte',
-    excerpt: 'Adalet Bakanlığı\'nın açıklamasına göre denetimli serbestlik uygulamasında yeni düzenlemeyle birlikte süreler 1 yıldan 2 yıla çıkarıldı. Düzenleme 180.000 kişiyi etkileyecek.',
-    category: 'Mevzuat',
-    source: 'Adalet Bakanlığı',
-    time: '3 saat önce',
-    views: 12400,
-    image: true,
-    hot: true,
-    tags: ['denetimliSerbestlik', 'infaz', 'kanun'],
-    color: 'from-blue-600 to-blue-800',
-  },
-  {
-    id: '2',
-    title: 'Türkiye\'deki Cezaevi Nüfusu Açıklandı — 350 Bin Tutuklu ve Hükümlü',
-    excerpt: 'TÜİK ve Adalet Bakanlığı verilerine göre Türkiye\'deki cezaevlerinde 350 bin 847 kişi bulunuyor. Bu rakam 2020\'ye kıyasla yüzde 18 artış gösteriyor.',
-    category: 'İstatistik',
-    source: 'TÜİK',
-    time: '1 gün önce',
-    views: 8900,
-    image: true,
-    hot: false,
-    tags: ['istatistik', 'cezaevleri', 'rapor'],
-    color: 'from-gray-600 to-gray-800',
-  },
-  {
-    id: '3',
-    title: 'AİHM: Türkiye\'de Cezaevi Koşulları İnsan Hakları İhlali Oluşturuyor',
-    excerpt: 'Avrupa İnsan Hakları Mahkemesi, Türkiye\'deki bazı cezaevlerindeki koşulların AİHS\'nin 3. maddesini ihlal ettiğine hükmetti. Türkiye ihlali gidermekle yükümlü.',
-    category: 'İnsan Hakları',
-    source: 'AİHM',
-    time: '2 gün önce',
-    views: 24500,
-    image: true,
-    hot: true,
-    tags: ['AİHM', 'insanHakları', 'cezaevi'],
-    color: 'from-red-600 to-red-800',
-  },
-  {
-    id: '4',
-    title: 'Cezaevinde Eğitim Programları Genişletildi — Online Kurs İmkânı',
-    excerpt: 'MEB ile Adalet Bakanlığı arasındaki protokol kapsamında cezaevlerinde online eğitim platformuna erişim sağlanacak. Pilot uygulama 15 cezaevinde başladı.',
-    category: 'Eğitim',
-    source: 'MEB',
-    time: '3 gün önce',
-    views: 5600,
-    image: false,
-    hot: false,
-    tags: ['eğitim', 'online', 'protokol'],
-    color: 'from-green-600 to-green-800',
-  },
-  {
-    id: '5',
-    title: 'İnfaz İzleme Kurulları Raporu: Kapasite Sorunu Devam Ediyor',
-    excerpt: 'Cezaevi İzleme Kurulları\'nın yıllık raporuna göre Türkiye\'deki cezaevlerinin yüzde 67\'si kapasitesinin üzerinde çalışıyor. Rapor, koşulların iyileştirilmesi için acil önlem alınmasını talep ediyor.',
-    category: 'Rapor',
-    source: 'İnfaz İzleme Kurulu',
-    time: '4 gün önce',
-    views: 7800,
-    image: false,
-    hot: true,
-    tags: ['kapasite', 'izleme', 'rapor'],
-    color: 'from-orange-600 to-orange-800',
-  },
-  {
-    id: '6',
-    title: 'Tahliye Sonrası Yeniden Entegrasyon Programı Başlatıldı',
-    excerpt: 'ÇSGB ve STK\'lar iş birliğiyle hayata geçirilen program, tahliye olan kişilere iş bulma, barınma ve psikolojik destek sağlıyor. İlk yılda 5.000 kişiye ulaşılması hedefleniyor.',
-    category: 'Sosyal',
-    source: 'ÇSGB',
-    time: '5 gün önce',
-    views: 4200,
-    image: false,
-    hot: false,
-    tags: ['tahliye', 'entegrasyon', 'iş'],
-    color: 'from-teal-600 to-teal-800',
-  },
-]
+const colors = ['from-blue-600 to-blue-800','from-red-600 to-red-800','from-green-600 to-green-800','from-orange-600 to-orange-800','from-teal-600 to-teal-800','from-gray-600 to-gray-800']
 
-const categories = ['Tümü', 'Mevzuat', 'İnsan Hakları', 'İstatistik', 'Eğitim', 'Rapor', 'Sosyal']
+const categories = ['Tümü', 'Mevzuat', 'İnsan Hakları', 'İstatistik', 'Eğitim', 'Rapor', 'Sosyal', 'Haber']
+
+type NewsItem = {
+  id: string; title: string; excerpt: string; category: string
+  source: string; time: string; views: number; image: boolean; hot: boolean; color: string
+}
 
 export default function HaberlerPage() {
   const [activeCategory, setActiveCategory] = useState('Tümü')
   const [saved, setSaved] = useState<Set<string>>(new Set())
-  const [dbNews, setDbNews] = useState<typeof haberler>([])
+  const [displayNews, setDisplayNews] = useState<NewsItem[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetch('/api/news')
       .then(r => r.json())
       .then((data: any[]) => {
-        if (!Array.isArray(data) || data.length === 0) return
-        setDbNews(data.map((n, i) => ({
+        if (!Array.isArray(data)) { setLoading(false); return }
+        setDisplayNews(data.map((n, i) => ({
           id:       n.id,
           title:    n.title,
           excerpt:  n.summary,
           category: n.category,
           source:   n.author?.name ?? 'Editör',
           time:     new Date(n.createdAt).toLocaleDateString('tr-TR'),
-          views:    Math.floor(Math.random() * 5000) + 1000,
+          views:    0,
           image:    !!n.imageUrl,
           hot:      i < 2,
-          tags:     [],
-          color:    ['from-blue-600 to-blue-800','from-red-600 to-red-800','from-green-600 to-green-800','from-orange-600 to-orange-800'][i % 4],
+          color:    colors[i % colors.length],
         })))
+        setLoading(false)
       })
-      .catch(() => {})
+      .catch(() => setLoading(false))
   }, [])
-
-  const displayNews = dbNews.length > 0 ? dbNews : haberler
 
   const filtered = activeCategory === 'Tümü'
     ? displayNews
@@ -193,8 +118,27 @@ export default function HaberlerPage() {
             ))}
           </div>
 
+          {/* Loading / Boş state */}
+          {loading && (
+            <div className="space-y-3">
+              {[1,2,3].map(i => (
+                <div key={i} className="card p-4 animate-pulse">
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                  <div className="h-3 bg-gray-100 rounded w-full mb-1" />
+                  <div className="h-3 bg-gray-100 rounded w-2/3" />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {!loading && displayNews.length === 0 && (
+            <div className="card p-10 text-center text-gray-400">
+              <p>Henüz haber yok.</p>
+            </div>
+          )}
+
           {/* Öne Çıkan Haber */}
-          {activeCategory === 'Tümü' && (
+          {!loading && activeCategory === 'Tümü' && featured && (
             <Link href={`/haberler/${featured.id}`} className="card overflow-hidden animate-fade-in block hover:shadow-md transition-shadow">
               <div className={`h-48 bg-gradient-to-br ${featured.color} flex items-end p-5`}>
                 <div>
@@ -230,7 +174,7 @@ export default function HaberlerPage() {
           )}
 
           {/* Haber Listesi */}
-          <div className="space-y-3">
+          {!loading && <div className="space-y-3">
             {(activeCategory === 'Tümü' ? rest : filtered).map(haber => (
               <Link
                 key={haber.id}
@@ -270,7 +214,7 @@ export default function HaberlerPage() {
                 </div>
               </Link>
             ))}
-          </div>
+          </div>}
         </div>
 
         {/* Sağ Panel */}
