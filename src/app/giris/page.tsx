@@ -1,12 +1,40 @@
 'use client'
 
 import { useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { HiScale, HiEye, HiEyeSlash, HiLockClosed, HiEnvelope } from 'react-icons/hi2'
 
 export default function GirisPage() {
+  const router = useRouter()
   const [showPass, setShowPass] = useState(false)
   const [form, setForm] = useState({ email: '', password: '', remember: false })
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      const res = await signIn('credentials', {
+        email: form.email,
+        password: form.password,
+        redirect: false,
+      })
+      if (res?.error) {
+        setError('E-posta veya şifre hatalı.')
+      } else {
+        router.push('/')
+        router.refresh()
+      }
+    } catch {
+      setError('Bir hata oluştu. Lütfen tekrar deneyin.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -28,7 +56,15 @@ export default function GirisPage() {
 
         {/* Form Kartı */}
         <div className="card p-6 shadow-lg">
-          <form className="space-y-4" onSubmit={e => e.preventDefault()}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
+
+            {/* Hata Mesajı */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3">
+                {error}
+              </div>
+            )}
+
             {/* E-posta */}
             <div>
               <label className="text-sm font-semibold text-gray-700 block mb-1.5">
@@ -90,9 +126,10 @@ export default function GirisPage() {
             {/* Giriş Butonu */}
             <button
               type="submit"
-              className="w-full bg-navy-700 hover:bg-navy-800 text-white font-bold py-3 rounded-xl transition-colors text-sm"
+              disabled={loading}
+              className="w-full bg-navy-700 hover:bg-navy-800 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-colors text-sm"
             >
-              Giriş Yap
+              {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
             </button>
 
             {/* Ayırıcı */}
@@ -102,9 +139,10 @@ export default function GirisPage() {
               <hr className="flex-1 border-gray-200" />
             </div>
 
-            {/* Sosyal Giriş */}
+            {/* Google Giriş */}
             <button
               type="button"
+              onClick={() => signIn('google', { callbackUrl: '/' })}
               className="w-full flex items-center justify-center gap-2 border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2.5 rounded-xl transition-colors text-sm"
             >
               <span>🔵</span> Google ile Giriş Yap
