@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import CookieBanner from '@/components/CookieBanner'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import Providers from '@/components/Providers'
+import BottomNav from '@/components/BottomNav'
 
 export const metadata: Metadata = {
   title: 'Cezaevinden.com — Mahkumlar, Aileler ve Hukuk Platformu',
@@ -37,10 +38,11 @@ export default function RootLayout({
         <Providers>
           <AnnouncementBar />
           <Header />
-          <main className="pt-16">
+          <main className="pt-16 pb-16 lg:pb-0">
             {children}
           </main>
-          <Footer />
+          <BottomNav />
+          <Footer className="hidden lg:block" />
           <CookieBanner />
         </Providers>
       </body>

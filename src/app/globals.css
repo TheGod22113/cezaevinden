@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* iPhone notch / home indicator safe area */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {

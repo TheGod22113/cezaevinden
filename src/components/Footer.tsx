@@ -29,9 +29,9 @@ const links = {
   ],
 }
 
-export default function Footer() {
+export default function Footer({ className }: { className?: string }) {
   return (
-    <footer className="bg-navy-800 text-white mt-16">
+    <footer className={`bg-navy-800 text-white mt-16 ${className ?? ''}`}>
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-10">
           {/* Marka */}
