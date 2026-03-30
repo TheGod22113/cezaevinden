@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import Sidebar from '@/components/Sidebar'
 import {
   HiScale,
@@ -133,12 +134,42 @@ const categories = [
   '📋 İdari İşlemler',
 ]
 
+type ApiQuestion = {
+  id: string
+  title: string
+  category: string
+  isAnonymous: boolean
+  isAnswered: boolean
+  createdAt: string
+  author: { name: string; role: string } | null
+  _count: { answers: number }
+}
+
+function timeAgo(dateStr: string) {
+  const diff = Date.now() - new Date(dateStr).getTime()
+  const m = Math.floor(diff / 60000)
+  if (m < 1) return 'az önce'
+  if (m < 60) return `${m} dk önce`
+  const h = Math.floor(m / 60)
+  if (h < 24) return `${h} saat önce`
+  return `${Math.floor(h / 24)} gün önce`
+}
+
 export default function HukukiYardimPage() {
   const [activeTab, setActiveTab] = useState<'sorular' | 'avukatlar'>('sorular')
   const [showAskForm, setShowAskForm] = useState(false)
   const [questionForm, setQF] = useState({ title: '', category: '', content: '', isAnonymous: false })
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [questions, setQuestions] = useState<ApiQuestion[]>([])
+  const [loadingQ, setLoadingQ] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/legal')
+      .then(r => r.json())
+      .then(data => { setQuestions(Array.isArray(data) ? data : []); setLoadingQ(false) })
+      .catch(() => setLoadingQ(false))
+  }, [])
 
   const handleAskSubmit = async () => {
     if (!questionForm.title.trim() || !questionForm.content.trim()) return
@@ -275,13 +306,26 @@ export default function HukukiYardimPage() {
           {/* SORULAR */}
           {activeTab === 'sorular' && (
             <div className="space-y-3">
-              {sorular.map(q => (
-                <div key={q.id} className="card p-4 hover:shadow-md transition-all cursor-pointer group">
+              {loadingQ && [1,2,3].map(i => (
+                <div key={i} className="card p-4 animate-pulse">
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                  <div className="h-3 bg-gray-100 rounded w-1/2" />
+                </div>
+              ))}
+              {!loadingQ && questions.length === 0 && (
+                <div className="card p-12 text-center text-gray-400">
+                  <HiScale className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                  <p className="font-medium">Henüz soru yok</p>
+                  <p className="text-sm mt-1">İlk soruyu siz sorun!</p>
+                </div>
+              )}
+              {!loadingQ && questions.map(q => (
+                <Link key={q.id} href={`/hukuki-yardim/${q.id}`} className="card p-4 hover:shadow-md transition-all cursor-pointer group block">
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <h3 className="font-semibold text-gray-900 group-hover:text-navy-700 transition-colors text-sm sm:text-base">
                       {q.title}
                     </h3>
-                    {q.answered ? (
+                    {q.isAnswered ? (
                       <span className="flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full flex-shrink-0 font-medium">
                         <HiCheckCircle className="w-3.5 h-3.5" /> Yanıtlandı
                       </span>
@@ -293,19 +337,14 @@ export default function HukukiYardimPage() {
                   </div>
                   <div className="flex items-center gap-3 flex-wrap text-xs text-gray-500">
                     <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium">{q.category}</span>
-                    <span>{q.asker} ({q.askerRole})</span>
-                    {q.avukat && (
-                      <span className="flex items-center gap-1 text-green-600">
-                        <HiCheckBadge className="w-3.5 h-3.5" /> {q.avukat}
-                      </span>
-                    )}
-                    <span>{q.time}</span>
-                    <span className="ml-auto flex items-center gap-3">
-                      <span>👁 {q.views}</span>
-                      <span>👍 {q.likes}</span>
+                    {!q.isAnonymous && q.author && <span>{q.author.name}</span>}
+                    {q.isAnonymous && <span>Anonim</span>}
+                    <span>{timeAgo(q.createdAt)}</span>
+                    <span className="ml-auto flex items-center gap-1">
+                      <HiChatBubbleLeftRight className="w-3.5 h-3.5" /> {q._count.answers}
                     </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

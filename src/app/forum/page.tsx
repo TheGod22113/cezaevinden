@@ -150,7 +150,7 @@ export default function ForumPage() {
   const [showModal, setShowModal] = useState(false)
   const [newTopic, setNewTopic] = useState({ title: '', category: '', content: '' })
   const [submitting, setSubmitting] = useState(false)
-  const [topicList, setTopicList] = useState(topics)
+  const [topicList, setTopicList] = useState<typeof topics>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -163,7 +163,7 @@ export default function ForumPage() {
     fetch(url)
       .then(r => r.json())
       .then((data: ApiTopic[]) => {
-        if (!Array.isArray(data) || data.length === 0) return // keep dummy
+        if (!Array.isArray(data)) return
         setTopicList(data.map(t => ({
           id:         t.id,
           title:      t.title,
@@ -347,6 +347,13 @@ export default function ForumPage() {
 
           {/* Konu Listesi */}
           <div className="space-y-3">
+            {!loading && topicList.length === 0 && (
+              <div className="card p-12 text-center text-gray-400">
+                <HiChatBubbleLeftRight className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                <p className="font-medium">Henüz konu yok</p>
+                <p className="text-sm mt-1">İlk konuyu siz açın!</p>
+              </div>
+            )}
             {loading && [1,2,3].map(i => (
               <div key={i} className="card p-4 animate-pulse">
                 <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
