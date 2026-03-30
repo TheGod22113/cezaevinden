@@ -1,10 +1,10 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const FROM = process.env.EMAIL_FROM || 'info@cezaevinden.com'
 
 export async function sendVerificationEmail(to: string, name: string, token: string) {
+  // Lazy init — env var build zamanında olmayabilir
+  const resend = new Resend(process.env.RESEND_API_KEY!)
   const baseUrl = process.env.NEXTAUTH_URL || 'https://cezaevinden.vercel.app'
   const link    = `${baseUrl}/api/auth/verify-email?token=${token}`
 
