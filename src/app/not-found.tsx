@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { HiHome, HiArrowLeft } from 'react-icons/hi2'
 
