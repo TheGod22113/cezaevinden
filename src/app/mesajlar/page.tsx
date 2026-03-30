@@ -110,7 +110,13 @@ export default function MesajlarPage() {
     Object.fromEntries(conversations.map(c => [c.id, c.messages]))
   )
   const [showList, setShowList] = useState(true)
+  const [search, setSearch] = useState('')
   const bottomRef = useRef<HTMLDivElement>(null)
+
+  const filteredConvs = conversations.filter(c =>
+    c.name.toLowerCase().includes(search.toLowerCase()) ||
+    c.lastMessage.toLowerCase().includes(search.toLowerCase())
+  )
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -141,19 +147,25 @@ export default function MesajlarPage() {
             <div className="p-4 border-b border-gray-100">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="font-bold text-gray-900">Mesajlar</h2>
-                <button className="p-2 bg-navy-700 text-white rounded-xl hover:bg-navy-800 transition-colors">
+                <button
+                  onClick={() => alert('Yeni mesaj özelliği yakında eklenecek.')}
+                  className="p-2 bg-navy-700 text-white rounded-xl hover:bg-navy-800 transition-colors"
+                >
                   <HiPlus className="w-4 h-4" />
                 </button>
               </div>
               <div className="relative">
                 <HiMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy-700"
-                  placeholder="Mesajlarda ara..." />
-              </div>
+                <input
+                  className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy-700"
+                  placeholder="Mesajlarda ara..."
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                />
             </div>
 
             <div className="flex-1 overflow-y-auto">
-              {conversations.map(conv => (
+              {filteredConvs.map(conv => (
                 <button key={conv.id} onClick={() => { setSelected(conv); setShowList(false) }}
                   className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-all text-left ${selected.id === conv.id ? 'bg-navy-50 border-r-2 border-navy-700' : ''}`}
                 >
@@ -207,13 +219,25 @@ export default function MesajlarPage() {
                 <p className="text-xs text-gray-400">{selected.online ? '● Çevrimiçi' : 'Son görülme: bilinmiyor'}</p>
               </div>
               <div className="flex items-center gap-1">
-                <button className="p-2 text-gray-400 hover:text-navy-700 hover:bg-gray-100 rounded-xl transition-all">
+                <button
+                  onClick={() => alert('Sesli arama özelliği yakında eklenecek.')}
+                  className="p-2 text-gray-400 hover:text-navy-700 hover:bg-gray-100 rounded-xl transition-all"
+                  title="Sesli Ara"
+                >
                   <HiPhone className="w-5 h-5" />
                 </button>
-                <button className="p-2 text-gray-400 hover:text-navy-700 hover:bg-gray-100 rounded-xl transition-all">
+                <button
+                  onClick={() => alert('Görüntülü arama özelliği yakında eklenecek.')}
+                  className="p-2 text-gray-400 hover:text-navy-700 hover:bg-gray-100 rounded-xl transition-all"
+                  title="Görüntülü Ara"
+                >
                   <HiVideoCamera className="w-5 h-5" />
                 </button>
-                <button className="p-2 text-gray-400 hover:text-navy-700 hover:bg-gray-100 rounded-xl transition-all">
+                <button
+                  onClick={() => alert('Daha fazla seçenek yakında eklenecek.')}
+                  className="p-2 text-gray-400 hover:text-navy-700 hover:bg-gray-100 rounded-xl transition-all"
+                  title="Seçenekler"
+                >
                   <HiEllipsisVertical className="w-5 h-5" />
                 </button>
               </div>
@@ -249,7 +273,11 @@ export default function MesajlarPage() {
             {/* Mesaj Gönder */}
             <div className="p-3 bg-white border-t border-gray-100">
               <div className="flex items-end gap-2">
-                <button className="p-2.5 text-gray-400 hover:text-navy-700 hover:bg-gray-100 rounded-xl transition-all flex-shrink-0">
+                <button
+                  onClick={() => alert('Dosya ekleme özelliği yakında eklenecek.')}
+                  className="p-2.5 text-gray-400 hover:text-navy-700 hover:bg-gray-100 rounded-xl transition-all flex-shrink-0"
+                  title="Dosya Ekle"
+                >
                   <HiPaperClip className="w-5 h-5" />
                 </button>
                 <textarea

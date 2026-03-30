@@ -37,12 +37,20 @@ const recentActivity = [
 
 const tabs = ['Genel Bakış', 'Kullanıcılar', 'Şikayetler', 'Avukat Onayı']
 
+const initialUsers = [
+  { name: 'Ahmet Kaya',   role: 'tahliye', email: 'ahmet@example.com',  joined: '2 gün önce',  status: 'aktif'  },
+  { name: 'Fatma Yıldız', role: 'aile',    email: 'fatma@example.com',  joined: '5 gün önce',  status: 'aktif'  },
+  { name: 'Anonim_4521',  role: 'mahkum',  email: '***@example.com',    joined: '1 hafta önce',status: 'aktif'  },
+  { name: 'Mehmet Demir', role: 'gonullu', email: 'mehmet@example.com', joined: '2 hafta önce',status: 'askıda' },
+]
+
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState('Genel Bakış')
   const [approved, setApproved] = useState<Set<string>>(new Set())
   const [rejected, setRejected] = useState<Set<string>>(new Set())
   const [reports, setReports] = useState(reportedPosts)
   const [reportLoading, setReportLoading] = useState<string | null>(null)
+  const [users, setUsers] = useState(initialUsers)
 
   const handleReport = async (id: string, action: 'resolve' | 'dismiss') => {
     setReportLoading(id)
@@ -166,12 +174,7 @@ export default function AdminPage() {
             <span className="text-sm text-gray-500">24.547 üye</span>
           </div>
           <div className="divide-y divide-gray-50">
-            {[
-              { name: 'Ahmet Kaya',   role: 'tahliye', email: 'ahmet@example.com',  joined: '2 gün önce',  status: 'aktif'  },
-              { name: 'Fatma Yıldız', role: 'aile',    email: 'fatma@example.com',  joined: '5 gün önce',  status: 'aktif'  },
-              { name: 'Anonim_4521',  role: 'mahkum',  email: '***@example.com',    joined: '1 hafta önce',status: 'aktif'  },
-              { name: 'Mehmet Demir', role: 'gonullu', email: 'mehmet@example.com', joined: '2 hafta önce',status: 'askıda' },
-            ].map((u, i) => (
+            {users.map((u, i) => (
               <div key={i} className="flex items-center gap-4 px-5 py-3">
                 <div className="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-600">
                   {u.name.charAt(0)}
@@ -191,8 +194,24 @@ export default function AdminPage() {
                   {u.status}
                 </span>
                 <div className="flex gap-1">
-                  <button className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"><HiEye className="w-4 h-4" /></button>
-                  <button className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"><HiTrash className="w-4 h-4" /></button>
+                  <button
+                    onClick={() => alert(`Kullanıcı: ${u.name}\nE-posta: ${u.email}\nRol: ${u.role}\nDurum: ${u.status}`)}
+                    className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                    title="Kullanıcıyı Görüntüle"
+                  >
+                    <HiEye className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (confirm(`${u.name} kullanıcısını silmek istediğinize emin misiniz?`)) {
+                        setUsers(prev => prev.filter((_, idx) => idx !== i))
+                      }
+                    }}
+                    className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                    title="Kullanıcıyı Sil"
+                  >
+                    <HiTrash className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             ))}

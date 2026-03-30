@@ -223,9 +223,9 @@ export default function DestekPage() {
                   <span className="text-xs text-gray-400 flex items-center gap-1">
                     <HiPhone className="w-3.5 h-3.5" /> {resource.phone}
                   </span>
-                  <button className="flex items-center gap-1.5 text-sm text-navy-700 font-medium hover:underline">
+                  <a href={`/destek/${resource.id}`} className="flex items-center gap-1.5 text-sm text-navy-700 font-medium hover:underline">
                     Detay Gör <HiArrowRight className="w-4 h-4" />
-                  </button>
+                  </a>
                 </div>
               </div>
             ))}
@@ -240,7 +240,10 @@ export default function DestekPage() {
                 <p className="text-sm text-gray-500">Faydalı bir kurum veya gönüllü grubu biliyor musunuz?</p>
               </div>
             </div>
-            <button className="mt-2 btn-primary text-sm">
+            <button
+              onClick={() => window.location.href = '/iletisim'}
+              className="mt-2 btn-primary text-sm"
+            >
               Kaynak Öner
             </button>
           </div>

@@ -1,5 +1,8 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
-import { HiCheckBadge, HiArrowTrendingUp, HiUserPlus } from 'react-icons/hi2'
+import { HiCheckBadge, HiArrowTrendingUp, HiUserPlus, HiCheck } from 'react-icons/hi2'
 import NewsletterBox from './NewsletterBox'
 
 const onlineAvukatlar = [
@@ -24,6 +27,16 @@ const suggestedUsers = [
 ]
 
 export default function RightSidebar() {
+  const [followed, setFollowed] = useState<Set<string>>(new Set())
+
+  const toggleFollow = (name: string) => {
+    setFollowed(prev => {
+      const s = new Set(prev)
+      if (s.has(name)) s.delete(name); else s.add(name)
+      return s
+    })
+  }
+
   return (
     <aside className="w-80 flex-shrink-0 space-y-4">
 
@@ -118,8 +131,18 @@ export default function RightSidebar() {
                 <p className="text-sm font-medium text-gray-800 truncate">{name}</p>
                 <p className="text-xs text-gray-500">{role} · {followers} takipçi</p>
               </div>
-              <button className="text-xs border border-navy-700 text-navy-700 hover:bg-navy-700 hover:text-white px-2.5 py-1 rounded-lg transition-all font-medium">
-                <HiUserPlus className="w-3.5 h-3.5 inline mr-0.5" /> Takip
+              <button
+                onClick={() => toggleFollow(name)}
+                className={`text-xs px-2.5 py-1 rounded-lg transition-all font-medium ${
+                  followed.has(name)
+                    ? 'bg-navy-700 text-white'
+                    : 'border border-navy-700 text-navy-700 hover:bg-navy-700 hover:text-white'
+                }`}
+              >
+                {followed.has(name)
+                  ? <><HiCheck className="w-3.5 h-3.5 inline mr-0.5" /> Takip Ediliyor</>
+                  : <><HiUserPlus className="w-3.5 h-3.5 inline mr-0.5" /> Takip</>
+                }
               </button>
             </div>
           ))}
