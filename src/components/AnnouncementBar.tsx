@@ -23,7 +23,7 @@ export default function AnnouncementBar() {
         <Link href={active.link} className="font-bold underline underline-offset-2">{active.linkText}</Link>
       </span>
       <button
-        onClick={() => setDismissed(p => new Set([...p, active.id]))}
+        onClick={() => setDismissed(p => { const s = new Set(p); s.add(active.id); return s; })}
         className="absolute right-3 top-1/2 -translate-y-1/2 opacity-70 hover:opacity-100 transition-opacity"
       >
         <HiXMark className="w-4 h-4" />
