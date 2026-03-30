@@ -271,7 +271,7 @@ export default function DestekPage() {
                   </a>
                 </div>
               </div>
-            )})}
+            ))}
           </div>
 
           {/* Kaynak Öner */}
