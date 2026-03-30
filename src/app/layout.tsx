@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description: 'Mahkumlar, aileler ve gönüllü avukatların bir arada olduğu dayanışma platformu.',
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
-  verification: { google: process.env.GOOGLE_SITE_VERIFICATION || '' },
+  verification: { google: 'LgD37TK4v1C0op24TRRRSs-TxQ4VT-4XA4Np8GuUHBQ' },
 }
 
 export default function RootLayout({
