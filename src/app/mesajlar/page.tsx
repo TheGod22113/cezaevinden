@@ -162,6 +162,7 @@ export default function MesajlarPage() {
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                 />
+              </div>
             </div>
 
             <div className="flex-1 overflow-y-auto">
