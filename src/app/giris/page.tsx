@@ -19,7 +19,7 @@ export default function GirisPage() {
     setLoading(true)
     try {
       const res = await signIn('credentials', {
-        email: form.email,
+        identifier: form.email,
         password: form.password,
         redirect: false,
       })
