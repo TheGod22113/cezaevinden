@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Sidebar from '@/components/Sidebar'
 import {
   HiHandRaised,
@@ -100,8 +100,44 @@ const cityFilter = ['Tümü', 'Ankara', 'İstanbul', 'İzmir', 'Bursa', 'Türkiy
 export default function DestekPage() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [activeCity, setActiveCity] = useState('Tümü')
+  const [dbResources, setDbResources] = useState<typeof resources>([])
+  const [loadingResources, setLoadingResources] = useState(true)
 
-  const filtered = resources.filter(r => {
+  useEffect(() => {
+    const params = new URLSearchParams()
+    if (activeCity !== 'Tümü') params.set('city', activeCity)
+    if (activeCategory) {
+      const cat = categories.find(c => c.id === activeCategory)
+      if (cat) params.set('category', cat.label)
+    }
+    fetch(`/api/support?${params}`)
+      .then(r => r.json())
+      .then((data: any[]) => {
+        if (!Array.isArray(data) || data.length === 0) {
+          setDbResources([])
+          return
+        }
+        setDbResources(data.map(r => ({
+          id:          r.id,
+          name:        r.name,
+          category:    r.category,
+          city:        r.city ?? 'Türkiye Geneli',
+          type:        'STK',
+          services:    [],
+          phone:       r.phone ?? '',
+          website:     r.website ?? '',
+          verified:    r.verified,
+          rating:      4.5,
+          description: r.description,
+        })))
+      })
+      .catch(() => setDbResources([]))
+      .finally(() => setLoadingResources(false))
+  }, [activeCategory, activeCity])
+
+  const displayResources = dbResources.length > 0 ? dbResources : resources
+
+  const filtered = displayResources.filter(r => {
     const catMatch = !activeCategory || r.category.toLowerCase().includes(activeCategory)
     const cityMatch = activeCity === 'Tümü' || r.city === activeCity
     return catMatch && cityMatch
@@ -179,7 +215,14 @@ export default function DestekPage() {
 
           {/* Kaynak Listesi */}
           <div className="space-y-4">
-            {filtered.map(resource => (
+            {loadingResources && [1,2,3].map(i => (
+              <div key={i} className="card p-5 animate-pulse">
+                <div className="h-4 bg-gray-200 rounded w-1/2 mb-2" />
+                <div className="h-3 bg-gray-100 rounded w-full mb-1" />
+                <div className="h-3 bg-gray-100 rounded w-3/4" />
+              </div>
+            ))}
+            {!loadingResources && filtered.map(resource => (
               <div key={resource.id} className="card p-5 hover:shadow-md transition-all animate-fade-in">
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div>
@@ -228,7 +271,7 @@ export default function DestekPage() {
                   </a>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
 
           {/* Kaynak Öner */}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Sidebar from '@/components/Sidebar'
 import RightSidebar from '@/components/RightSidebar'
 import {
@@ -118,6 +118,31 @@ const roleLabels: Record<string, string> = {
   mahkum: 'Tutuklu', aile: 'Aile', avukat: 'Avukat', tahliye: 'Tahliye', gonullu: 'Gönüllü',
 }
 
+type ApiTopic = {
+  id: string
+  title: string
+  content: string
+  category: string
+  isAnonymous: boolean
+  isPinned: boolean
+  isSolved: boolean
+  views: number
+  createdAt: string
+  author: { id: string | null; name: string; username: string | null; role: string; verified: boolean } | null
+  _count: { replies: number }
+}
+
+function timeAgo(dateStr: string) {
+  const diff = Date.now() - new Date(dateStr).getTime()
+  const m = Math.floor(diff / 60000)
+  if (m < 1)  return 'Az önce'
+  if (m < 60) return `${m} dk önce`
+  const h = Math.floor(m / 60)
+  if (h < 24) return `${h} saat önce`
+  const d = Math.floor(h / 24)
+  return `${d} gün önce`
+}
+
 export default function ForumPage() {
   const [activeSort, setActiveSort] = useState('En Yeni')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -126,6 +151,38 @@ export default function ForumPage() {
   const [newTopic, setNewTopic] = useState({ title: '', category: '', content: '' })
   const [submitting, setSubmitting] = useState(false)
   const [topicList, setTopicList] = useState(topics)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const sort = activeSort === 'En Popüler' ? 'popular' : 'new'
+    const cat  = selectedCategory
+      ? categories.find(c => c.id === selectedCategory)?.label
+      : undefined
+    const url  = `/api/forum?sort=${sort}${cat ? `&category=${encodeURIComponent(cat)}` : ''}`
+    setLoading(true)
+    fetch(url)
+      .then(r => r.json())
+      .then((data: ApiTopic[]) => {
+        if (!Array.isArray(data) || data.length === 0) return // keep dummy
+        setTopicList(data.map(t => ({
+          id:         t.id,
+          title:      t.title,
+          category:   t.category,
+          author:     t.isAnonymous ? 'Anonim' : (t.author?.name ?? 'Üye'),
+          authorRole: (t.author?.role ?? 'aile').toLowerCase(),
+          replies:    t._count.replies,
+          views:      t.views,
+          likes:      0,
+          time:       timeAgo(t.createdAt),
+          answered:   t.isSolved,
+          hot:        t._count.replies > 10,
+          pinned:     t.isPinned,
+          excerpt:    t.content.slice(0, 140),
+        })))
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [activeSort, selectedCategory])
 
   const handleCreateTopic = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -290,7 +347,17 @@ export default function ForumPage() {
 
           {/* Konu Listesi */}
           <div className="space-y-3">
-            {topicList.map(topic => (
+            {loading && [1,2,3].map(i => (
+              <div key={i} className="card p-4 animate-pulse">
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                <div className="h-3 bg-gray-100 rounded w-full mb-3" />
+                <div className="flex gap-2">
+                  <div className="h-3 bg-gray-100 rounded w-16" />
+                  <div className="h-3 bg-gray-100 rounded w-20" />
+                </div>
+              </div>
+            ))}
+            {!loading && topicList.map(topic => (
               <article
                 key={topic.id}
                 onClick={() => window.location.href = `/forum/${topic.id}`}

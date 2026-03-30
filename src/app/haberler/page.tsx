@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Sidebar from '@/components/Sidebar'
 import {
@@ -102,13 +102,38 @@ const categories = ['Tümü', 'Mevzuat', 'İnsan Hakları', 'İstatistik', 'Eği
 export default function HaberlerPage() {
   const [activeCategory, setActiveCategory] = useState('Tümü')
   const [saved, setSaved] = useState<Set<string>>(new Set())
+  const [dbNews, setDbNews] = useState<typeof haberler>([])
+
+  useEffect(() => {
+    fetch('/api/news')
+      .then(r => r.json())
+      .then((data: any[]) => {
+        if (!Array.isArray(data) || data.length === 0) return
+        setDbNews(data.map((n, i) => ({
+          id:       n.id,
+          title:    n.title,
+          excerpt:  n.summary,
+          category: n.category,
+          source:   n.author?.name ?? 'Editör',
+          time:     new Date(n.createdAt).toLocaleDateString('tr-TR'),
+          views:    Math.floor(Math.random() * 5000) + 1000,
+          image:    !!n.imageUrl,
+          hot:      i < 2,
+          tags:     [],
+          color:    ['from-blue-600 to-blue-800','from-red-600 to-red-800','from-green-600 to-green-800','from-orange-600 to-orange-800'][i % 4],
+        })))
+      })
+      .catch(() => {})
+  }, [])
+
+  const displayNews = dbNews.length > 0 ? dbNews : haberler
 
   const filtered = activeCategory === 'Tümü'
-    ? haberler
-    : haberler.filter(h => h.category === activeCategory)
+    ? displayNews
+    : displayNews.filter(h => h.category === activeCategory)
 
-  const featured = haberler[0]
-  const rest = haberler.slice(1)
+  const featured = displayNews[0]
+  const rest = displayNews.slice(1)
 
   const toggleSave = (e: React.MouseEvent, id: string) => {
     e.preventDefault()
