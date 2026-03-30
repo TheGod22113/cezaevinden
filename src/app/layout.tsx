@@ -6,17 +6,31 @@ import CookieBanner from '@/components/CookieBanner'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import Providers from '@/components/Providers'
 import BottomNav from '@/components/BottomNav'
+import JsonLd from '@/components/JsonLd'
 
 export const metadata: Metadata = {
-  title: 'Cezaevinden.com — Mahkumlar, Aileler ve Hukuk Platformu',
-  description: 'Tutuklu ve hükümlüler ile ailelerinin buluşma, dayanışma ve hukuki destek platformu.',
-  keywords: ['cezaevi', 'mahkum', 'tutuklu', 'hukuki yardım', 'avukat', 'tahliye', 'infaz'],
+  title: { default: 'Cezaevinden.com — Mahkumlar, Aileler ve Hukuk Platformu', template: '%s | Cezaevinden.com' },
+  description: 'Tutuklu ve hükümlüler ile ailelerinin buluşma, dayanışma ve ücretsiz hukuki destek platformu. Avukat soruları, forum ve destek ağı.',
+  keywords: ['cezaevi', 'mahkum', 'tutuklu', 'hukuki yardım', 'avukat', 'tahliye', 'infaz', 'denetimli serbestlik', 'koşullu salıverilme'],
+  authors: [{ name: 'Cezaevinden.com', url: 'https://cezaevinden.com' }],
+  creator: 'Cezaevinden.com',
+  metadataBase: new URL('https://cezaevinden.com'),
+  alternates: { canonical: 'https://cezaevinden.com' },
   openGraph: {
-    title: 'Cezaevinden.com',
-    description: 'Mahkumlar, aileler ve gönüllü avukatların bir arada olduğu dayanışma platformu.',
+    title: 'Cezaevinden.com — Mahkumlar, Aileler ve Hukuk Platformu',
+    description: 'Mahkumlar, aileler ve gönüllü avukatların bir arada olduğu dayanışma ve hukuki destek platformu.',
+    url: 'https://cezaevinden.com',
+    siteName: 'Cezaevinden.com',
     locale: 'tr_TR',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cezaevinden.com',
+    description: 'Mahkumlar, aileler ve gönüllü avukatların bir arada olduğu dayanışma platformu.',
+  },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION || '' },
 }
 
 export default function RootLayout({
@@ -27,6 +41,7 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <head>
+        <JsonLd />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
