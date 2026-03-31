@@ -47,18 +47,18 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+          <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
             <Image
               src="/logo.png"
               alt="Cezaevinden.com"
-              width={44}
-              height={44}
+              width={52}
+              height={52}
               className="rounded-full bg-white p-0.5 shadow-md"
               priority
             />
-            <div className="leading-tight hidden sm:block">
-              <span className="text-white font-bold text-lg tracking-tight">Cezaevinden</span>
-              <span className="text-crimson-500 font-bold text-lg">.com</span>
+            <div className="leading-tight">
+              <span className="text-white font-bold text-base sm:text-lg tracking-tight">Cezaevinden</span>
+              <span className="text-crimson-500 font-bold text-base sm:text-lg">.com</span>
             </div>
           </Link>
 

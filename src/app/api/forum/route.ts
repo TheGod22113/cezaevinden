@@ -7,7 +7,8 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const category = searchParams.get('category') || undefined
   const sort     = searchParams.get('sort')     || 'new'
-  const page     = parseInt(searchParams.get('page') || '1')
+  const page     = parseInt(searchParams.get('page')  || '1')
+  const limit    = parseInt(searchParams.get('limit') || '20')
 
   const orderBy = sort === 'popular'
     ? [{ replies: { _count: 'desc' as const } }, { createdAt: 'desc' as const }]
@@ -20,8 +21,8 @@ export async function GET(req: NextRequest) {
       _count: { select: { replies: true } },
     },
     orderBy,
-    skip:  (page - 1) * 20,
-    take:  20,
+    skip:  (page - 1) * limit,
+    take:  limit,
   })
 
   const sanitized = topics.map(t => ({

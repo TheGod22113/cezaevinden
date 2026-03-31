@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import Link from 'next/link'
 import Sidebar from '@/components/Sidebar'
 import RightSidebar from '@/components/RightSidebar'
 import PostCard, { type PostData } from '@/components/PostCard'
 import PostComposer from '@/components/PostComposer'
 import { PostSkeleton } from '@/components/Skeleton'
-import { HiScale, HiNewspaper, HiHandRaised, HiStar } from 'react-icons/hi2'
+import { HiScale, HiNewspaper, HiHandRaised, HiStar, HiChatBubbleLeftRight, HiArrowRight, HiCheckBadge } from 'react-icons/hi2'
 
 const filterTabs = [
   { label: 'Tümü',       category: undefined },
@@ -17,12 +18,19 @@ const filterTabs = [
   { label: 'Haber',      category: 'Haber' },
 ]
 
+type FeaturedData = {
+  news:       { id: string; title: string; summary: string; category: string } | null
+  lawyerPost: PostData | null
+  forumTopic: { id: string; title: string; category: string; _count: { replies: number }; isSolved: boolean } | null
+}
+
 export default function HomePage() {
   const [activeFilter, setActiveFilter] = useState(0)
   const [posts, setPosts]     = useState<PostData[]>([])
   const [loading, setLoading] = useState(true)
   const [page, setPage]       = useState(1)
   const [hasMore, setHasMore] = useState(true)
+  const [featured, setFeatured] = useState<FeaturedData>({ news: null, lawyerPost: null, forumTopic: null })
 
   const loadPosts = useCallback(async (pageNum: number, catIdx: number, replace = false) => {
     setLoading(true)
@@ -40,6 +48,20 @@ export default function HomePage() {
     setPage(1)
     loadPosts(1, activeFilter, true)
   }, [activeFilter, loadPosts])
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/news?limit=1').then(r => r.json()),
+      fetch('/api/posts?category=Hukuki&limit=1').then(r => r.json()),
+      fetch('/api/forum?sort=popular&limit=1').then(r => r.json()),
+    ]).then(([newsData, postData, forumData]) => {
+      setFeatured({
+        news:       Array.isArray(newsData)  && newsData[0]  ? newsData[0]  : null,
+        lawyerPost: Array.isArray(postData)  && postData[0]  ? postData[0]  : null,
+        forumTopic: Array.isArray(forumData) && forumData[0] ? forumData[0] : null,
+      })
+    }).catch(() => {})
+  }, [])
 
   const loadMore = () => {
     const next = page + 1
@@ -113,6 +135,70 @@ export default function HomePage() {
               </a>
             ))}
           </div>
+
+          {/* Öne Çıkanlar */}
+          {(featured.news || featured.lawyerPost || featured.forumTopic) && (
+            <div className="mb-4">
+              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 px-1">Öne Çıkanlar</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+
+                {/* Güncel Haber */}
+                {featured.news && (
+                  <Link href="/haberler" className="card p-4 hover:shadow-md transition-all group border-l-4 border-crimson-500">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <HiNewspaper className="w-4 h-4 text-crimson-500" />
+                      <span className="text-xs font-semibold text-crimson-600 uppercase tracking-wide">Güncel Haber</span>
+                    </div>
+                    <p className="text-sm font-semibold text-gray-800 line-clamp-2 group-hover:text-navy-700 transition-colors leading-snug">
+                      {featured.news.title}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1.5 line-clamp-2">{featured.news.summary}</p>
+                    <span className="inline-flex items-center gap-1 text-xs text-crimson-600 font-medium mt-2">
+                      Habere git <HiArrowRight className="w-3 h-3" />
+                    </span>
+                  </Link>
+                )}
+
+                {/* Avukat Gönderisi */}
+                {featured.lawyerPost && (
+                  <div className="card p-4 border-l-4 border-blue-500">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <HiCheckBadge className="w-4 h-4 text-blue-500" />
+                      <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">Avukat Paylaşımı</span>
+                    </div>
+                    {featured.lawyerPost.author && (
+                      <p className="text-xs text-gray-500 mb-1.5 font-medium">{featured.lawyerPost.author.name}</p>
+                    )}
+                    <p className="text-sm text-gray-700 line-clamp-3 leading-snug">{featured.lawyerPost.content}</p>
+                    <div className="flex items-center gap-3 mt-2 text-xs text-gray-400">
+                      <span>👍 {featured.lawyerPost._count?.likes ?? 0}</span>
+                      <span>💬 {featured.lawyerPost._count?.comments ?? 0}</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Forum Tartışması */}
+                {featured.forumTopic && (
+                  <Link href={`/forum/${featured.forumTopic.id}`} className="card p-4 hover:shadow-md transition-all group border-l-4 border-gold-500">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <HiChatBubbleLeftRight className="w-4 h-4 text-gold-600" />
+                      <span className="text-xs font-semibold text-gold-700 uppercase tracking-wide">Aktif Tartışma</span>
+                    </div>
+                    <p className="text-sm font-semibold text-gray-800 line-clamp-2 group-hover:text-navy-700 transition-colors leading-snug">
+                      {featured.forumTopic.title}
+                    </p>
+                    <div className="flex items-center gap-3 mt-2 text-xs text-gray-400">
+                      <span>💬 {featured.forumTopic._count?.replies ?? 0} yanıt</span>
+                      {featured.forumTopic.isSolved && <span className="text-green-600 font-medium">✅ Çözüldü</span>}
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-xs text-gold-700 font-medium mt-1">
+                      Tartışmaya katıl <HiArrowRight className="w-3 h-3" />
+                    </span>
+                  </Link>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Composer */}
           <PostComposer onPost={onPost} />
