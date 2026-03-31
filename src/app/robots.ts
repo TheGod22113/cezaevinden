@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/api/', '/mesajlar/', '/profil/ayarlar'],
+      disallow: ['/admin/', '/api/', '/mesajlar/', '/profil/', '/giris', '/kayit', '/bildirimler'],
     },
     sitemap: 'https://cezaevinden.com/sitemap.xml',
   }

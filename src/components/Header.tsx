@@ -44,21 +44,21 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-navy-700 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-[72px]">
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
             <Image
               src="/logo.png"
               alt="Cezaevinden.com"
-              width={52}
-              height={52}
+              width={64}
+              height={64}
               className="rounded-full bg-white p-0.5 shadow-md"
               priority
             />
             <div className="leading-tight">
-              <span className="text-white font-bold text-base sm:text-lg tracking-tight">Cezaevinden</span>
-              <span className="text-crimson-500 font-bold text-base sm:text-lg">.com</span>
+              <span className="text-white font-bold text-lg sm:text-xl tracking-tight">Cezaevinden</span>
+              <span className="text-crimson-500 font-bold text-lg sm:text-xl">.com</span>
             </div>
           </Link>
 
