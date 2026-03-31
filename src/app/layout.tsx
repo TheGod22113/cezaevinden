@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -23,11 +24,20 @@ export const metadata: Metadata = {
     siteName: 'Cezaevinden.com',
     locale: 'tr_TR',
     type: 'website',
+    images: [
+      {
+        url: 'https://cezaevinden.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Cezaevinden.com — Mahkumlar, Aileler ve Hukuk Platformu',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Cezaevinden.com',
     description: 'Mahkumlar, aileler ve gönüllü avukatların bir arada olduğu dayanışma platformu.',
+    images: ['https://cezaevinden.com/og-image.png'],
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   verification: { google: 'LgD37TK4v1C0op24TRRRSs-TxQ4VT-4XA4Np8GuUHBQ' },
@@ -50,6 +60,14 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-gray-50">
+        {/* Google Analytics */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-6KK0GGMTBG" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-6KK0GGMTBG');
+        `}</Script>
         <Providers>
           <AnnouncementBar />
           <Header />
