@@ -115,55 +115,60 @@ async function main() {
 
   // ─── GÖNDERILER ─────────────────────────────────────────────
 
-  const postCount = await prisma.post.count()
-  if (postCount === 0) {
-    await prisma.post.createMany({
-      data: [
-        {
-          authorId: lawyer.id,
-          content: '⚖️ ÖNEMLİ DUYURU: 2024 yılında yapılan infaz kanunu değişiklikleri ile iyi hal indirimi hesaplamalarında yeni kriterler uygulanıyor. Özellikle 2022 sonrası suçlarda değişiklikler var. Soru sormak isteyenler mesaj atabilir.',
-          category: 'Hukuki', isPinned: true,
-        },
-        {
-          authorId: family.id,
-          content: 'Açık cezaevinde izin hakkı hakkında bilgi alan var mı? Eşim açık cezaevine geçti ve haftalık izin talebinde bulunmak istiyoruz. Hangi belgeler gerekiyor?',
-          category: 'Soru',
-        },
-        {
-          authorId: tahliye.id,
-          content: 'Tahliyenin üzerinden 8 ay geçti. Adli sicil affı başvurusu yaptım ve onaylandı. Merak edenler için süreci anlatayım: Nüfus müdürlüğüne dilekçe + sabıka kaydı + kimlik fotokopisi yeterli. Ortalama 30 gün sürüyor.',
-          category: 'Deneyim',
-        },
-        {
-          authorId: family2.id,
-          content: 'Görüş saatleri ve koşulları hakkında sormak istiyorum. Eşimle ayda kaç kez görüşebilirim? Kapalı cezaevinde kurallar farklı mı açık cezaevinden?',
-          category: 'Soru',
-        },
-        {
-          authorId: lawyer2.id,
-          content: '📢 Kadın mahkumların hakları konusunda bir rehber hazırladım. Hamilelik, emzirme, çocukla birlikte kalma hakları... Merak edenler DM atabilir, ücretsiz bilgi veriyorum.',
-          category: 'Hukuki',
-        },
-        {
-          authorId: tahliye.id,
-          content: 'Yeniden topluma uyum süreci gerçekten zorlu ama imkansız değil. SGK kaydını yaptırın, KOSGEB\'den girişim desteği alabilirsiniz, ÇALIŞMA BAKANLIĞI\'nın ex-mahkum istihdamı teşviğinden yararlanın.',
-          category: 'Deneyim',
-        },
-        {
-          authorId: mahkum.id,
-          content: 'Açık cezaevinde okumaya devam edebilir miyim? Uzaktan eğitim imkanları var mı? AÖF kayıt işlemleri için başvuru yaptı mı olan?',
-          category: 'Soru',
-          isAnonymous: false,
-        },
-        {
-          authorId: family.id,
-          content: 'Avukat kardeşlerimize çok teşekkürler. Özellikle Av. Mehmet Bey çok yardımcı oldu. Bu platform gerçekten çok değerli. Yalnız hissetmiyoruz artık.',
-          category: 'Genel',
-        },
-      ],
-    })
-    console.log('✅ Gönderiler oluşturuldu')
-  }
+  // Gönderileri temizle ve çeşitli içerikle yeniden oluştur
+  await prisma.post.deleteMany({})
+  await prisma.post.createMany({
+    data: [
+      // ── Sabitlenmiş gönderiler (her birinden farklı avukat/konu) ──
+      {
+        authorId: lawyer.id,
+        content: '⚖️ 2026 HATIRLATMA: Koşullu salıverilme oranları suç tipine göre farklılaşıyor. Kasıtlı suçlarda 2/3, taksirli suçlarda 1/2, terör ve cinsel suçlarda 3/4. Hesaplama için /hesapla sayfasını kullanabilirsiniz. Sorularınız için mesaj atın.',
+        category: 'Hukuki', isPinned: true,
+      },
+      {
+        authorId: lawyer2.id,
+        content: '👩‍⚖️ Kadın hükümlüler için önemli: 0-6 yaş çocuğunuz varsa çocuğunuzla birlikte kalma hakkınız bulunuyor. Hamilelik ve emzirme döneminde özel koruma şartları uygulanır. Bu hakların ihlali durumunda infaz hâkimliğine şikâyet hakkınız var. DM atabilirsiniz.',
+        category: 'Hukuki', isPinned: true,
+      },
+      {
+        authorId: lawyer3.id,
+        content: '🇪🇺 AİHM\'e başvuru süresinin 6 aydan 4 aya düşürüldüğünü hatırlatırım (2022\'den itibaren). Cezaevi koşulları, avukata erişim engeli veya uzun tutukluluk konularında iç hukuk yollarını tükettikten sonra 4 ay içinde başvurulması gerekiyor. Ücretsiz bilgi için buradayım.',
+        category: 'Hukuki', isPinned: true,
+      },
+      // ── Normal gönderiler ──
+      {
+        authorId: family.id,
+        content: 'Açık cezaevinde izin hakkı hakkında bilgi alan var mı? Eşim açık cezaevine geçti ve haftalık izin talebinde bulunmak istiyoruz. Hangi belgeler gerekiyor?',
+        category: 'Soru',
+      },
+      {
+        authorId: tahliye.id,
+        content: 'Tahliyenin üzerinden 8 ay geçti. Adli sicil kaydım silindi. Merak edenler için: e-devlet üzerinden "Adli Sicil Kaydı Sorgulama" ile takip edebilirsiniz. Yasal süre dolunca otomatik siliniyor.',
+        category: 'Deneyim',
+      },
+      {
+        authorId: family2.id,
+        content: 'Görüş saatleri ve koşulları hakkında sormak istiyorum. Eşimle ayda kaç kez görüşebilirim? Kapalı cezaevinde kurallar farklı mı açık cezaevinden?',
+        category: 'Soru',
+      },
+      {
+        authorId: tahliye.id,
+        content: 'Yeniden topluma uyum süreci gerçekten zorlu ama imkansız değil. SGK kaydını yaptırın, KOSGEB\'den girişimcilik desteği alabilirsiniz. İŞKUR\'a kayıt olun, ex-mahkum istihdamı için işverenlere SGK prim teşviki var.',
+        category: 'Deneyim',
+      },
+      {
+        authorId: mahkum.id,
+        content: 'Açık cezaevinde okumaya devam edebilir miyim? Uzaktan eğitim (AÖF) için başvuru yapan oldu mu? Süreç nasıl işliyor?',
+        category: 'Soru',
+      },
+      {
+        authorId: family.id,
+        content: 'Bu platform gerçekten çok değerli. Avukat sorularımızı yanıtlıyor, forum\'da bilgi paylaşılıyor. Yalnız hissetmiyoruz artık. Herkese teşekkürler.',
+        category: 'Genel',
+      },
+    ],
+  })
+  console.log('✅ Gönderiler güncellendi')
 
   // ─── FORUM KONULARI ─────────────────────────────────────────
 
