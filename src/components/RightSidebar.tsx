@@ -161,7 +161,7 @@ export default function RightSidebar() {
             { label: 'Avukat Liderliği', href: '/liderlik' },
             { label: 'Etkinlikler', href: '/etkinlikler' },
             { label: 'Anonim Mod Nedir?', href: '/gizli-mod' },
-            { label: 'Bağış Yap', href: '/bagis' },
+            { label: 'Destek Ağı', href: '/destek' },
           ].map(({ label, href }) => (
             <Link key={href} href={href}
               className="block text-sm text-gray-600 hover:text-navy-700 hover:underline transition-colors py-0.5">

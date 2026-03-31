@@ -25,7 +25,7 @@ const links = {
     { label: 'Hakkımızda',  href: '/hakkimizda'  },
     { label: 'İletişim',    href: '/iletisim'    },
     { label: 'Basın',       href: '/basin'       },
-    { label: 'Bağış Yap',  href: '/bagis'       },
+    { label: 'Gönüllü Ol', href: '/kayit'       },
   ],
 }
 

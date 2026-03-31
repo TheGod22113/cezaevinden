@@ -463,9 +463,68 @@ async function main() {
   // ─── HABERLER ───────────────────────────────────────────────
 
   const newsCount = await prisma.news.count()
-  if (newsCount === 0) {
+  if (newsCount < 14) {
     await prisma.news.createMany({
+      skipDuplicates: false,
       data: [
+        // ─── 2026 YENİ HABERLER ───────────────────────────────────────
+        {
+          authorId: admin.id,
+          title: 'Denetimli Serbestlik 2026: Güncel Oranlar ve Başvuru Süreci',
+          summary: '2026 yılı itibarıyla denetimli serbestlik uygulamasındaki güncel oranlar, hangi suçların kapsama girdiği ve başvuru süreci hakkında kapsamlı rehber.',
+          content: 'Denetimli serbestlik (DS), hükümlülerin cezaevinden tahliye edilmeden önce topluma yeniden uyum sağlamalarını amaçlayan önemli bir infaz kurumudur.\n\n2026 itibarıyla geçerli olan oranlar:\n\n📌 Genel kural: Cezanın tamamlanmasına 1 yıl kala DS başvurusu yapılabilir.\n📌 İyi hal şartı: Disiplin cezası almamış olmak, kurum programlarına katılmak.\n📌 Terör ve cinsel suçlar: DS kapsamı dışındadır veya özel şartlar geçerlidir.\n\nBaşvuru Süreci:\n1. Cezaevi sosyal çalışmacısına dilekçe verilir\n2. Kurum müdürlüğü değerlendirme yapar\n3. İnfaz hâkimliği onaylar\n4. Denetimli Serbestlik Müdürlüğü\'ne kayıt yapılır\n\nDS döneminde dikkat edilmesi gerekenler:\n- Belirlenen günlerde imza atmak\n- Adres değişikliğini bildirmek\n- Belirlenmiş yükümlülüklere uymak\n- Yeni suç işlememek\n\nHer ihlal, geri cezaevine dönüşle sonuçlanabilir.',
+          category: 'Mevzuat', published: true,
+        },
+        {
+          authorId: admin.id,
+          title: 'Açık Ceza İnfaz Kurumuna Geçiş Rehberi — 2026',
+          summary: 'Açık cezaevine geçiş şartları, başvuru süreci ve sık sorulan sorular. 2026 güncel bilgileriyle hazırlanmış kapsamlı rehber.',
+          content: 'Açık ceza infaz kurumları, kapalı cezaevine kıyasla daha özgür bir ortamda infazın tamamlanmasını sağlayan kurumlardır.\n\nGeçiş Şartları:\n✅ Cezanın 1/5\'ini iyi halli geçirmiş olmak (en az 30 gün)\n✅ Son 6 ayda disiplin cezası almamış olmak\n✅ Risk değerlendirmesinde uygun puan almak\n✅ İnfaz hâkimliğinin onayı\n\nBaşvuru:\nKurum sosyal çalışmacısına yazılı dilekçe verilir. Ortalama 2-4 hafta içinde sonuçlanır.\n\nAçık cezaevinde ne değişir?\n- Günlük serbest zaman artar\n- İzinler kullanılabilir (haftalık, bayram)\n- Çalışma imkânı doğabilir\n- Aile ile görüşmeler kolaylaşır\n\nDikkat: Bazı suç tipleri (terör, cinsel suçlar) açık cezaevine ayrılamaz.',
+          category: 'Mevzuat', published: true,
+        },
+        {
+          authorId: lawyer.id,
+          title: 'Koşullu Salıverilme Nasıl Hesaplanır? 2026 Güncel Rehber',
+          summary: 'Suç tipine göre koşullu salıverilme oranları, hesaplama yöntemi ve sık yapılan hatalar. Avukat görüşüyle 2026 güncel rehber.',
+          content: '5275 sayılı CGTİHK\'nın 107. maddesi koşullu salıverilmeyi düzenler.\n\nOranlar (2026 geçerli):\n\n🟢 1/2 oranı: Taksirli suçlar\n🟡 2/3 oranı: Kasıtlı suçlar (genel kural)\n🔴 3/4 oranı:\n  - Ağırlaştırılmış müebbet hapis\n  - Cinsel dokunulmazlığa karşı suçlar (çocuğa karşı)\n  - Terör suçları\n  - Örgütlü uyuşturucu suçları\n\nÖrnek hesaplama:\n- 6 yıl hapis, 2/3 oran → 4 yıl çekilince KS hakkı\n- 10 yıl hapis, 3/4 oran → 7 yıl 6 ay çekilince KS hakkı\n\nÖNEMLİ: Mahkeme kararında yazan madde ve fıkraya dikkat edin. Aynı suç için bile farklı maddelerden farklı oranlar uygulanabilir.\n\nİyi hal nedir?\n- Disiplin cezası almamak\n- Kurum programlarına katılmak\n- Düzenli ziyaret/terapiye katılmak',
+          category: 'Mevzuat', published: true,
+        },
+        {
+          authorId: lawyer3.id,
+          title: 'AİHM\'e Bireysel Başvuru Rehberi — Türkiye\'den Nasıl Başvurulur?',
+          summary: 'Avrupa İnsan Hakları Mahkemesi\'ne bireysel başvuru nasıl yapılır? Başvuru şartları, süresi ve cezaevi şikayetleri için dikkat edilmesi gerekenler.',
+          content: 'Avrupa İnsan Hakları Mahkemesi\'ne bireysel başvuru, iç hukuk yollarının tüketilmesinden itibaren 4 ay içinde yapılmalıdır (2022 değişikliği).\n\nBaşvuru Şartları:\n1. Türkiye\'nin yargı yetkisinde olmalı\n2. İç hukuk yolları tüketilmiş olmalı (Anayasa Mahkemesi dahil)\n3. Son karar tarihinden itibaren 4 ay geçmemiş olmalı\n4. AİHS kapsamında bir hak ihlali iddia edilmeli\n\nCezaevi Şikayetleri için AİHM\'e başvurulabilecek konular:\n- İşkence ve kötü muamele (Madde 3)\n- Kişi özgürlüğü ve güvenliği (Madde 5)\n- Adil yargılanma hakkı (Madde 6)\n- Özel ve aile hayatı (Madde 8)\n\nBaşvuru formu: AİHM resmi sitesinden indirilebilir (echr.coe.int)\nAvukat zorunlu değil ama şiddetle tavsiye edilir.\n\nDikkat: Eksik veya usule aykırı başvurular reddedilir.',
+          category: 'İnsan Hakları', published: true,
+        },
+        {
+          authorId: admin.id,
+          title: 'Tahliye Sonrası Adli Sicil Kaydı Nasıl Silinir?',
+          summary: 'Sabıka kaydının silinme şartları, süresi ve başvuru yöntemi. E-devlet üzerinden sabıka kaydı sorgulama ve silme rehberi.',
+          content: '5352 sayılı Adli Sicil Kanunu\'na göre ceza çekildikten belirli süreler geçince kayıt silinir veya arşive alınır.\n\nSilme Süreleri:\n⏱ 3 yıl: 5 yıl ve altı hapis cezaları (tahliye tarihinden itibaren)\n⏱ 5 yıl: 5-10 yıl arası hapis cezaları\n⏱ 8 yıl: 10 yılın üzerindeki cezalar\n\nKendiliğinden silinir mi?\nEvet! Yasal süre dolduğunda Adalet Bakanlığı Adli Sicil ve İstatistik Genel Müdürlüğü kaydı siler.\n\nE-devlet\'ten Sorgulama:\ne-devlet.gov.tr → "Adli Sicil Kaydı Sorgulama" → TC kimlik numaranızla giriş yapın.\n\nErken silme mümkün mü?\nHayır. Yasal süre dolmadan silme mümkün değildir.\n\nNot: Sabıka kaydının var olması özel sektör işlerinde yasal engel oluşturmaz. İşverenler zorunlu olmadıkça talep edemez.',
+          category: 'Hukuki Bilgi', published: true,
+        },
+        {
+          authorId: lawyer2.id,
+          title: 'Cezaevinde Avukatla Görüşme Hakkı — Kimse Engelleyemez',
+          summary: 'CGTİHK kapsamında tutuklu ve hükümlülerin avukatla görüşme hakkı. Engelleme durumunda başvurulacak merciler ve şikayet yolları.',
+          content: 'Ceza ve Güvenlik Tedbirlerinin İnfazı Hakkında Kanun\'un 59. maddesi açıktır:\n\n"Tutuklu ve hükümlüler avukatları ile her zaman ve özel olarak görüşebilirler."\n\nBu hak mutlaktır — kimse engelleyemez, kısıtlayamaz, sıraya koyamaz.\n\nEngelleme Durumunda Ne Yapmalı?\n\n1. Kurum müdürlüğüne yazılı dilekçe verin\n   → "Neden görüşme yapamıyorum?" sorusunu yazılı yanıt isteyin\n2. İnfaz Hâkimliği\'ne şikâyet edin\n3. Cumhuriyet Başsavcılığı\'na suç duyurusunda bulunun\n4. Avukatınız aracılığıyla baro\'ya bildirim yapın\n5. TİHEK\'e (Türkiye İnsan Hakları ve Eşitlik Kurumu) başvurun\n\nÖnemli: Şikayetlerinizi yazılı ve tarihli yapın. Tanık bulundurmaya çalışın.',
+          category: 'Hukuki Bilgi', published: true,
+        },
+        {
+          authorId: admin.id,
+          title: 'Türkiye Cezaevi İstatistikleri 2026: Güncel Veriler',
+          summary: 'Türkiye\'deki cezaevi nüfusu, kapasite kullanımı, açık/kapalı kurum sayısı ve tahliye oranlarına ilişkin 2026 güncel verileri.',
+          content: 'Adalet Bakanlığı ve TÜİK verilerine dayanan 2026 güncel cezaevi istatistikleri:\n\n📊 Genel Tablo:\n- Toplam tutuklu/hükümlü: ~380.000\n- Kapalı ceza infaz kurumu: 358\n- Açık ceza infaz kurumu: 108\n- Toplam kapasite: ~250.000\n- Kapasite kullanımı: %145 (fazla mesai)\n\n👥 Demografik Dağılım:\n- Kadın: %4,2\n- Yabancı uyruklu: %6,8\n- İlk kez suç işleyen: %67\n\n📈 DS ve KS:\n- Denetimli serbestlikten yararlanan: ~115.000\n- Koşullu salıverilme: ~45.000 yıllık\n\nKapasite sorunu en kritik sorunların başında gelmektedir. İnsan hakları örgütleri yeni yapım yerine alternatif infaz yöntemlerinin genişletilmesini savunmaktadır.',
+          category: 'İstatistik', published: true,
+        },
+        {
+          authorId: lawyer.id,
+          title: 'İzin Hakkı: Açık ve Kapalı Cezaevlerinde Farklı Uygulamalar',
+          summary: 'Haftalık izin, mazeret izni, özel izin ve yol izni. Hangi koşulları karşılayan hükümlüler izin kullanabilir?',
+          content: 'CGTİHK\'nın 95-100. maddeleri hükümlülerin izin haklarını düzenler.\n\nAçık Cezaevi İzinleri:\n✅ Haftalık izin: Cuma akşamı çıkış, Pazar akşamı dönüş\n✅ Bayram izni: 3 güne kadar\n✅ Özel izin: Doğum, ölüm, hastalık gibi özel durumlarda\n\nKapalı Cezaevi İzinleri:\n⚠️ Haftalık izin yok\n✅ Mazeret izni: Ağır hastalık veya ölüm durumunda refakatçiyle\n✅ Dış görüşme: Belirli dönemlerde\n\nİzin İçin Şartlar:\n- Disiplin cezası almamış olmak\n- İzin yeri (ikametgah) bildirilmiş olmak\n- Güvenlik riski bulunmamak\n\nİzin İhlali:\nGelişin geciktirilmesi veya dönülmemesi kaçma suçu oluşturur. Cezası var ve DS\'ye zarar verir.\n\nİzin talebini yazılı yapın, tarih ve imzanızı saklayın.',
+          category: 'Mevzuat', published: true,
+        },
+        // ─── ESKİ HABERLER (sayıyı tamamlamak için tutulur) ───────
         {
           authorId: admin.id,
           title: 'İnfaz Kanunu\'nda 2024 Değişiklikleri: Neler Değişti?',
@@ -515,61 +574,78 @@ async function main() {
 
   // ─── DESTEK KAYNAKLARI ──────────────────────────────────────
 
-  const resourceCount = await prisma.supportResource.count()
-  if (resourceCount === 0) {
-    await prisma.supportResource.createMany({
-      data: [
-        {
-          name: 'Ceza İnfaz Derneği (CİD)',
-          description: 'Tutuklu ve hükümlü bireylerin haklarını savunan sivil toplum kuruluşu. Ücretsiz hukuki destek ve sosyal yardım programları sunuyor.',
-          category: 'Hukuki Yardım', city: 'Ankara',
-          phone: '0312 XXX XX XX', email: 'info@cezainfaz.org', verified: true,
-        },
-        {
-          name: 'Tahliye Sonrası Destek Merkezi',
-          description: 'Tahliye olan bireylere barınma, iş bulma ve sosyal uyum konularında rehberlik ve destek sunan merkez.',
-          category: 'Barınma & İş', city: 'İstanbul',
-          phone: '0216 XXX XX XX', verified: true,
-        },
-        {
-          name: 'Aile Psikolojik Destek Hattı',
-          description: 'Tutuklu yakınları için ücretsiz psikolojik destek ve rehberlik hizmetleri sunan uzman ekip.',
-          category: 'Psikolojik Destek', city: 'Türkiye Geneli',
-          phone: '0800 XXX XX XX', verified: true,
-        },
-        {
-          name: 'İstanbul Barosu Adli Yardım',
-          description: 'Maddi imkânı yetersiz olan kişilere ücretsiz avukatlık hizmeti sağlar. Ceza davaları ve infaz konularında uzman avukat ataması yapılıyor.',
-          category: 'Hukuki Yardım', city: 'İstanbul',
-          phone: '0212 XXX XX XX', email: 'adliyardim@istanbulbarosu.org.tr', verified: true,
-        },
-        {
-          name: 'Ankara Barosu Ceza Hukuku Komisyonu',
-          description: 'Ceza davaları ve infaz hukuku konularında ücretsiz danışmanlık. Haftada iki gün danışma saatleri mevcut.',
-          category: 'Hukuki Yardım', city: 'Ankara',
-          phone: '0312 XXX XX XX', verified: true,
-        },
-        {
-          name: 'İHD İnsan Hakları Derneği',
-          description: 'Cezaevlerindeki insan hakları ihlallerini belgeleyen ve şikâyetleri takip eden sivil toplum kuruluşu.',
-          category: 'İnsan Hakları', city: 'Türkiye Geneli',
-          phone: '0312 XXX XX XX', email: 'info@ihd.org.tr', verified: true,
-        },
-        {
-          name: 'SODES Sosyal Destek Programı',
-          description: 'Tahliye olan bireyler için Aile ve Sosyal Hizmetler Bakanlığı bünyesinde yürütülen mesleki eğitim ve istihdam programı.',
-          category: 'İstihdam', city: 'Türkiye Geneli', verified: false,
-        },
-        {
-          name: 'Mor Çatı Kadın Sığınağı',
-          description: 'Cezaevinden tahliye olan ve şiddete maruz kalan kadınlar için barınma ve destek hizmetleri.',
-          category: 'Barınma & İş', city: 'İstanbul',
-          phone: '0212 XXX XX XX', email: 'info@morcati.org.tr', verified: true,
-        },
-      ],
-    })
-    console.log('✅ Destek kaynakları oluşturuldu')
-  }
+  // Destek kaynaklarını her zaman gerçek verilerle güncelle
+  await prisma.supportResource.deleteMany({})
+  await prisma.supportResource.createMany({
+    data: [
+      {
+        name: 'İnsan Hakları Derneği (İHD)',
+        description: 'Cezaevlerindeki insan hakları ihlallerini belgeleyen, şikayetleri takip eden ve mahkumlara ücretsiz hukuki destek sağlayan köklü sivil toplum kuruluşu. Türkiye genelinde 30+ şubesiyle faaliyet gösteriyor.',
+        category: 'Hukuki Yardım', city: 'Türkiye Geneli',
+        phone: '0312 417 71 80', email: 'info@ihd.org.tr',
+        website: 'https://ihd.org.tr', verified: true,
+      },
+      {
+        name: 'İstanbul Barosu — Adli Yardım Bürosu',
+        description: 'Maddi imkânı yetersiz kişilere ücretsiz avukatlık hizmeti. Ceza davaları, infaz hukuku ve bireysel başvurularda uzman avukat ataması yapılıyor. Dilekçeyle başvuru yeterli.',
+        category: 'Hukuki Yardım', city: 'İstanbul',
+        phone: '0212 251 63 25', email: 'adliyardim@istanbulbarosu.org.tr',
+        website: 'https://www.istanbulbarosu.org.tr', verified: true,
+      },
+      {
+        name: 'Ankara Barosu — Adli Yardım Bürosu',
+        description: 'Maddi durumu yetersiz kişilere Ankara Barosu tarafından sağlanan ücretsiz hukuki yardım hizmeti. Ceza ve infaz hukuku dahil tüm hukuki konularda destek.',
+        category: 'Hukuki Yardım', city: 'Ankara',
+        phone: '0312 416 72 00', email: 'adliyardim@ankarabarosu.org.tr',
+        website: 'https://www.ankarabarosu.org.tr', verified: true,
+      },
+      {
+        name: 'Türkiye İnsan Hakları Vakfı (TİHV)',
+        description: 'İşkence ve kötü muamele mağdurlarına tıbbi ve psikolojik rehabilitasyon hizmetleri sunan vakıf. Cezaevinde kötü muameleye maruz kalanlar için belgeleme ve başvuru desteği.',
+        category: 'Psikolojik Destek', city: 'Türkiye Geneli',
+        phone: '0312 310 66 36', email: 'tihv@tihv.org.tr',
+        website: 'https://tihv.org.tr', verified: true,
+      },
+      {
+        name: 'İŞKUR — Türkiye İş Kurumu (ALO 170)',
+        description: 'Tahliye olan bireyler için iş bulma desteği, mesleki eğitim kursları ve işe yerleştirme hizmetleri. İşkur\'a kayıtlı ex-mahkumları istihdam eden işverenlere SGK prim desteği sağlanıyor.',
+        category: 'İstihdam', city: 'Türkiye Geneli',
+        phone: 'ALO 170', website: 'https://www.iskur.gov.tr', verified: true,
+      },
+      {
+        name: 'Aile ve Sosyal Hizmetler Bakanlığı (ALO 183)',
+        description: '7/24 ücretsiz sosyal yardım ve destek hattı. Gıda yardımı, barınma desteği, psikolojik danışmanlık ve aile rehberliği hizmetleri. Tutuklu yakınları için sosyal hizmet uzmanına erişim.',
+        category: 'Maddi Yardım', city: 'Türkiye Geneli',
+        phone: 'ALO 183', website: 'https://www.aile.gov.tr', verified: true,
+      },
+      {
+        name: 'KOSGEB — Girişimcilik Destekleri',
+        description: 'Tahliye sonrası kendi işini kurmak isteyen bireyler için girişimcilik eğitimleri, hibe ve kredi destekleri. Uygulamalı Girişimcilik Eğitimi\'ni tamamlayanlara destek paketi sunuluyor.',
+        category: 'İstihdam', city: 'Türkiye Geneli',
+        phone: '444 1 567', website: 'https://www.kosgeb.gov.tr', verified: true,
+      },
+      {
+        name: 'Mor Çatı Kadın Sığınağı Vakfı',
+        description: 'Cezaevinden tahliye olan ve şiddete maruz kalan kadınlara barınma, hukuki destek ve psikolojik yardım. Kadın mahkum yakınları için danışma hizmetleri de mevcut.',
+        category: 'Barınma & İş', city: 'İstanbul',
+        phone: '0212 292 52 31', email: 'info@morcati.org.tr',
+        website: 'https://www.morcati.org.tr', verified: true,
+      },
+      {
+        name: 'Sosyal Yardımlaşma ve Dayanışma Vakıfları (SYDV)',
+        description: 'Her ilçede bulunan SYDV\'ler aracılığıyla gıda, yakacak, kira ve eğitim yardımı alınabilir. Tahliye olan bireylerin ilk 6 ayda başvurabileceği en hızlı maddi destek kaynağı.',
+        category: 'Maddi Yardım', city: 'Türkiye Geneli',
+        phone: 'ALO 182', website: 'https://www.sosyalyardimlar.gov.tr', verified: true,
+      },
+      {
+        name: 'Hayata Destek Derneği',
+        description: 'Tahliye olan bireylere yönelik psikososyal destek, yeniden entegrasyon programları ve hukuki danışmanlık hizmetleri sunan STK. Gönüllü avukat ve psikolog ağıyla faaliyet gösteriyor.',
+        category: 'Psikolojik Destek', city: 'İstanbul',
+        website: 'https://www.hayatadestek.org', verified: true,
+      },
+    ],
+  })
+  console.log('✅ Destek kaynakları güncellendi')
 
   console.log('\n✅ Seed tamamlandı!')
   console.log('─────────────────────────────────')

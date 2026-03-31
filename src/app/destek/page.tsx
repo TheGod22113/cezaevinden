@@ -27,73 +27,6 @@ const categories = [
   { id: 'hukuk',     label: 'Hukuki Destek',      icon: HiShieldCheck,   color: 'bg-navy-500',   count: 31 },
 ]
 
-const resources = [
-  {
-    id: '1',
-    name: 'Ankara Tahliye Sonrası Destek Merkezi',
-    category: 'Barınma & İş',
-    city: 'Ankara',
-    type: 'STK',
-    services: ['Geçici barınma', 'İş bulma desteği', 'CV hazırlama'],
-    phone: '0312 xxx xx xx',
-    website: 'ankararehab.org',
-    verified: true,
-    rating: 4.8,
-    description: 'Tahliye olan bireyler için 3 aya kadar ücretsiz barınma, iş bulma desteği ve psikolojik danışmanlık sağlıyoruz.',
-  },
-  {
-    id: '2',
-    name: 'İstanbul Aile Destek Hattı',
-    category: 'Psikolojik Destek',
-    city: 'İstanbul',
-    type: 'Gönüllü Grup',
-    services: ['7/24 destek hattı', 'Online terapi', 'Grup terapisi'],
-    phone: '0212 xxx xx xx',
-    website: 'istanbulaile.org',
-    verified: true,
-    rating: 4.9,
-    description: 'Cezaevindeki yakınları için ücretsiz psikolojik destek, 7/24 kriz hattı ve online danışmanlık hizmetleri.',
-  },
-  {
-    id: '3',
-    name: 'İzmir Meslek Edindirme Kooperatifi',
-    category: 'İş & Kariyer',
-    city: 'İzmir',
-    type: 'Kooperatif',
-    services: ['Meslek kursları', 'Sertifika programları', 'İş garantisi'],
-    phone: '0232 xxx xx xx',
-    website: 'izmirmeslek.coop',
-    verified: false,
-    rating: 4.6,
-    description: 'Tahliye olan bireylere yönelik 3 aylık meslek edindirme kursları. Program tamamlanınca iş garantisi veriyoruz.',
-  },
-  {
-    id: '4',
-    name: 'Ulusal Ceza Adaleti Derneği',
-    category: 'Hukuki Destek',
-    city: 'Türkiye Geneli',
-    type: 'Dernek',
-    services: ['Ücretsiz hukuki danışmanlık', 'Dava takibi', 'AİHM başvurusu'],
-    phone: '0850 xxx xx xx',
-    website: 'ucad.org.tr',
-    verified: true,
-    rating: 4.7,
-    description: 'Türkiye genelinde mahkumlar ve ailelerine ücretsiz hukuki destek sağlayan ulusal dernek.',
-  },
-  {
-    id: '5',
-    name: 'Yeniden Entegrasyon Fonu',
-    category: 'Maddi Yardım',
-    city: 'Türkiye Geneli',
-    type: 'Vakıf',
-    services: ['Kira yardımı', 'Gıda yardımı', 'Fatura desteği'],
-    phone: '0212 xxx xx xx',
-    website: 'yenidenfon.org',
-    verified: true,
-    rating: 4.5,
-    description: 'Tahliye olan bireyler ve ailelerine 6 aya kadar maddi destek sağlıyoruz. Başvuru online yapılabilir.',
-  },
-]
 
 const cityFilter = ['Tümü', 'Ankara', 'İstanbul', 'İzmir', 'Bursa', 'Türkiye Geneli']
 
@@ -135,9 +68,7 @@ export default function DestekPage() {
       .finally(() => setLoadingResources(false))
   }, [activeCategory, activeCity])
 
-  const displayResources = dbResources.length > 0 ? dbResources : resources
-
-  const filtered = displayResources.filter(r => {
+  const filtered = dbResources.filter(r => {
     const catMatch = !activeCategory || r.category.toLowerCase().includes(activeCategory)
     const cityMatch = activeCity === 'Tümü' || r.city === activeCity
     return catMatch && cityMatch
@@ -215,6 +146,11 @@ export default function DestekPage() {
 
           {/* Kaynak Listesi */}
           <div className="space-y-4">
+            {!loadingResources && filtered.length === 0 && (
+              <div className="card p-8 text-center text-gray-400">
+                <p>Bu kategoride kaynak bulunamadı.</p>
+              </div>
+            )}
             {loadingResources && [1,2,3].map(i => (
               <div key={i} className="card p-5 animate-pulse">
                 <div className="h-4 bg-gray-200 rounded w-1/2 mb-2" />
@@ -245,7 +181,7 @@ export default function DestekPage() {
                     <a href={`tel:${resource.phone}`} className="p-2 bg-green-50 text-green-600 hover:bg-green-100 rounded-lg transition-colors" title="Ara">
                       <HiPhone className="w-5 h-5" />
                     </a>
-                    <a href={`https://${resource.website}`} target="_blank" rel="noopener noreferrer"
+                    <a href={resource.website.startsWith('http') ? resource.website : `https://${resource.website}`} target="_blank" rel="noopener noreferrer"
                       className="p-2 bg-navy-50 text-navy-700 hover:bg-navy-100 rounded-lg transition-colors" title="Web Sitesi">
                       <HiGlobeAlt className="w-5 h-5" />
                     </a>
