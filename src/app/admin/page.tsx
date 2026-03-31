@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import {
   HiUsers, HiChatBubbleLeftRight, HiScale, HiNewspaper,
   HiFlag, HiCheckCircle, HiXCircle, HiTrash,
   HiShieldCheck, HiChartBar, HiBell, HiMegaphone,
-  HiPlus, HiNoSymbol, HiArrowPath,
+  HiPlus, HiNoSymbol, HiArrowPath, HiArrowTopRightOnSquare,
 } from 'react-icons/hi2'
 
 const roleColors: Record<string, string> = {
@@ -340,6 +341,13 @@ export default function AdminPage() {
                     <span className={`font-bold text-sm ${color}`}>{count}</span>
                   </button>
                 ))}
+                <Link href="/admin/haberler"
+                  className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-all text-left border border-gray-100">
+                  <span className="text-sm text-gray-700">Haber yönetimi</span>
+                  <span className="font-bold text-sm text-gray-400 flex items-center gap-1">
+                    <HiArrowTopRightOnSquare className="w-4 h-4" />
+                  </span>
+                </Link>
               </div>
             </div>
 

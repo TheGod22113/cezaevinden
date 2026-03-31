@@ -12,6 +12,7 @@ import {
   HiShieldCheck, HiBookmark,
 } from 'react-icons/hi2'
 import NotificationBell from './NotificationBell'
+import ThemeToggle from './ThemeToggle'
 
 const navItems = [
   { href: '/',              label: 'Ana Sayfa',     icon: HiHome },
@@ -93,6 +94,9 @@ export default function Header() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-1.5">
+            {/* Dark Mode */}
+            <ThemeToggle />
+
             {/* Search */}
             <button onClick={() => setSearchOpen(o => !o)}
               aria-label="Ara"

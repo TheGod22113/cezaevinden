@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import PostCard, { type PostData } from '@/components/PostCard'
+import UserBadges from '@/components/UserBadges'
 import {
   HiCheckBadge, HiMapPin, HiCalendar, HiUserPlus, HiUserMinus,
   HiChatBubbleLeftRight, HiShare, HiArrowLeft, HiScale,
@@ -188,6 +189,8 @@ export default function ProfilPage({ params }: { params: { username: string } })
               )
             ))}
           </div>
+
+          <UserBadges userId={user.id} />
         </div>
       </div>
 

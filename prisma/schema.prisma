@@ -62,6 +62,7 @@ model User {
   forumTopics      ForumTopic[]
   forumReplies     ForumReply[]
   news             News[]
+  userBadges       UserBadge[]
 
   @@index([email])
   @@index([username])
@@ -349,6 +350,32 @@ model PasswordResetToken {
 
   @@index([token])
   @@index([email])
+}
+
+// ─── ROZET ───────────────────────────────────────────────────
+enum BadgeType {
+  ILK_GONDERI        // İlk gönderiyi yaptı
+  ILK_YORUM          // İlk yorumu yaptı
+  AKTIF_UYE          // 30+ gün üye
+  FORUMC             // 5+ forum konusu açtı
+  HUKUK_DESTEKCI     // Hukuki soruya yanıt verdi (avukat)
+  TOPLULUK_KAHRAMANI // 50+ beğeni aldı
+  DAYANISMA          // 20+ yorum yaptı
+  DS_KULLANICI       // DS hatırlatma kurdu
+  SORUCU             // Hukuki soru sordu
+  KAHRAMAN_100       // 100+ gönderi/yorum
+}
+
+model UserBadge {
+  id        String    @id @default(cuid())
+  userId    String
+  type      BadgeType
+  awardedAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type])
+  @@index([userId])
 }
 
 // ─── DUYURU ──────────────────────────────────────────────────

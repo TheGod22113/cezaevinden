@@ -61,7 +61,7 @@ export default function RootLayout({
       <head>
         <JsonLd />
       </head>
-      <body className={`min-h-screen bg-gray-50 ${inter.className}`}>
+      <body className={`min-h-screen bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 transition-colors duration-200 ${inter.className}`}>
         {/* Google Analytics */}
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-6KK0GGMTBG" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">{`
