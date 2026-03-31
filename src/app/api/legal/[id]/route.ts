@@ -30,9 +30,48 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
   const sanitized = {
     ...question,
     author: question.isAnonymous ? null : question.author,
+    authorId: question.authorId, // always expose for canManage check
   }
 
   return NextResponse.json(sanitized)
+}
+
+// DELETE — soru sahibi veya admin silebilir
+export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions)
+  if (!session) return NextResponse.json({ error: 'Giriş gerekli' }, { status: 401 })
+
+  const user = session.user as any
+  const question = await prisma.legalQuestion.findUnique({ where: { id: params.id } })
+  if (!question) return NextResponse.json({ error: 'Bulunamadı' }, { status: 404 })
+
+  if (question.authorId !== user.id && user.role !== 'ADMIN') {
+    return NextResponse.json({ error: 'Yetkisiz' }, { status: 403 })
+  }
+
+  await prisma.legalQuestion.delete({ where: { id: params.id } })
+  return NextResponse.json({ ok: true })
+}
+
+// PATCH — soru sahibi veya admin düzenleyebilir
+export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions)
+  if (!session) return NextResponse.json({ error: 'Giriş gerekli' }, { status: 401 })
+
+  const user = session.user as any
+  const question = await prisma.legalQuestion.findUnique({ where: { id: params.id } })
+  if (!question) return NextResponse.json({ error: 'Bulunamadı' }, { status: 404 })
+
+  if (question.authorId !== user.id && user.role !== 'ADMIN') {
+    return NextResponse.json({ error: 'Yetkisiz' }, { status: 403 })
+  }
+
+  const { title, content, category } = await req.json()
+  const updated = await prisma.legalQuestion.update({
+    where: { id: params.id },
+    data: { ...(title && { title }), ...(content && { content }), ...(category && { category }) },
+  })
+  return NextResponse.json(updated)
 }
 
 // POST — add answer (lawyers only)

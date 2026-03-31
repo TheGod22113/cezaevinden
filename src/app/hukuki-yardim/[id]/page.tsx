@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import {
   HiArrowLeft, HiCheckCircle, HiCheckBadge, HiClock,
   HiFlag, HiPaperAirplane, HiLockClosed, HiShieldCheck,
-  HiChatBubbleLeft,
+  HiChatBubbleLeft, HiTrash, HiPencil,
 } from 'react-icons/hi2'
 
 interface Answer {
@@ -58,6 +59,7 @@ const roleLabel: Record<string, string> = {
 export default function LegalQuestionPage() {
   const { id } = useParams<{ id: string }>()
   const { data: session } = useSession()
+  const router = useRouter()
   const [question, setQuestion] = useState<Question | null>(null)
   const [loading, setLoading] = useState(true)
   const [answerText, setAnswerText] = useState('')
@@ -65,9 +67,15 @@ export default function LegalQuestionPage() {
   const [sendingAnswer, setSendingAnswer] = useState(false)
   const [sendingComment, setSendingComment] = useState(false)
   const [error, setError] = useState('')
+  const [editMode, setEditMode] = useState(false)
+  const [editTitle, setEditTitle] = useState('')
+  const [editContent, setEditContent] = useState('')
+  const [deleting, setDeleting] = useState(false)
+  const [saving, setSaving] = useState(false)
 
   const user = session?.user as any
   const isLawyer = user?.role === 'AVUKAT' || user?.role === 'ADMIN'
+  const canManage = user && question && (user.id === (question as any).authorId || user.role === 'ADMIN')
 
   useEffect(() => {
     fetch(`/api/legal/${id}`)
@@ -122,6 +130,33 @@ export default function LegalQuestionPage() {
     setSendingComment(false)
   }
 
+  const handleDelete = async () => {
+    if (!confirm('Bu soruyu silmek istediğinize emin misiniz?')) return
+    setDeleting(true)
+    await fetch(`/api/legal/${id}`, { method: 'DELETE' })
+    router.push('/hukuki-yardim')
+  }
+
+  const handleEdit = () => {
+    setEditTitle(question?.title || '')
+    setEditContent(question?.content || '')
+    setEditMode(true)
+  }
+
+  const handleSaveEdit = async () => {
+    setSaving(true)
+    const res = await fetch(`/api/legal/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: editTitle, content: editContent }),
+    })
+    if (res.ok) {
+      setQuestion(prev => prev ? { ...prev, title: editTitle, content: editContent } : prev)
+      setEditMode(false)
+    }
+    setSaving(false)
+  }
+
   if (loading) return <div className="max-w-3xl mx-auto px-4 py-12 text-center text-gray-400">Yükleniyor...</div>
   if (!question || (question as any).error) return (
     <div className="max-w-3xl mx-auto px-4 py-12 text-center">
@@ -139,12 +174,34 @@ export default function LegalQuestionPage() {
       {/* Soru */}
       <div className="card p-5 mb-4">
         <div className="flex items-start justify-between gap-3 mb-3">
-          <h1 className="text-lg font-bold text-gray-900">{question.title}</h1>
-          {question.isAnswered && (
-            <span className="flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full flex-shrink-0 font-medium">
-              <HiCheckCircle className="w-3.5 h-3.5" /> Yanıtlandı
-            </span>
+          {editMode ? (
+            <input
+              value={editTitle}
+              onChange={e => setEditTitle(e.target.value)}
+              className="flex-1 text-lg font-bold text-gray-900 border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy-300"
+            />
+          ) : (
+            <h1 className="text-lg font-bold text-gray-900">{question.title}</h1>
           )}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {question.isAnswered && !editMode && (
+              <span className="flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full font-medium">
+                <HiCheckCircle className="w-3.5 h-3.5" /> Yanıtlandı
+              </span>
+            )}
+            {canManage && !editMode && (
+              <>
+                <button onClick={handleEdit}
+                  className="p-1.5 text-gray-400 hover:text-navy-700 hover:bg-gray-100 rounded-lg transition-colors" title="Düzenle">
+                  <HiPencil className="w-4 h-4" />
+                </button>
+                <button onClick={handleDelete} disabled={deleting}
+                  className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Sil">
+                  <HiTrash className="w-4 h-4" />
+                </button>
+              </>
+            )}
+          </div>
         </div>
         <div className="flex flex-wrap gap-2 text-xs text-gray-400 mb-4">
           <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium">{question.category}</span>
@@ -153,7 +210,28 @@ export default function LegalQuestionPage() {
           )}
           <span className="flex items-center gap-0.5"><HiClock className="w-3 h-3" /> {timeAgo(question.createdAt)}</span>
         </div>
-        <p className="text-sm text-gray-700 leading-relaxed">{question.content}</p>
+        {editMode ? (
+          <div className="space-y-3">
+            <textarea
+              value={editContent}
+              onChange={e => setEditContent(e.target.value)}
+              rows={5}
+              className="w-full text-sm text-gray-700 border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-navy-300 resize-none"
+            />
+            <div className="flex gap-2">
+              <button onClick={handleSaveEdit} disabled={saving}
+                className="px-4 py-2 bg-navy-700 text-white text-sm font-medium rounded-lg hover:bg-navy-800 disabled:opacity-50">
+                {saving ? 'Kaydediliyor…' : 'Kaydet'}
+              </button>
+              <button onClick={() => setEditMode(false)}
+                className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200">
+                İptal
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-700 leading-relaxed">{question.content}</p>
+        )}
         <div className="mt-4 flex items-start gap-2 p-3 bg-amber-50 rounded-xl">
           <HiShieldCheck className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
           <p className="text-xs text-amber-700">Yanıtlar bilgilendirme amaçlıdır, hukuki tavsiye yerine geçmez.</p>
