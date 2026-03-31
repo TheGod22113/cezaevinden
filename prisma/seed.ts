@@ -463,7 +463,7 @@ async function main() {
   // ─── HABERLER ───────────────────────────────────────────────
 
   const newsCount = await prisma.news.count()
-  if (newsCount < 14) {
+  if (newsCount < 16) {
     await prisma.news.createMany({
       skipDuplicates: false,
       data: [
@@ -522,6 +522,20 @@ async function main() {
           title: 'İzin Hakkı: Açık ve Kapalı Cezaevlerinde Farklı Uygulamalar',
           summary: 'Haftalık izin, mazeret izni, özel izin ve yol izni. Hangi koşulları karşılayan hükümlüler izin kullanabilir?',
           content: 'CGTİHK\'nın 95-100. maddeleri hükümlülerin izin haklarını düzenler.\n\nAçık Cezaevi İzinleri:\n✅ Haftalık izin: Cuma akşamı çıkış, Pazar akşamı dönüş\n✅ Bayram izni: 3 güne kadar\n✅ Özel izin: Doğum, ölüm, hastalık gibi özel durumlarda\n\nKapalı Cezaevi İzinleri:\n⚠️ Haftalık izin yok\n✅ Mazeret izni: Ağır hastalık veya ölüm durumunda refakatçiyle\n✅ Dış görüşme: Belirli dönemlerde\n\nİzin İçin Şartlar:\n- Disiplin cezası almamış olmak\n- İzin yeri (ikametgah) bildirilmiş olmak\n- Güvenlik riski bulunmamak\n\nİzin İhlali:\nGelişin geciktirilmesi veya dönülmemesi kaçma suçu oluşturur. Cezası var ve DS\'ye zarar verir.\n\nİzin talebini yazılı yapın, tarih ve imzanızı saklayın.',
+          category: 'Mevzuat', published: true,
+        },
+        {
+          authorId: admin.id,
+          title: '12. Yargı Paketi 2026: İnfaz ve Yargı Sisteminde Neler Değişiyor?',
+          summary: 'Adalet Bakanlığı\'nın hazırladığı 12. Yargı Paketi, Türkiye\'deki 12,5 milyon aktif davayı azaltmayı ve yargıyı hızlandırmayı hedefliyor. İnfaz ve ceza hukukunu da doğrudan etkileyen düzenlemeler gündemde.',
+          content: 'Adalet Bakanlığı\'nın hazırladığı 12. Yargı Paketi, Türk yargı sisteminde köklü değişiklikler öngörüyor.\n\nPaketin Öne Çıkan Başlıkları:\n\n📌 Arabuluculuk Genişletiliyor\nBoşanma davaları dahil daha fazla alanda zorunlu arabuluculuk uygulaması başlıyor. Tarafların mahkemeye gitmeden anlaşması teşvik ediliyor.\n\n📌 "Atlamalı Temyiz" Sistemi\nBazı davalarda ara istinaf basamağı atlanarak doğrudan Yargıtay\'a gidilebilecek. Bu sayede dava sürelerinin kısalması hedefleniyor.\n\n📌 Çocuklara Karşı Suçlarda Ağırlaştırma\nÇocuklara yönelik ağır suçlarda ömür boyu hapis cezası öngörülüyor.\n\n📌 Hâkim ve Savcı Kadrosu Artışı\n12,5 milyon aktif davayı yönetmek için yargı mensupları sayısının artırılması planlanıyor.\n\n📌 İnfaza Etkisi\nPaket henüz yasalaşmadı. Meclis\'ten geçmesi durumunda infaz sürelerine ve yargılama süreçlerine doğrudan etkileri olacak.\n\nKaynak: Hürriyet / Adalet Bakanlığı açıklamaları',
+          category: 'Mevzuat', published: true,
+        },
+        {
+          authorId: admin.id,
+          title: '7242 Sayılı Kanun ve COVID-19 İzni: Kapsamlı Bilgi Rehberi',
+          summary: 'COVID-19 salgını döneminde açık cezaevi ve denetimli serbestlik kapsamındaki hükümlülere uygulanan özel izin düzenlemesi hakkında Adalet Bakanlığı\'nın resmi açıklamaları.',
+          content: 'Adalet Bakanlığı Ceza ve Tevkifevleri Genel Müdürlüğü, COVID-19 salgını sürecinde 7242 sayılı Kanun kapsamında özel bir izin uygulaması başlattı.\n\nKimler Yararlandı?\n✅ Açık ceza infaz kurumlarındaki hükümlüler\n✅ Açık kuruma ayrılmaya hak kazananlar\n✅ Denetimli serbestlik kapsamındakiler\n\nUygulama Takvimi:\n- İlk dönem: 14 Nisan 2020 – 30 Kasım 2020\n- 1. uzatma: 30 Kasım 2020 – 31 Ocak 2021\n- 2. uzatma: 31 Ocak 2021 – 31 Mart 2021\n\nHukuki Dayanağı:\n5275 sayılı CGTİHK, 7242 sayılı Kanun Geçici Madde 9 ve 7256 sayılı Kanun\'un 31. maddesi.\n\nNeden Önemli?\nBu uygulama, olağanüstü koşullarda infaz hukukunun nasıl esneyebildiğini göstermesi bakımından emsal niteliği taşıyor. Benzer kriz dönemlerinde bu düzenlemeye atıfta bulunulabilir.\n\nKaynak: Adalet Bakanlığı CTE Genel Müdürlüğü resmi sitesi (cte.adalet.gov.tr)',
           category: 'Mevzuat', published: true,
         },
         // ─── ESKİ HABERLER (sayıyı tamamlamak için tutulur) ───────
