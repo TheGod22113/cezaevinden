@@ -462,12 +462,9 @@ async function main() {
 
   // ─── HABERLER ───────────────────────────────────────────────
 
-  const newsCount = await prisma.news.count()
-  if (newsCount < 16) {
-    await prisma.news.createMany({
-      skipDuplicates: false,
-      data: [
-        // ─── 2026 YENİ HABERLER ───────────────────────────────────────
+  await prisma.news.deleteMany({})
+  await prisma.news.createMany({
+    data: [
         {
           authorId: admin.id,
           title: 'Denetimli Serbestlik 2026: Güncel Oranlar ve Başvuru Süreci',
@@ -538,53 +535,9 @@ async function main() {
           content: 'Adalet Bakanlığı Ceza ve Tevkifevleri Genel Müdürlüğü, COVID-19 salgını sürecinde 7242 sayılı Kanun kapsamında özel bir izin uygulaması başlattı.\n\nKimler Yararlandı?\n✅ Açık ceza infaz kurumlarındaki hükümlüler\n✅ Açık kuruma ayrılmaya hak kazananlar\n✅ Denetimli serbestlik kapsamındakiler\n\nUygulama Takvimi:\n- İlk dönem: 14 Nisan 2020 – 30 Kasım 2020\n- 1. uzatma: 30 Kasım 2020 – 31 Ocak 2021\n- 2. uzatma: 31 Ocak 2021 – 31 Mart 2021\n\nHukuki Dayanağı:\n5275 sayılı CGTİHK, 7242 sayılı Kanun Geçici Madde 9 ve 7256 sayılı Kanun\'un 31. maddesi.\n\nNeden Önemli?\nBu uygulama, olağanüstü koşullarda infaz hukukunun nasıl esneyebildiğini göstermesi bakımından emsal niteliği taşıyor. Benzer kriz dönemlerinde bu düzenlemeye atıfta bulunulabilir.\n\nKaynak: Adalet Bakanlığı CTE Genel Müdürlüğü resmi sitesi (cte.adalet.gov.tr)',
           category: 'Mevzuat', published: true,
         },
-        // ─── ESKİ HABERLER (sayıyı tamamlamak için tutulur) ───────
-        {
-          authorId: admin.id,
-          title: 'İnfaz Kanunu\'nda 2024 Değişiklikleri: Neler Değişti?',
-          summary: '2024 yılında yapılan düzenlemelerle infaz süreçlerinde önemli güncellemeler yapıldı. İyi hal indirimleri ve koşullu salıverilme süreçlerinde yeni kriterler belirlendi.',
-          content: 'Türkiye Büyük Millet Meclisi\'nde kabul edilen son düzenlemelerle 5275 sayılı Ceza ve Güvenlik Tedbirlerinin İnfazı Hakkında Kanun\'da kapsamlı değişiklikler yapıldı.\n\nYapılan başlıca değişiklikler:\n\n1. İyi Hal Değerlendirmesi: Kurum içi eğitim programlarına katılım artık iyi hal puanlamasında daha fazla ağırlık taşıyor.\n\n2. Denetimli Serbestlik: Bazı suç tipleri için DS süresi yeniden düzenlendi.\n\n3. Elektronik Kelepçe: Daha fazla hükümlünün elektronik takip yöntemiyle DS\'den yararlanması öngörülüyor.\n\nDüzenlemeler 1 Mart 2024 tarihinden itibaren uygulanmaya başlandı.',
-          category: 'Mevzuat', published: true,
-        },
-        {
-          authorId: admin.id,
-          title: 'Cezaevlerinde Kapasite Sorunu: Güncel Veriler',
-          summary: 'Adalet Bakanlığı\'nın açıkladığı verilere göre cezaevi nüfusu artmaya devam ediyor. Yeni kurumların açılması planlanıyor.',
-          content: 'Türkiye\'deki cezaevi nüfusu son 5 yılda yüzde 40 artış gösterdi. Adalet Bakanlığı bu durumu çözmek için çeşitli tedbirler almayı planlıyor.\n\nBakanlık tarafından açıklanan rakamlara göre:\n- Toplam kapasite: 220.000 kişi\n- Mevcut nüfus: 320.000\'i aşkın\n- Yeni kurumlar: 15 yeni cezaevi yapımı planlandı\n\nKapasite sorunu, cezaevi koşullarını doğrudan etkiliyor ve insan hakları örgütlerinin yakından takip ettiği bir konu olmaya devam ediyor.',
-          category: 'Haber', published: true,
-        },
-        {
-          authorId: lawyer.id,
-          title: 'Denetimli Serbestlik: Sık Yapılan Hatalar',
-          summary: 'Denetimli serbestlik döneminde yapılan hatalar nedeniyle yüzlerce kişi geri cezaevine dönmek zorunda kaldı. Uzmanlar uyarıyor.',
-          content: 'Denetimli serbestlik (DS) kararının geri alınmasına neden olan en yaygın hatalar şöyle sıralanabilir:\n\n1. İmza ihlali: Belirlenen günlerde müdürlüğe gitmemek\n2. Adres bildirmeme: Taşınmalarını yetkililere bildirmemek\n3. Yükümlülük ihlali: Belirlenen kurslara veya programlara katılmamak\n4. Suç işleme: DS döneminde herhangi bir suç işlemek\n5. Alkol/uyuşturucu: Madde kullanımının tespit edilmesi\n\nHer ihlal, geri cezaevine dönüşle sonuçlanabilir. Dikkatli olunmasını tavsiye ediyorum.',
-          category: 'Hukuki Bilgi', published: true,
-        },
-        {
-          authorId: admin.id,
-          title: 'Cezaevinde Eğitim İmkanları Genişletiliyor',
-          summary: 'Milli Eğitim Bakanlığı ve Adalet Bakanlığı iş birliğiyle cezaevlerindeki eğitim programları kapsamı artırıldı.',
-          content: 'İki bakanlık arasında imzalanan protokol kapsamında cezaevlerindeki eğitim imkanları önemli ölçüde genişletildi.\n\nYeni eklenen programlar:\n- Uzaktan yükseköğretim (AÖF)\n- Mesleki kurslar (kaynakçı, elektrikçi, bilgisayar)\n- İlk ve ortaöğretim tamamlama\n- Dil kursları (İngilizce, Almanca)\n\nBu gelişme, cezaevindeyken kendini geliştirmek isteyen hükümlüler için önemli bir fırsat sunuyor.',
-          category: 'Haber', published: true,
-        },
-        {
-          authorId: lawyer2.id,
-          title: 'Kadın Mahkumların Hakları: Kapsamlı Rehber',
-          summary: 'Kadın hükümlü ve tutukluların özel hakları nelerdir? Çocuk bakımından sağlık hizmetlerine kadar detaylı bilgi.',
-          content: 'Kadın mahkumlar için özel düzenlemeler yapılmıştır:\n\n1. Doğum Hakkı: Gebelik ve doğum sonrası dönemde özel koşullar sağlanır\n2. Çocuk Birlikteliği: 0-6 yaş çocuk annesiyle kalabilir\n3. Ayrı Koğuş: Erkeklerden tamamen ayrı birimler zorunludur\n4. Sağlık: Jinekolojik muayene hakkı vardır\n5. Şiddet Mağdurları: Özel koruma tedbirleri alınır\n\nBu haklardan herhangi birinin ihlali halinde şikayet yolları mevcuttur.',
-          category: 'Hukuki Bilgi', published: true,
-        },
-        {
-          authorId: admin.id,
-          title: 'Cezaevinden.com: 10.000 Üyeye Ulaştık!',
-          summary: 'Platformumuzu tercih eden tüm üyelerimize teşekkür ederiz. Yeni özellikler ve geliştirmeler yolda.',
-          content: 'Cezaevinden.com olarak kısa sürede 10.000 üyeye ulaşmanın gururunu yaşıyoruz. Bu milestone bize büyük sorumluluk yüklüyor.\n\nKullanıcılarımızın geri bildirimleri doğrultusunda geliştirmeye devam edeceğiz:\n\n- Daha fazla gönüllü avukat\n- Gelişmiş bildirim sistemi\n- Mobil uygulama (yakında)\n- Bölgesel toplantılar\n\nHerkese teşekkürler. Birlikte daha güçlüyüz! 💪',
-          category: 'Duyuru', published: true,
-        },
-      ],
-    })
-    console.log('✅ Haberler oluşturuldu')
-  }
+    ],
+  })
+  console.log('✅ Haberler güncellendi')
 
   // ─── DESTEK KAYNAKLARI ──────────────────────────────────────
 

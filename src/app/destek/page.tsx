@@ -191,7 +191,7 @@ export default function DestekPage() {
                 <p className="text-sm text-gray-600 mb-3">{resource.description}</p>
 
                 <div className="flex flex-wrap gap-2">
-                  {resource.services.map(s => (
+                  {resource.services.map((s: string) => (
                     <span key={s} className="text-xs bg-gray-50 border border-gray-200 text-gray-600 px-2.5 py-1 rounded-full flex items-center gap-1">
                       <HiCheckCircle className="w-3 h-3 text-green-500" /> {s}
                     </span>
