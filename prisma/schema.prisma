@@ -351,6 +351,20 @@ model PasswordResetToken {
   @@index([email])
 }
 
+// ─── DUYURU ──────────────────────────────────────────────────
+model Announcement {
+  id        String    @id @default(cuid())
+  text      String
+  link      String?
+  linkText  String?
+  color     String    @default("bg-gold-500 text-navy-800")
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  expiresAt DateTime?
+
+  @@index([active])
+}
+
 // ─── DESTEK AĞI ──────────────────────────────────────────────
 model SupportResource {
   id          String   @id @default(cuid())

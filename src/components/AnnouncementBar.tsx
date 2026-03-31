@@ -1,18 +1,29 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { HiXMark, HiMegaphone } from 'react-icons/hi2'
 
-const announcements = [
-  { id: '1', text: '🎉 Platform beta sürümünde! Geri bildirimleriniz için ', link: '/iletisim', linkText: 'tıklayın', color: 'bg-gold-500 text-navy-800' },
-  { id: '2', text: '⚖️ Yeni gönüllü avukatlar platforma katıldı. Hukuki sorularınız için ', link: '/hukuki-yardim', linkText: 'Hukuki Yardım', color: 'bg-green-600 text-white' },
-]
+interface Announcement {
+  id: string
+  text: string
+  link: string | null
+  linkText: string | null
+  color: string
+}
 
 export default function AnnouncementBar() {
+  const [announcements, setAnnouncements] = useState<Announcement[]>([])
   const [dismissed, setDismissed] = useState<Set<string>>(new Set())
-  const active = announcements.filter(a => !dismissed.has(a.id))[0]
 
+  useEffect(() => {
+    fetch('/api/announcements')
+      .then(r => r.json())
+      .then(data => { if (Array.isArray(data)) setAnnouncements(data) })
+      .catch(() => {})
+  }, [])
+
+  const active = announcements.find(a => !dismissed.has(a.id))
   if (!active) return null
 
   return (
@@ -20,10 +31,15 @@ export default function AnnouncementBar() {
       <HiMegaphone className="w-4 h-4 flex-shrink-0" />
       <span>
         {active.text}
-        <Link href={active.link} className="font-bold underline underline-offset-2">{active.linkText}</Link>
+        {active.link && active.linkText && (
+          <Link href={active.link} className="font-bold underline underline-offset-2 ml-1">
+            {active.linkText}
+          </Link>
+        )}
       </span>
       <button
-        onClick={() => setDismissed(p => { const s = new Set(p); s.add(active.id); return s; })}
+        onClick={() => setDismissed(p => { const s = new Set(p); s.add(active.id); return s })}
+        aria-label="Duyuruyu kapat"
         className="absolute right-3 top-1/2 -translate-y-1/2 opacity-70 hover:opacity-100 transition-opacity"
       >
         <HiXMark className="w-4 h-4" />
