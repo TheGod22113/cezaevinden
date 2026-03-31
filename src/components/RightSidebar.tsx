@@ -62,7 +62,7 @@ export default function RightSidebar() {
       <div className="card p-4">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide">Aktif Avukatlar</h3>
-          <Link href="/hukuki-yardim/avukatlar" className="text-xs text-navy-700 hover:underline">Tümü</Link>
+          <Link href="/hukuki-yardim/avukatlar" aria-label="Tüm aktif avukatları görüntüle" className="text-xs text-navy-700 hover:underline">Tüm Avukatlar</Link>
         </div>
         <div className="space-y-3">
           {onlineAvukatlar.map(({ name, expertise, answered, online }) => (
@@ -82,6 +82,7 @@ export default function RightSidebar() {
               </div>
               <Link
                 href="/hukuki-yardim"
+                aria-label={`${name} avukatına soru sor`}
                 className="text-xs bg-navy-700 hover:bg-navy-800 text-white px-2.5 py-1 rounded-lg transition-colors"
               >
                 Sor

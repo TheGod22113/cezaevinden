@@ -252,7 +252,7 @@ export default function HukukiYardimPage() {
             <div className="card p-5 animate-fade-in border-2 border-navy-200">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-bold text-gray-800">Hukuki Soru Sor</h2>
-                <button onClick={() => setShowAskForm(false)} className="text-gray-400 hover:text-gray-600">✕</button>
+                <button onClick={() => setShowAskForm(false)} aria-label="Kapat" className="text-gray-400 hover:text-gray-600">✕</button>
               </div>
               <div className="space-y-3">
                 <div>

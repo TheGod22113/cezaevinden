@@ -80,6 +80,7 @@ export default function Header() {
           <div className="flex items-center gap-1.5">
             {/* Search */}
             <button onClick={() => setSearchOpen(o => !o)}
+              aria-label="Ara"
               className="p-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-lg transition-all">
               <HiMagnifyingGlass className="w-5 h-5" />
             </button>
@@ -94,6 +95,7 @@ export default function Header() {
                 {/* Profile Dropdown */}
                 <div className="relative hidden sm:block">
                   <button onClick={() => setProfileOpen(o => !o)}
+                    aria-label="Profil menüsü"
                     className="flex items-center gap-2 p-1.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-lg transition-all">
                     <div className="w-7 h-7 bg-gold-500 rounded-full flex items-center justify-center text-navy-900 font-bold text-sm">
                       {user?.name?.charAt(0) ?? '?'}
@@ -141,6 +143,7 @@ export default function Header() {
 
             {/* Mobile Menu Toggle */}
             <button onClick={() => setMobileOpen(m => !m)}
+              aria-label={mobileOpen ? 'Menüyü kapat' : 'Menüyü aç'}
               className="lg:hidden p-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-lg transition-all">
               {mobileOpen ? <HiXMark className="w-6 h-6" /> : <HiBars3 className="w-6 h-6" />}
             </button>

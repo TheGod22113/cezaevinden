@@ -227,7 +227,7 @@ export default function ForumPage() {
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg">
             <div className="flex items-center justify-between p-5 border-b">
               <h2 className="text-lg font-bold text-navy-700">Yeni Konu Aç</h2>
-              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+              <button onClick={() => setShowModal(false)} aria-label="Kapat" className="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
             </div>
             <form onSubmit={handleCreateTopic} className="p-5 space-y-4">
               <div>

@@ -92,6 +92,7 @@ export default function PostCard({ post }: { post: PostData }) {
 
         <div className="relative">
           <button onClick={() => setMenu(m => !m)}
+            aria-label="Gönderi seçenekleri"
             className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all">
             <HiEllipsisHorizontal className="w-5 h-5" />
           </button>
@@ -122,6 +123,7 @@ export default function PostCard({ post }: { post: PostData }) {
       <div className="flex items-center justify-between pt-3 border-t border-gray-50">
         <div className="flex items-center gap-1">
           <button onClick={toggleLike}
+            aria-label={liked ? 'Beğeniyi kaldır' : 'Beğen'}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
               liked ? 'text-red-500 bg-red-50' : 'text-gray-500 hover:bg-gray-100'
             }`}>
@@ -130,6 +132,7 @@ export default function PostCard({ post }: { post: PostData }) {
           </button>
 
           <Link href={`/${post.id}`}
+            aria-label={`${comments} yorum`}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-100 transition-all">
             <HiChatBubbleOvalLeft className="w-4 h-4" />
             {comments > 0 && <span>{comments}</span>}
@@ -139,6 +142,7 @@ export default function PostCard({ post }: { post: PostData }) {
         </div>
 
         <button onClick={toggleSave}
+          aria-label={saved ? 'Kaydedildi, kaldır' : 'Kaydet'}
           className={`p-2 rounded-lg transition-all ${saved ? 'text-gold-500 bg-yellow-50' : 'text-gray-400 hover:bg-gray-100'}`}>
           {saved ? <HiBookmark className="w-4 h-4" /> : <HiOutlineBookmark className="w-4 h-4" />}
         </button>

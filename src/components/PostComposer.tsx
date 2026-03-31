@@ -57,7 +57,9 @@ export default function PostComposer({ onPost }: Props) {
 
           <div className="flex items-center justify-between gap-2 flex-wrap">
             <div className="flex items-center gap-2">
+              <label htmlFor="post-category" className="sr-only">Gönderi kategorisi</label>
               <select
+                id="post-category"
                 value={category}
                 onChange={e => setCategory(e.target.value)}
                 className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 text-gray-600 focus:outline-none focus:ring-1 focus:ring-navy-700"
@@ -73,7 +75,7 @@ export default function PostComposer({ onPost }: Props) {
             </div>
 
             <div className="flex items-center gap-2">
-              <button className="p-1.5 rounded-lg text-gray-400 hover:text-navy-700 hover:bg-gray-100 transition-colors">
+              <button aria-label="Fotoğraf ekle" className="p-1.5 rounded-lg text-gray-400 hover:text-navy-700 hover:bg-gray-100 transition-colors">
                 <HiPhoto className="w-4 h-4" />
               </button>
               <button

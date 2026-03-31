@@ -141,7 +141,7 @@ export default function TopluluklarPage() {
           <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl">
             <div className="flex items-center justify-between mb-5">
               <h2 className="font-bold text-gray-900 text-lg">Yeni Topluluk Oluştur</h2>
-              <button onClick={() => setShowModal(false)} className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-xl">
+              <button onClick={() => setShowModal(false)} aria-label="Kapat" className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-xl">
                 <HiXMark className="w-5 h-5" />
               </button>
             </div>

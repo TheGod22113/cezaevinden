@@ -43,8 +43,9 @@ export default function NotificationBell() {
           <div className="flex items-center justify-between px-4 py-3 border-b">
             <span className="font-bold text-gray-900">Bildirimler</span>
             <Link href="/bildirimler" onClick={() => setOpen(false)}
+              aria-label="Tüm bildirimleri görüntüle"
               className="text-xs text-navy-700 hover:underline font-semibold">
-              Tümünü Gör
+              Tüm Bildirimler
             </Link>
           </div>
 
