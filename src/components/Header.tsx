@@ -54,7 +54,7 @@ export default function Header() {
               alt="Cezaevinden.com"
               width={64}
               height={64}
-              className="rounded-full bg-white p-0.5 shadow-md sm:hidden"
+              className="rounded-2xl shadow-md sm:hidden"
               priority
             />
             {/* Masaüstü: büyük logo */}
@@ -63,7 +63,7 @@ export default function Header() {
               alt=""
               width={88}
               height={88}
-              className="rounded-full bg-white p-0.5 shadow-md hidden sm:block"
+              className="rounded-2xl shadow-md hidden sm:block"
               priority
             />
             <div className="leading-tight hidden sm:block">
