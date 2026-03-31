@@ -300,25 +300,51 @@ export default function ProfilAyarlarPage() {
 
             {/* İmza Saati */}
             <div>
-              <label className="text-sm font-semibold text-gray-700 block mb-1.5">İmza Saati</label>
+              <label className="text-sm font-semibold text-gray-700 block mb-1">İmza Saati</label>
+              <p className="text-xs text-gray-400 mb-2">24 saat formatında girin — örn: 14:30</p>
               <input type="time" className="input-field w-40"
                 value={ds.imzaSaati}
                 onChange={e => setDs(p => ({ ...p, imzaSaati: e.target.value }))} />
+              {ds.imzaSaati && (
+                <p className="text-xs text-green-600 mt-1.5 flex items-center gap-1">
+                  ✅ Seçilen saat: <strong>
+                    {(() => {
+                      const [h, m] = ds.imzaSaati.split(':').map(Number)
+                      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`
+                    })()}
+                  </strong>
+                  {' '}→ 2 saat öncesi: <strong>
+                    {(() => {
+                      const [h, m] = ds.imzaSaati.split(':').map(Number)
+                      const total = h * 60 + m - 120
+                      const hh = Math.floor(((total % 1440) + 1440) % 1440 / 60)
+                      const mm = ((total % 60) + 60) % 60
+                      return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`
+                    })()}
+                  </strong>'da hatırlatma
+                </p>
+              )}
             </div>
 
             {/* Hatırlatma */}
             <div>
-              <label className="text-sm font-semibold text-gray-700 block mb-2">Ne zaman hatırlat?</label>
-              <div className="flex gap-2">
-                {[1, 2, 3].map(n => (
-                  <button key={n}
-                    onClick={() => setDs(p => ({ ...p, hatirlatmaGun: n }))}
+              <label className="text-sm font-semibold text-gray-700 block mb-1">Ek hatırlatma</label>
+              <p className="text-xs text-gray-400 mb-2">İmzadan 2 saat önce her zaman bildirim gönderilir. Ek olarak:</p>
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  { val: 0, label: 'Sadece 2 saat önce' },
+                  { val: 1, label: '+ 1 gün önce de' },
+                  { val: 2, label: '+ 2 gün önce de' },
+                ].map(({ val, label }) => (
+                  <button key={val}
+                    type="button"
+                    onClick={() => setDs(p => ({ ...p, hatirlatmaGun: val }))}
                     className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${
-                      ds.hatirlatmaGun === n
+                      ds.hatirlatmaGun === val
                         ? 'bg-navy-700 text-white border-navy-700'
-                        : 'bg-white text-gray-600 border-gray-200'
+                        : 'bg-white text-gray-600 border-gray-200 hover:border-navy-300'
                     }`}>
-                    {n === 1 ? '1 gün önce' : `${n} gün önce`}
+                    {label}
                   </button>
                 ))}
               </div>

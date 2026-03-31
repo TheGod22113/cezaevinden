@@ -47,18 +47,33 @@ export default function Header() {
         <div className="flex items-center justify-between h-[84px]">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            {/* Mobil: küçük logo */}
             <Image
               src="/logo.png"
               alt="Cezaevinden.com"
-              width={76}
-              height={76}
-              className="rounded-full bg-white p-0.5 shadow-md"
+              width={52}
+              height={52}
+              className="rounded-full bg-white p-0.5 shadow-md sm:hidden"
               priority
             />
-            <div className="leading-tight">
-              <span className="text-white font-bold text-xl sm:text-2xl tracking-tight">Cezaevinden</span>
-              <span className="text-crimson-500 font-bold text-xl sm:text-2xl">.com</span>
+            {/* Masaüstü: büyük logo */}
+            <Image
+              src="/logo.png"
+              alt=""
+              width={76}
+              height={76}
+              className="rounded-full bg-white p-0.5 shadow-md hidden sm:block"
+              priority
+            />
+            <div className="leading-tight hidden sm:block">
+              <span className="text-white font-bold text-xl lg:text-2xl tracking-tight">Cezaevinden</span>
+              <span className="text-crimson-500 font-bold text-xl lg:text-2xl">.com</span>
+            </div>
+            {/* Mobil: sadece kısa isim */}
+            <div className="leading-tight sm:hidden">
+              <span className="text-white font-bold text-base tracking-tight">Cezaevinden</span>
+              <span className="text-crimson-500 font-bold text-base">.com</span>
             </div>
           </Link>
 
