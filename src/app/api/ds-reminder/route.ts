@@ -25,11 +25,13 @@ function saatToDakika(saatStr: string): number {
   return h * 60 + m
 }
 
-export async function POST(req: NextRequest) {
+async function handleReminder(req: NextRequest) {
   const session    = await getServerSession(authOptions)
-  const authHeader = req.headers.get('x-cron-secret')
+  const authHeader = req.headers.get('authorization') ?? req.headers.get('x-cron-secret')
   const isAdmin    = session && (session.user as any).role === 'ADMIN'
-  const isCron     = authHeader === process.env.CRON_SECRET
+  // Vercel cron: Authorization: Bearer <CRON_SECRET>
+  const isCron     = authHeader === `Bearer ${process.env.CRON_SECRET}`
+                  || authHeader === process.env.CRON_SECRET
 
   if (!isAdmin && !isCron) {
     return NextResponse.json({ error: 'Yetkisiz' }, { status: 403 })
@@ -156,4 +158,14 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json({ ok: true, sent, checked: schedules.length })
+}
+
+// Vercel Cron Jobs GET ile çağırır
+export async function GET(req: NextRequest) {
+  return handleReminder(req)
+}
+
+// Admin manuel tetikleme için POST
+export async function POST(req: NextRequest) {
+  return handleReminder(req)
 }
