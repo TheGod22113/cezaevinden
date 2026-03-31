@@ -53,14 +53,12 @@ body {
   }
   .btn-secondary {
     @apply bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg transition-colors duration-200;
-    .dark & { @apply bg-white/10 hover:bg-white/20 text-gray-200; }
   }
   .btn-danger {
     @apply bg-crimson-600 hover:bg-crimson-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200;
   }
   .card {
     @apply bg-white rounded-xl shadow-sm border border-gray-100;
-    .dark & { @apply bg-[#1a1d2e] border-[#2a2d3e] shadow-none; }
   }
   .badge {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
@@ -87,8 +85,29 @@ body {
   }
   .input-field {
     @apply w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy-700 focus:border-transparent outline-none transition-all bg-white text-gray-900;
-    .dark & { @apply bg-[#1a1d2e] border-[#2a2d3e] text-gray-100 placeholder:text-gray-500; }
   }
+}
+
+/* Dark mode overrides */
+.dark .card {
+  background-color: #1a1d2e;
+  border-color: #2a2d3e;
+  box-shadow: none;
+}
+.dark .input-field {
+  background-color: #1a1d2e;
+  border-color: #2a2d3e;
+  color: #e8eaf0;
+}
+.dark .input-field::placeholder {
+  color: #6b7280;
+}
+.dark .btn-secondary {
+  background-color: rgba(255,255,255,0.1);
+  color: #e8eaf0;
+}
+.dark .btn-secondary:hover {
+  background-color: rgba(255,255,255,0.15);
 }
 
 /* Animasyonlar */
