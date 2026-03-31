@@ -20,7 +20,7 @@ export default function JsonLd() {
         '@id': 'https://cezaevinden.com/#organization',
         name: 'Cezaevinden.com',
         url: 'https://cezaevinden.com',
-        logo: 'https://cezaevinden.com/logo.png',
+        logo: 'https://cezaevinden.com/logo.jpg',
         contactPoint: {
           '@type': 'ContactPoint',
           email: 'info@cezaevinden.com',

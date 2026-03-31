@@ -73,7 +73,7 @@ export default function RootLayout({
         <Providers>
           <AnnouncementBar />
           <Header />
-          <main className="pt-[84px] pb-16 lg:pb-0">
+          <main className="pt-[96px] pb-16 lg:pb-0">
             {children}
           </main>
           <BottomNav />

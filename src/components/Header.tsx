@@ -44,25 +44,25 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-navy-700 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-[84px]">
+        <div className="flex items-center justify-between h-[96px]">
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">
             {/* Mobil: küçük logo */}
             <Image
-              src="/logo.png"
+              src="/logo.jpg"
               alt="Cezaevinden.com"
-              width={52}
-              height={52}
+              width={64}
+              height={64}
               className="rounded-full bg-white p-0.5 shadow-md sm:hidden"
               priority
             />
             {/* Masaüstü: büyük logo */}
             <Image
-              src="/logo.png"
+              src="/logo.jpg"
               alt=""
-              width={76}
-              height={76}
+              width={88}
+              height={88}
               className="rounded-full bg-white p-0.5 shadow-md hidden sm:block"
               priority
             />

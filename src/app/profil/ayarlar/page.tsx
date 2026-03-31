@@ -181,13 +181,13 @@ export default function ProfilAyarlarPage() {
         <h1 className="text-xl font-bold text-gray-900">Hesap Ayarları</h1>
       </div>
 
-      <div className="flex gap-1 bg-white rounded-xl p-1 border border-gray-100 shadow-sm mb-6 overflow-x-auto">
+      <div className="flex flex-wrap gap-1 bg-white rounded-xl p-1 border border-gray-100 shadow-sm mb-6">
         {tabs.map(({ id, label, icon: Icon }) => (
           <button key={id} onClick={() => { setActiveTab(id); setError('') }}
-            className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
-              activeTab === id ? 'bg-navy-700 text-white' : 'text-gray-500 hover:text-gray-700'
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+              activeTab === id ? 'bg-navy-700 text-white' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}>
-            <Icon className="w-4 h-4" /> {label}
+            <Icon className="w-4 h-4 flex-shrink-0" /> <span>{label}</span>
           </button>
         ))}
       </div>
@@ -302,9 +302,29 @@ export default function ProfilAyarlarPage() {
             <div>
               <label className="text-sm font-semibold text-gray-700 block mb-1">İmza Saati</label>
               <p className="text-xs text-gray-400 mb-2">24 saat formatında girin — örn: 14:30</p>
-              <input type="time" className="input-field w-40"
+              <input
+                type="text"
+                inputMode="numeric"
+                placeholder="14:30"
+                maxLength={5}
+                className="input-field w-32 font-mono text-lg tracking-widest"
                 value={ds.imzaSaati}
-                onChange={e => setDs(p => ({ ...p, imzaSaati: e.target.value }))} />
+                onChange={e => {
+                  let v = e.target.value.replace(/[^0-9:]/g, '')
+                  // Otomatik ":" ekle
+                  if (v.length === 2 && ds.imzaSaati.length === 1 && !v.includes(':')) {
+                    v = v + ':'
+                  }
+                  if (v.length <= 5) {
+                    // Saat doğrulama: 00-23
+                    const parts = v.split(':')
+                    if (parts[0] && parseInt(parts[0]) > 23) return
+                    // Dakika doğrulama: 00-59
+                    if (parts[1] && parseInt(parts[1]) > 59) return
+                    setDs(p => ({ ...p, imzaSaati: v }))
+                  }
+                }}
+              />
               {ds.imzaSaati && (
                 <p className="text-xs text-green-600 mt-1.5 flex items-center gap-1">
                   ✅ Seçilen saat: <strong>

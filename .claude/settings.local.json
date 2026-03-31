@@ -33,7 +33,16 @@
       "WebFetch(domain:cte.adalet.gov.tr)",
       "WebFetch(domain:www.hurriyet.com.tr)",
       "Bash(git -C \"C:/sosyal\" status)",
-      "Bash(git -C \"C:\\\\sosyal\" status)"
+      "Bash(git -C \"C:\\\\sosyal\" status)",
+      "Bash(git -C \"C:\\\\sosyal\" add src/app/profil/ayarlar/page.tsx)",
+      "Bash(git -C C:/sosyal status)",
+      "Bash(dir \"C:\\\\sosyal\")",
+      "Bash(git --version)",
+      "Bash(\"C:\\\\Program Files\\\\Git\\\\cmd\\\\git.exe\" --version)",
+      "Bash(printf '%s\\\\n' \"test output\")",
+      "Bash(exit 0)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(env)"
     ]
   }
 }
