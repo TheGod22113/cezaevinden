@@ -33,7 +33,7 @@ const cityFilter = ['Tümü', 'Ankara', 'İstanbul', 'İzmir', 'Bursa', 'Türkiy
 export default function DestekPage() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [activeCity, setActiveCity] = useState('Tümü')
-  const [dbResources, setDbResources] = useState<typeof resources>([])
+  const [dbResources, setDbResources] = useState<any[]>([])
   const [loadingResources, setLoadingResources] = useState(true)
 
   useEffect(() => {
