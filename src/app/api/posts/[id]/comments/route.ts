@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { checkAndAwardBadges } from '@/lib/badges'
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   const comments = await prisma.comment.findMany({
@@ -63,6 +64,9 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       },
     })
   }
+
+  // Arka planda rozet kontrolü
+  checkAndAwardBadges((session.user as any).id).catch(() => {})
 
   return NextResponse.json(comment, { status: 201 })
 }

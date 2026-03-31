@@ -59,6 +59,13 @@ export default function ProfilPage({ params }: { params: { username: string } })
       .catch(() => { setNotFound(true); setLoading(false) })
   }, [params.username])
 
+  // Kendi profilini açınca rozet kontrolü yap (arka planda, sessizce)
+  useEffect(() => {
+    if (isOwn) {
+      fetch('/api/badges', { method: 'POST' }).catch(() => {})
+    }
+  }, [isOwn])
+
   useEffect(() => {
     if (activeTab !== 'Gönderiler') return
     setPostsLoading(true)

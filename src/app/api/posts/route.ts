@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { checkAndAwardBadges } from '@/lib/badges'
 
 // GET /api/posts — Feed
 export async function GET(req: NextRequest) {
@@ -54,5 +55,9 @@ export async function POST(req: NextRequest) {
   })
 
   const sanitized = { ...post, author: post.isAnonymous ? null : post.author }
+
+  // Arka planda rozet kontrolü (cevabı beklemiyoruz)
+  checkAndAwardBadges((session.user as any).id).catch(() => {})
+
   return NextResponse.json(sanitized, { status: 201 })
 }

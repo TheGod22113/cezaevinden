@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { checkAndAwardBadges } from '@/lib/badges'
 
 // GET — kendi DS programını getir
 export async function GET() {
@@ -27,6 +28,9 @@ export async function PATCH(req: NextRequest) {
     update: { imzaGunleri, imzaSaati, seminerler, hatirlatmaGun, telefon, aktif },
     create: { userId, imzaGunleri, imzaSaati, seminerler, hatirlatmaGun, telefon, aktif },
   })
+
+  // Arka planda rozet kontrolü (DS_KULLANICI rozeti)
+  checkAndAwardBadges(userId).catch(() => {})
 
   return NextResponse.json({ ok: true, schedule })
 }
