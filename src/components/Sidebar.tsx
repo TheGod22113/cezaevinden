@@ -10,16 +10,17 @@ import {
   HiCog6Tooth,
   HiQuestionMarkCircle,
   HiShieldCheck,
+  HiCalculator,
 } from 'react-icons/hi2'
 
 const navItems = [
   { href: '/',              label: 'Ana Sayfa',      icon: HiHome,                 badge: null },
-  { href: '/forum',         label: 'Forum',          icon: HiChatBubbleLeftRight,  badge: '12' },
-  { href: '/hukuki-yardim', label: 'Hukuki Yardım',  icon: HiScale,                badge: '3' },
+  { href: '/forum',         label: 'Forum',          icon: HiChatBubbleLeftRight,  badge: null },
+  { href: '/hukuki-yardim', label: 'Hukuki Yardım',  icon: HiScale,                badge: null },
   { href: '/haberler',      label: 'Haberler',       icon: HiNewspaper,            badge: null },
   { href: '/destek',        label: 'Destek Ağı',     icon: HiHandRaised,           badge: null },
-  { href: '/topluluklar',   label: 'Topluluklar',    icon: HiUserGroup,            badge: null },
-  { href: '/mesajlar',      label: 'Mesajlar',       icon: HiEnvelope,             badge: '5' },
+  { href: '/hesapla',       label: 'İnfaz Hesapla',  icon: HiCalculator,           badge: null },
+  { href: '/mesajlar',      label: 'Mesajlar',       icon: HiEnvelope,             badge: null },
 ]
 
 const categories = [

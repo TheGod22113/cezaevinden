@@ -16,7 +16,24 @@
       "Bash(export PATH=\"$PATH:/c/Program Files/nodejs\")",
       "Bash(PATH=\"/c/Program Files/nodejs:$PATH\" npm --version)",
       "Bash(echo $SHELL)",
-      "Bash(echo $PATH)"
+      "Bash(echo $PATH)",
+      "Bash(mkdir -p \"C:\\\\sosyal\\\\src\\\\app\\\\forum\\\\[id]\")",
+      "Bash(\"C:\\\\sosyal\\\\src\\\\app\\\\forum\\\\[id]\\\\page.tsx\")",
+      "Bash(cmd /c \"mkdir \"\"C:\\\\sosyal\\\\src\\\\app\\\\forum\\\\[id]\"\" 2>nul & type nul > \"\"C:\\\\sosyal\\\\src\\\\app\\\\forum\\\\[id]\\\\page.tsx\"\"\")",
+      "Bash(powershell -Command \"New-Item -ItemType Directory -Force -Path ''C:\\\\sosyal\\\\src\\\\app\\\\forum\\\\[id]'' | Out-Null; New-Item -ItemType File -Force -Path ''C:\\\\sosyal\\\\src\\\\app\\\\forum\\\\[id]\\\\page.tsx'' | Out-Null\")",
+      "Bash(mkdir -p \"src/app/forum/[id]\")",
+      "Bash(touch \"src/app/forum/[id]/page.tsx\")",
+      "Bash(dir \"C:\\\\sosyal\\\\src\\\\app\\\\forum\")",
+      "Bash(\"src/app/forum/[id]/page.tsx\")",
+      "Bash(npx prisma:*)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(node -e \"console.log\\(''hello''\\)\")",
+      "Bash(where node:*)",
+      "Bash(git add:*)",
+      "WebFetch(domain:cte.adalet.gov.tr)",
+      "WebFetch(domain:www.hurriyet.com.tr)",
+      "Bash(git -C \"C:/sosyal\" status)",
+      "Bash(git -C \"C:\\\\sosyal\" status)"
     ]
   }
 }

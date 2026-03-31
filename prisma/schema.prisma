@@ -58,6 +58,7 @@ model User {
   reports          Report[]        @relation("Reporter")
   reportedPosts    Report[]        @relation("ReportedUser")
   notifications    Notification[]
+  dsSchedule       DsSchedule?
   forumTopics      ForumTopic[]
   forumReplies     ForumReply[]
   news             News[]
@@ -300,6 +301,22 @@ model Notification {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, read])
+}
+
+// ─── DS HATIRLATMA ───────────────────────────────────────────
+model DsSchedule {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  imzaGunleri   String?  // JSON: ["Salı","Cuma"] — imza atılacak günler
+  imzaSaati     String?  // "09:30"
+  seminerler    String?  // JSON: ["2026-04-15","2026-05-20"] — seminer tarihleri
+  hatirlatmaGun Int      @default(1) // kaç gün önce hatırlat
+  telefon       String?
+  aktif         Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // ─── HABER ───────────────────────────────────────────────────

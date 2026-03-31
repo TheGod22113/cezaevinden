@@ -6,14 +6,18 @@ import Link from 'next/link'
 import {
   HiUser, HiLockClosed, HiBell, HiShieldCheck,
   HiTrash, HiCheckCircle, HiEye, HiEyeSlash, HiArrowLeft,
+  HiCalendar, HiPlus, HiXMark,
 } from 'react-icons/hi2'
 
 const tabs = [
   { id: 'profil',   label: 'Profil',   icon: HiUser        },
   { id: 'guvenlik', label: 'Güvenlik', icon: HiLockClosed  },
+  { id: 'ds',       label: 'DS Hatırlatma', icon: HiCalendar },
   { id: 'bildirim', label: 'Bildirim', icon: HiBell        },
   { id: 'gizlilik', label: 'Gizlilik', icon: HiShieldCheck },
 ]
+
+const GUNLER = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar']
 
 export default function ProfilAyarlarPage() {
   const { data: session } = useSession()
@@ -32,6 +36,16 @@ export default function ProfilAyarlarPage() {
     current: '', newPass: '', confirm: '',
   })
 
+  const [ds, setDs] = useState({
+    imzaGunleri: [] as string[],
+    imzaSaati: '',
+    seminerler: [] as string[],
+    hatirlatmaGun: 1,
+    aktif: true,
+  })
+  const [yeniSeminer, setYeniSeminer] = useState('')
+  const [dsLoading, setDsLoading] = useState(false)
+
   const [notifs, setNotifs] = useState({
     like: true, comment: true, follow: true, legalAnswer: true,
     email: false, digest: true,
@@ -41,6 +55,22 @@ export default function ProfilAyarlarPage() {
     showRole: true, showCity: true, allowMessages: true,
     anonymousDefault: false, showOnline: true,
   })
+
+  useEffect(() => {
+    fetch('/api/ds-schedule')
+      .then(r => r.json())
+      .then(data => {
+        if (data && !data.error) {
+          setDs({
+            imzaGunleri: data.imzaGunleri ? JSON.parse(data.imzaGunleri) : [],
+            imzaSaati: data.imzaSaati || '',
+            seminerler: data.seminerler ? JSON.parse(data.seminerler) : [],
+            hatirlatmaGun: data.hatirlatmaGun ?? 1,
+            aktif: data.aktif ?? true,
+          })
+        }
+      }).catch(() => {})
+  }, [])
 
   useEffect(() => {
     fetch('/api/users/me')
@@ -81,6 +111,27 @@ export default function ProfilAyarlarPage() {
       setTimeout(() => setSaved(false), 3000)
     } catch { setError('Bağlantı hatası') }
     setSaving(false)
+  }
+
+  const handleSaveDs = async () => {
+    setDsLoading(true)
+    setError('')
+    try {
+      await fetch('/api/ds-schedule', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          imzaGunleri: JSON.stringify(ds.imzaGunleri),
+          imzaSaati: ds.imzaSaati,
+          seminerler: JSON.stringify(ds.seminerler),
+          hatirlatmaGun: ds.hatirlatmaGun,
+          aktif: ds.aktif,
+        }),
+      })
+      setSaved(true)
+      setTimeout(() => setSaved(false), 3000)
+    } catch { setError('Bağlantı hatası') }
+    setDsLoading(false)
   }
 
   const handleChangePassword = async () => {
@@ -205,6 +256,126 @@ export default function ProfilAyarlarPage() {
             className="btn-primary flex items-center gap-2 disabled:opacity-60">
             {saved ? <><HiCheckCircle className="w-4 h-4" /> Kaydedildi!</> : saving ? 'Kaydediliyor...' : 'Kaydet'}
           </button>
+        </div>
+      )}
+
+      {/* DS HATIRLATMA */}
+      {activeTab === 'ds' && (
+        <div className="space-y-4">
+          <div className="card p-6 space-y-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="font-bold text-gray-800">Denetimli Serbestlik Hatırlatmaları</h2>
+                <p className="text-sm text-gray-500 mt-0.5">İmza ve seminer günlerinizi kaydedin, email ile hatırlatalım.</p>
+              </div>
+              <button
+                onClick={() => setDs(p => ({ ...p, aktif: !p.aktif }))}
+                className={`relative w-11 h-6 rounded-full transition-colors ${ds.aktif ? 'bg-navy-700' : 'bg-gray-200'}`}>
+                <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${ds.aktif ? 'translate-x-5' : 'translate-x-0.5'}`} />
+              </button>
+            </div>
+
+            {/* İmza Günleri */}
+            <div>
+              <label className="text-sm font-semibold text-gray-700 block mb-2">İmza Günleri</label>
+              <div className="flex flex-wrap gap-2">
+                {GUNLER.map(g => (
+                  <button key={g}
+                    onClick={() => setDs(p => ({
+                      ...p,
+                      imzaGunleri: p.imzaGunleri.includes(g)
+                        ? p.imzaGunleri.filter(x => x !== g)
+                        : [...p.imzaGunleri, g],
+                    }))}
+                    className={`px-3 py-1.5 rounded-xl text-sm font-medium border transition-all ${
+                      ds.imzaGunleri.includes(g)
+                        ? 'bg-navy-700 text-white border-navy-700'
+                        : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+                    }`}>
+                    {g}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* İmza Saati */}
+            <div>
+              <label className="text-sm font-semibold text-gray-700 block mb-1.5">İmza Saati</label>
+              <input type="time" className="input-field w-40"
+                value={ds.imzaSaati}
+                onChange={e => setDs(p => ({ ...p, imzaSaati: e.target.value }))} />
+            </div>
+
+            {/* Hatırlatma */}
+            <div>
+              <label className="text-sm font-semibold text-gray-700 block mb-2">Ne zaman hatırlat?</label>
+              <div className="flex gap-2">
+                {[1, 2, 3].map(n => (
+                  <button key={n}
+                    onClick={() => setDs(p => ({ ...p, hatirlatmaGun: n }))}
+                    className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${
+                      ds.hatirlatmaGun === n
+                        ? 'bg-navy-700 text-white border-navy-700'
+                        : 'bg-white text-gray-600 border-gray-200'
+                    }`}>
+                    {n === 1 ? '1 gün önce' : `${n} gün önce`}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Seminer Tarihleri */}
+            <div>
+              <label className="text-sm font-semibold text-gray-700 block mb-2">Seminer Tarihleri</label>
+              <div className="flex gap-2 mb-3">
+                <input type="date" className="input-field flex-1"
+                  value={yeniSeminer}
+                  onChange={e => setYeniSeminer(e.target.value)}
+                  min={new Date().toISOString().split('T')[0]} />
+                <button
+                  onClick={() => {
+                    if (yeniSeminer && !ds.seminerler.includes(yeniSeminer)) {
+                      setDs(p => ({ ...p, seminerler: [...p.seminerler, yeniSeminer].sort() }))
+                      setYeniSeminer('')
+                    }
+                  }}
+                  className="btn-primary px-4 flex items-center gap-1">
+                  <HiPlus className="w-4 h-4" /> Ekle
+                </button>
+              </div>
+              {ds.seminerler.length > 0 && (
+                <div className="space-y-2">
+                  {ds.seminerler.map(t => (
+                    <div key={t} className="flex items-center justify-between bg-gray-50 rounded-xl px-3 py-2">
+                      <span className="text-sm flex items-center gap-2">
+                        <HiCalendar className="w-4 h-4 text-gray-400" />
+                        {new Date(t).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      </span>
+                      <button onClick={() => setDs(p => ({ ...p, seminerler: p.seminerler.filter(x => x !== t) }))}
+                        className="text-gray-400 hover:text-red-500 transition-colors">
+                        <HiXMark className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {ds.seminerler.length === 0 && (
+                <p className="text-sm text-gray-400">Henüz seminer tarihi eklenmedi.</p>
+              )}
+            </div>
+
+            <button onClick={handleSaveDs} disabled={dsLoading}
+              className="btn-primary flex items-center gap-2 disabled:opacity-60">
+              {saved ? <><HiCheckCircle className="w-4 h-4" /> Kaydedildi!</> : dsLoading ? 'Kaydediliyor...' : 'Kaydet'}
+            </button>
+          </div>
+
+          <div className="card p-4 bg-blue-50 border border-blue-200">
+            <p className="text-sm text-blue-800">
+              <strong>Nasıl çalışır?</strong> Belirlediğiniz günlerde sistem size email hatırlatması gönderir.
+              E-posta adresinizin doğru olduğundan emin olun.
+            </p>
+          </div>
         </div>
       )}
 

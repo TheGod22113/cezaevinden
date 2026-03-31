@@ -8,14 +8,15 @@ import {
   HiScale,
   HiEnvelope,
   HiBell,
+  HiCalculator,
 } from 'react-icons/hi2'
 
 const navItems = [
   { href: '/',              label: 'Ana Sayfa', icon: HiHome,                badge: null },
-  { href: '/forum',         label: 'Forum',     icon: HiChatBubbleLeftRight, badge: '12' },
-  { href: '/hukuki-yardim', label: 'Hukuki',    icon: HiScale,               badge: null, center: true },
-  { href: '/mesajlar',      label: 'Mesajlar',  icon: HiEnvelope,            badge: '5'  },
-  { href: '/bildirimler',   label: 'Bildirim',  icon: HiBell,                badge: '4'  },
+  { href: '/forum',         label: 'Forum',     icon: HiChatBubbleLeftRight, badge: null },
+  { href: '/hesapla',       label: 'Hesapla',   icon: HiCalculator,          badge: null, center: true },
+  { href: '/mesajlar',      label: 'Mesajlar',  icon: HiEnvelope,            badge: null },
+  { href: '/bildirimler',   label: 'Bildirim',  icon: HiBell,                badge: null },
 ]
 
 export default function BottomNav() {
