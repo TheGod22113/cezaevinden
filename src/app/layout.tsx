@@ -1,6 +1,14 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Inter } from 'next/font/google'
 import './globals.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-inter',
+})
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CookieBanner from '@/components/CookieBanner'
@@ -26,7 +34,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://cezaevinden.com/og-image.png',
+        url: 'https://cezaevinden.com/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Cezaevinden.com — Mahkumlar, Aileler ve Hukuk Platformu',
@@ -37,7 +45,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Cezaevinden.com',
     description: 'Mahkumlar, aileler ve gönüllü avukatların bir arada olduğu dayanışma platformu.',
-    images: ['https://cezaevinden.com/og-image.png'],
+    images: ['https://cezaevinden.com/og-image.jpg'],
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   verification: { google: 'LgD37TK4v1C0op24TRRRSs-TxQ4VT-4XA4Np8GuUHBQ' },
@@ -49,17 +57,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="tr">
+    <html lang="tr" className={inter.variable}>
       <head>
         <JsonLd />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
       </head>
-      <body className="min-h-screen bg-gray-50">
+      <body className={`min-h-screen bg-gray-50 ${inter.className}`}>
         {/* Google Analytics */}
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-6KK0GGMTBG" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">{`
@@ -71,7 +73,7 @@ export default function RootLayout({
         <Providers>
           <AnnouncementBar />
           <Header />
-          <main className="pt-[72px] pb-16 lg:pb-0">
+          <main className="pt-[84px] pb-16 lg:pb-0">
             {children}
           </main>
           <BottomNav />
