@@ -5,8 +5,32 @@ import Link from 'next/link'
 import { HiScale, HiEnvelope, HiArrowLeft, HiCheckCircle } from 'react-icons/hi2'
 
 export default function SifremiUnuttumPage() {
-  const [email, setEmail] = useState('')
-  const [sent,  setSent]  = useState(false)
+  const [email,   setEmail]   = useState('')
+  const [sent,    setSent]    = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error,   setError]   = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch('/api/auth/reset-password', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ email }),
+      })
+      if (!res.ok) {
+        const d = await res.json()
+        setError(d.error || 'Bir hata oluştu, tekrar deneyin.')
+      } else {
+        setSent(true)
+      }
+    } catch {
+      setError('Sunucuya bağlanılamadı, tekrar deneyin.')
+    }
+    setLoading(false)
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -30,22 +54,40 @@ export default function SifremiUnuttumPage() {
                 <strong>{email}</strong> adresine şifre sıfırlama linki gönderdik. Gelen kutunuzu kontrol edin.
               </p>
               <p className="text-xs text-gray-400 mb-4">E-posta gelmedi mi? Spam klasörünü kontrol edin.</p>
-              <button onClick={() => setSent(false)} className="text-sm text-navy-700 hover:underline">
+              <button onClick={() => { setSent(false); setEmail('') }} className="text-sm text-navy-700 hover:underline">
                 Tekrar gönder
               </button>
             </div>
           ) : (
-            <form onSubmit={e => { e.preventDefault(); setSent(true) }} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="text-sm font-semibold text-gray-700 block mb-1.5">E-posta Adresi</label>
+                <label htmlFor="reset-email" className="text-sm font-semibold text-gray-700 block mb-1.5">
+                  E-posta Adresi
+                </label>
                 <div className="relative">
                   <HiEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
-                    className="input-field pl-10" placeholder="ornek@email.com" />
+                  <input
+                    id="reset-email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    className="input-field pl-10"
+                    placeholder="ornek@email.com"
+                  />
                 </div>
               </div>
-              <button type="submit" className="w-full bg-navy-700 hover:bg-navy-800 text-white font-bold py-3 rounded-xl transition-colors text-sm">
-                Sıfırlama Linki Gönder
+
+              {error && (
+                <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-navy-700 hover:bg-navy-800 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-colors text-sm"
+              >
+                {loading ? 'Gönderiliyor…' : 'Sıfırlama Linki Gönder'}
               </button>
             </form>
           )}
