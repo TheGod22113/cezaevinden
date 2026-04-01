@@ -36,7 +36,8 @@ export default function HomePage() {
   const loadPosts = useCallback(async (pageNum: number, catIdx: number, replace = false) => {
     setLoading(true)
     const cat = filterTabs[catIdx].category
-    const url = `/api/posts?page=${pageNum}${cat ? `&category=${encodeURIComponent(cat)}` : ''}`
+    const catParam = cat ? '&category=' + encodeURIComponent(cat) : ''
+    const url = '/api/posts?page=' + pageNum + catParam
     const res = await fetch(url)
     const data = await res.json()
     const arr: PostData[] = Array.isArray(data) ? data : []
@@ -225,8 +226,6 @@ export default function HomePage() {
           </div>
 
           <InfiniteScroll onLoadMore={loadMore} hasMore={hasMore} isLoading={loading} />
-            </button>
-          )}
 
           {!loading && posts.length === 0 && (
             <div className="text-center py-16 text-gray-400">
