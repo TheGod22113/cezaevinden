@@ -70,12 +70,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     try {
       const support = await prisma.supportResource.findMany({
         where: { verified: true },
-        select: { id: true, updatedAt: true },
+        select: { id: true },
         take: 50,
       })
       dynamicRoutes.push(...support.map(s => ({
         url: `${base}/destek/${s.id}`,
-        lastModified: s.updatedAt,
+        lastModified: new Date(),
         changeFrequency: 'monthly' as const,
         priority: 0.5,
       })))
