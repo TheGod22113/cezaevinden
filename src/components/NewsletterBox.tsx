@@ -10,10 +10,16 @@ export default function NewsletterBox() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!email) return
     setLoading(true)
-    // Gerçek entegrasyon için API endpoint eklenebilir
-    await new Promise(r => setTimeout(r, 800))
-    setDone(true)
+    try {
+      await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      setDone(true)
+    } catch { /* ignore */ }
     setLoading(false)
   }
 

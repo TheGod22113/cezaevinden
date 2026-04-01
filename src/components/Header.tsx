@@ -9,7 +9,7 @@ import {
   HiHome, HiNewspaper, HiScale, HiChatBubbleLeftRight,
   HiMagnifyingGlass, HiBars3, HiXMark, HiHandRaised,
   HiUserCircle, HiCog6Tooth, HiArrowRightOnRectangle,
-  HiShieldCheck, HiBookmark,
+  HiShieldCheck, HiBookmark, HiDocumentText, HiCalculator,
 } from 'react-icons/hi2'
 import NotificationBell from './NotificationBell'
 import ThemeToggle from './ThemeToggle'
@@ -20,6 +20,8 @@ const navItems = [
   { href: '/hukuki-yardim', label: 'Hukuki Yardım', icon: HiScale },
   { href: '/haberler',      label: 'Haberler',      icon: HiNewspaper },
   { href: '/destek',        label: 'Destek Ağı',    icon: HiHandRaised },
+  { href: '/dilekce',       label: 'Dilekçeler',    icon: HiDocumentText },
+  { href: '/hesapla',       label: 'Hesapla',       icon: HiCalculator },
 ]
 
 export default function Header() {

@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { checkAndAwardBadges } from '@/lib/badges'
+import { filterText } from '@/lib/wordFilter'
 
 // GET /api/posts — Feed
 export async function GET(req: NextRequest) {
@@ -44,7 +45,7 @@ export async function POST(req: NextRequest) {
   const post = await prisma.post.create({
     data: {
       authorId:    (session.user as any).id,
-      content:     content.trim(),
+      content:     filterText(content.trim()),
       category:    category || 'Genel',
       isAnonymous: !!isAnonymous,
     },

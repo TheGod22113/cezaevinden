@@ -6,6 +6,7 @@ import Sidebar from '@/components/Sidebar'
 import RightSidebar from '@/components/RightSidebar'
 import PostCard, { type PostData } from '@/components/PostCard'
 import PostComposer from '@/components/PostComposer'
+import InfiniteScroll from '@/components/InfiniteScroll'
 import { PostSkeleton } from '@/components/Skeleton'
 import { HiScale, HiNewspaper, HiHandRaised, HiStar, HiChatBubbleLeftRight, HiArrowRight, HiCheckBadge } from 'react-icons/hi2'
 
@@ -223,10 +224,7 @@ export default function HomePage() {
             {loading && <><PostSkeleton /><PostSkeleton /></>}
           </div>
 
-          {!loading && hasMore && (
-            <button onClick={loadMore}
-              className="w-full card py-3 mt-3 text-sm font-medium text-navy-700 hover:bg-gray-50 transition-colors">
-              Daha fazla göster
+          <InfiniteScroll onLoadMore={loadMore} hasMore={hasMore} isLoading={loading} />
             </button>
           )}
 

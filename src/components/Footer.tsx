@@ -8,12 +8,15 @@ const links = {
     { label: 'Hukuki Yardım', href: '/hukuki-yardim'  },
     { label: 'Haberler',      href: '/haberler'       },
     { label: 'Destek Ağı',   href: '/destek'         },
+    { label: 'İnfaz Hesapla', href: '/hesapla'        },
+    { label: 'Dilekçe Şablonları', href: '/dilekce'  },
+    { label: 'S.S.S.',        href: '/sss'            },
   ],
   'Topluluk': [
     { label: 'Üye Ol',          href: '/kayit'          },
     { label: 'Giriş Yap',       href: '/giris'          },
     { label: 'Gönüllü Avukat Ol', href: '/kayit'        },
-    { label: 'Arama',           href: '/ara'            },
+    { label: 'Arama',           href: '/arama'          },
   ],
   'Hukuki': [
     { label: 'KVKK',              href: '/kvkk'             },

@@ -13,6 +13,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/hesapla`,           lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/avukat-ol`,         lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${base}/hakkimizda`,        lastModified: new Date(), changeFrequency: 'monthly', priority: 0.4 },
+    { url: `${base}/sss`,               lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${base}/dilekce`,           lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/gizlilik`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.3 },
     { url: `${base}/kullanim-kosullari`,lastModified: new Date(), changeFrequency: 'monthly', priority: 0.3 },
   ]

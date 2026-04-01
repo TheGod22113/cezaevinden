@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { checkAndAwardBadges } from '@/lib/badges'
+import { filterText } from '@/lib/wordFilter'
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   const comments = await prisma.comment.findMany({
@@ -42,7 +43,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     data: {
       postId:     params.id,
       authorId:   (session.user as any).id,
-      content:    content.trim(),
+      content:    filterText(content.trim()),
       isAnonymous: !!isAnonymous,
       parentId:   parentId || null,
     },
