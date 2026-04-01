@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Sidebar from '@/components/Sidebar'
 import RightSidebar from '@/components/RightSidebar'
@@ -26,6 +27,7 @@ type FeaturedData = {
 }
 
 export default function HomePage() {
+  const { data: session } = useSession()
   const [activeFilter, setActiveFilter] = useState(0)
   const [posts, setPosts]     = useState<PostData[]>([])
   const [loading, setLoading] = useState(true)
@@ -90,12 +92,26 @@ export default function HomePage() {
             paylaşmak, destek olmak ve birlikte güçlenmek için.
           </p>
           <div className="flex flex-wrap gap-3">
-            <a href="/kayit" className="bg-crimson-600 hover:bg-crimson-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm">
-              Hemen Üye Ol — Ücretsiz
-            </a>
-            <a href="/hakkimizda" className="bg-white/10 hover:bg-white/20 text-white font-medium px-5 py-2.5 rounded-xl transition-colors text-sm">
-              Nasıl Çalışır?
-            </a>
+            {session ? (
+              <>
+                <div className="bg-white/10 rounded-xl px-5 py-2.5">
+                  <p className="text-blue-200 text-xs">Hoş geldiniz</p>
+                  <p className="font-semibold text-white">{session.user?.name}</p>
+                </div>
+                <a href="/profil" className="bg-white/10 hover:bg-white/20 text-white font-medium px-5 py-2.5 rounded-xl transition-colors text-sm flex items-center">
+                  Profilim
+                </a>
+              </>
+            ) : (
+              <>
+                <a href="/kayit" className="bg-crimson-600 hover:bg-crimson-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm">
+                  Hemen Üye Ol — Ücretsiz
+                </a>
+                <a href="/hakkimizda" className="bg-white/10 hover:bg-white/20 text-white font-medium px-5 py-2.5 rounded-xl transition-colors text-sm">
+                  Nasıl Çalışır?
+                </a>
+              </>
+            )}
           </div>
         </div>
         <div className="flex flex-wrap gap-6 mt-6 pt-5 border-t border-white/20">
