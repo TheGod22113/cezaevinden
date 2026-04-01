@@ -4,8 +4,6 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY!)
-
 // Türkiye saatini al (UTC+3)
 function turkiyeSaati() {
   const now = new Date()
@@ -26,6 +24,7 @@ function saatToDakika(saatStr: string): number {
 }
 
 async function handleReminder(req: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY!)
   const session    = await getServerSession(authOptions)
   const authHeader = req.headers.get('authorization') ?? req.headers.get('x-cron-secret')
   const isAdmin    = session && (session.user as any).role === 'ADMIN'
