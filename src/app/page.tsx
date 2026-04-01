@@ -98,7 +98,7 @@ export default function HomePage() {
                   <p className="text-blue-200 text-xs">Hoş geldiniz</p>
                   <p className="font-semibold text-white">{session.user?.name}</p>
                 </div>
-                <a href="/profil" className="bg-white/10 hover:bg-white/20 text-white font-medium px-5 py-2.5 rounded-xl transition-colors text-sm flex items-center">
+                <a href={`/profil/${(session.user as any)?.username}`} className="bg-white/10 hover:bg-white/20 text-white font-medium px-5 py-2.5 rounded-xl transition-colors text-sm flex items-center">
                   Profilim
                 </a>
               </>

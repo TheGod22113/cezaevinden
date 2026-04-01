@@ -3,10 +3,15 @@ import { prisma } from '@/lib/prisma'
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
-  const q   = searchParams.get('q')?.trim()
-  const tab = searchParams.get('tab') || 'all'
+  const q    = searchParams.get('q')?.trim()
+  const tab  = searchParams.get('tab')  || 'all'
+  const sort = searchParams.get('sort') || 'recent'
 
   if (!q || q.length < 2) return NextResponse.json({ users: [], posts: [], topics: [], questions: [] })
+
+  const postOrder    = sort === 'popular' ? { likes:   { _count: 'desc' as const } } : { createdAt: 'desc' as const }
+  const topicOrder   = sort === 'popular' ? { replies: { _count: 'desc' as const } } : { createdAt: 'desc' as const }
+  const legalOrder   = sort === 'popular' ? { answers: { _count: 'desc' as const } } : { createdAt: 'desc' as const }
 
   const [posts, users, topics, questions] = await Promise.all([
     (tab === 'all' || tab === 'posts')
@@ -14,7 +19,7 @@ export async function GET(req: NextRequest) {
           where: { content: { contains: q, mode: 'insensitive' }, isAnonymous: false },
           include: { _count: { select: { likes: true, comments: true } } },
           take: 5,
-          orderBy: { createdAt: 'desc' },
+          orderBy: postOrder,
         })
       : [],
 
@@ -42,7 +47,7 @@ export async function GET(req: NextRequest) {
           },
           include: { _count: { select: { replies: true } } },
           take: 5,
-          orderBy: { createdAt: 'desc' },
+          orderBy: topicOrder,
         })
       : [],
 
@@ -56,7 +61,7 @@ export async function GET(req: NextRequest) {
           },
           include: { _count: { select: { answers: true } } },
           take: 5,
-          orderBy: { createdAt: 'desc' },
+          orderBy: legalOrder,
         })
       : [],
   ])

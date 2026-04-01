@@ -14,15 +14,17 @@ function SearchResults() {
   const [tab, setTab]     = useState<Tab>('all')
   const [results, setResults] = useState<any>(null)
   const [loading, setLoading] = useState(false)
+  const [sort, setSort] = useState('relevance')
+  const [showFilters, setShowFilters] = useState(false)
 
   useEffect(() => {
     if (!q.trim()) return
     setLoading(true)
-    fetch(`/api/search?q=${encodeURIComponent(q)}&tab=${tab}`)
+    fetch(`/api/search?q=${encodeURIComponent(q)}&tab=${tab}&sort=${sort}`)
       .then(r => r.json())
       .then(d => { setResults(d); setLoading(false) })
       .catch(() => setLoading(false))
-  }, [q, tab])
+  }, [q, tab, sort])
 
   const tabs: { key: Tab; label: string; icon: React.ComponentType<any> }[] = [
     { key: 'all',   label: 'Tümü',   icon: HiMagnifyingGlass },
@@ -50,6 +52,51 @@ function SearchResults() {
           <button type="submit" className="btn-primary px-5">Ara</button>
         </form>
         {q && <p className="text-sm text-gray-500 mt-2">"{q}" için sonuçlar</p>}
+
+        {/* Filters */}
+        <div className="mt-3 space-y-3">
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="text-sm text-navy-700 font-medium hover:underline"
+          >
+            {showFilters ? '✓ Filtreler' : '⊕ Filtreler'}
+          </button>
+
+          {showFilters && (
+            <div className="grid sm:grid-cols-3 gap-3 p-3 bg-gray-50 rounded-xl">
+              <div>
+                <label className="text-xs font-semibold text-gray-700 block mb-1">Sıralama</label>
+                <select
+                  value={sort}
+                  onChange={e => setSort(e.target.value)}
+                  className="input-field text-sm"
+                >
+                  <option value="relevance">En İlgili</option>
+                  <option value="recent">En Yeni</option>
+                  <option value="popular">En Popüler</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-gray-700 block mb-1">Türü</label>
+                <select className="input-field text-sm">
+                  <option>Tümü</option>
+                  <option>Gönderiler</option>
+                  <option>Forum</option>
+                  <option>Hukuki Sorular</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-gray-700 block mb-1">Zaman</label>
+                <select className="input-field text-sm">
+                  <option>Her zaman</option>
+                  <option>Son gün</option>
+                  <option>Son hafta</option>
+                  <option>Son ay</option>
+                </select>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Tabs */}
