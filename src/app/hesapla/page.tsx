@@ -477,7 +477,7 @@ export default function HesaplaPage() {
                   </div>
                 </div>
               </div>
-            ) : result.ekDenetim3Yil && !result.ekDenetimVar ? (
+            ) : result.sucTip.ekDenetim3Yil && !result.ekDenetimVar ? (
               <div className="card p-3 border border-gray-100 dark:border-[#2a2d3e]">
                 <p className="text-xs text-gray-500 flex items-center gap-1.5">
                   <HiCheckCircle className="w-4 h-4 text-green-500" />
