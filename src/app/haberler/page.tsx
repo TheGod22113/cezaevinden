@@ -110,7 +110,7 @@ export default function HaberlerPage() {
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                  activeCategory === cat ? 'bg-navy-700 text-white' : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                  activeCategory === cat ? 'bg-navy-700 text-white' : 'bg-white dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/15 border border-gray-200 dark:border-[#2a2d3e]'
                 }`}
               >
                 {cat}
@@ -152,7 +152,7 @@ export default function HaberlerPage() {
                 <p className="text-sm text-gray-600 mb-3">{featured.excerpt}</p>
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <div className="flex items-center gap-3 text-xs text-gray-400">
-                    <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium">{featured.category}</span>
+                    <span className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full font-medium">{featured.category}</span>
                     <span>📰 {featured.source}</span>
                     <span className="flex items-center gap-1"><HiClock className="w-3.5 h-3.5" /> {featured.time}</span>
                     <span className="flex items-center gap-1"><HiEye className="w-3.5 h-3.5" /> {featured.views.toLocaleString('tr')}</span>
@@ -160,7 +160,7 @@ export default function HaberlerPage() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={e => handleShare(e, featured.title)}
-                      className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-navy-700 transition-colors px-2 py-1.5 hover:bg-gray-50 rounded-lg"
+                      className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 hover:text-navy-700 transition-colors px-2 py-1.5 hover:bg-gray-50 dark:hover:bg-white/5 rounded-lg"
                     >
                       <HiShare className="w-4 h-4" /> Paylaş
                     </button>
@@ -199,7 +199,7 @@ export default function HaberlerPage() {
                     <p className="text-xs text-gray-500 line-clamp-2 mb-2">{haber.excerpt}</p>
 
                     <div className="flex items-center gap-3 flex-wrap text-xs text-gray-400">
-                      <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{haber.category}</span>
+                      <span className="bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded-full">{haber.category}</span>
                       <span>{haber.source}</span>
                       <span className="flex items-center gap-0.5"><HiClock className="w-3 h-3" /> {haber.time}</span>
                       <span className="flex items-center gap-0.5"><HiEye className="w-3 h-3" /> {haber.views.toLocaleString('tr')}</span>

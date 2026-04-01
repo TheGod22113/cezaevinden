@@ -224,8 +224,8 @@ export default function ForumPage() {
       {/* Yeni Konu Modalı */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg">
-            <div className="flex items-center justify-between p-5 border-b">
+          <div className="bg-white dark:bg-[#1a1d2e] rounded-2xl shadow-2xl w-full max-w-lg">
+            <div className="flex items-center justify-between p-5 border-b dark:border-[#2a2d3e]">
               <h2 className="text-lg font-bold text-navy-700">Yeni Konu Aç</h2>
               <button onClick={() => setShowModal(false)} aria-label="Kapat" className="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
             </div>
@@ -263,7 +263,7 @@ export default function ForumPage() {
                 />
               </div>
               <div className="flex gap-3 pt-1">
-                <button type="button" onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-300 rounded-xl text-gray-600 hover:bg-gray-50 font-medium text-sm">İptal</button>
+                <button type="button" onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-300 dark:border-[#2a2d3e] rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 font-medium text-sm">İptal</button>
                 <button type="submit" disabled={submitting} className="flex-1 py-2.5 bg-crimson-600 hover:bg-crimson-700 disabled:opacity-60 text-white rounded-xl font-semibold text-sm">
                   {submitting ? 'Gönderiliyor...' : 'Konuyu Yayınla'}
                 </button>
@@ -316,7 +316,7 @@ export default function ForumPage() {
                   key={opt}
                   onClick={() => setActiveSort(opt)}
                   className={`flex-shrink-0 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                    activeSort === opt ? 'bg-navy-700 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    activeSort === opt ? 'bg-navy-700 text-white' : 'bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/15'
                   }`}
                 >
                   {opt}
@@ -385,7 +385,7 @@ export default function ForumPage() {
                     </div>
                   </div>
                   {topic.answered && (
-                    <span className="flex items-center gap-1 text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded-full flex-shrink-0">
+                    <span className="flex items-center gap-1 text-xs text-green-600 font-medium bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full flex-shrink-0">
                       <HiCheckCircle className="w-3.5 h-3.5" /> Yanıtlandı
                     </span>
                   )}
@@ -397,7 +397,7 @@ export default function ForumPage() {
                     {roleLabels[topic.authorRole]}
                   </span>
                   <span className="text-xs text-gray-500">{topic.author}</span>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{topic.category}</span>
+                  <span className="text-xs bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded-full">{topic.category}</span>
                   <span className="text-xs text-gray-400">{topic.time}</span>
 
                   <div className="ml-auto flex items-center gap-3 text-xs text-gray-400">
@@ -422,7 +422,7 @@ export default function ForumPage() {
               <button
                 key={i}
                 className={`w-9 h-9 rounded-lg text-sm font-medium transition-all ${
-                  page === 1 ? 'bg-navy-700 text-white' : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                  page === 1 ? 'bg-navy-700 text-white' : 'bg-white dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/15 border border-gray-200 dark:border-[#2a2d3e]'
                 }`}
               >
                 {page}

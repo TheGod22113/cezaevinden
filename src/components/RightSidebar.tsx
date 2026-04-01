@@ -50,7 +50,7 @@ export default function RightSidebar() {
             { label: 'Soru Cevaplandı', value: '8.2K', color: 'text-purple-600' },
             { label: 'Aktif Konu',   value: '1.4K',  color: 'text-orange-600' },
           ].map(({ label, value, color }) => (
-            <div key={label} className="bg-gray-50 rounded-lg p-3 text-center">
+            <div key={label} className="bg-gray-50 dark:bg-white/5 rounded-lg p-3 text-center">
               <p className={`text-xl font-bold ${color}`}>{value}</p>
               <p className="text-xs text-gray-500 mt-0.5">{label}</p>
             </div>

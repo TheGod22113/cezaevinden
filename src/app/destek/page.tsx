@@ -136,7 +136,7 @@ export default function DestekPage() {
                 key={city}
                 onClick={() => setActiveCity(city)}
                 className={`flex-shrink-0 px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
-                  activeCity === city ? 'bg-navy-700 text-white' : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                  activeCity === city ? 'bg-navy-700 text-white' : 'bg-white dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/15 border border-gray-200 dark:border-[#2a2d3e]'
                 }`}
               >
                 <HiMapPin className="w-3.5 h-3.5 inline mr-1" />{city}
@@ -171,18 +171,18 @@ export default function DestekPage() {
                       )}
                     </div>
                     <div className="flex items-center gap-2 flex-wrap text-xs text-gray-500">
-                      <span className="bg-gray-100 px-2 py-0.5 rounded-full">{resource.type}</span>
+                      <span className="bg-gray-100 dark:bg-white/10 px-2 py-0.5 rounded-full">{resource.type}</span>
                       <span className="flex items-center gap-0.5"><HiMapPin className="w-3 h-3" /> {resource.city}</span>
-                      <span className="bg-navy-50 text-navy-700 px-2 py-0.5 rounded-full">{resource.category}</span>
+                      <span className="bg-navy-50 dark:bg-navy-900/40 text-navy-700 dark:text-blue-300 px-2 py-0.5 rounded-full">{resource.category}</span>
                       <span>⭐ {resource.rating}</span>
                     </div>
                   </div>
                   <div className="flex-shrink-0 flex gap-2">
-                    <a href={`tel:${resource.phone}`} className="p-2 bg-green-50 text-green-600 hover:bg-green-100 rounded-lg transition-colors" title="Ara">
+                    <a href={`tel:${resource.phone}`} className="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg transition-colors" title="Ara">
                       <HiPhone className="w-5 h-5" />
                     </a>
                     <a href={resource.website.startsWith('http') ? resource.website : `https://${resource.website}`} target="_blank" rel="noopener noreferrer"
-                      className="p-2 bg-navy-50 text-navy-700 hover:bg-navy-100 rounded-lg transition-colors" title="Web Sitesi">
+                      className="p-2 bg-navy-50 dark:bg-navy-900/40 text-navy-700 dark:text-blue-300 hover:bg-navy-100 dark:hover:bg-navy-900/60 rounded-lg transition-colors" title="Web Sitesi">
                       <HiGlobeAlt className="w-5 h-5" />
                     </a>
                   </div>
@@ -198,7 +198,7 @@ export default function DestekPage() {
                   ))}
                 </div>
 
-                <div className="mt-3 pt-3 border-t border-gray-50 flex items-center justify-between">
+                <div className="mt-3 pt-3 border-t border-gray-50 dark:border-white/5 flex items-center justify-between">
                   <span className="text-xs text-gray-400 flex items-center gap-1">
                     <HiPhone className="w-3.5 h-3.5" /> {resource.phone}
                   </span>
@@ -211,7 +211,7 @@ export default function DestekPage() {
           </div>
 
           {/* Kaynak Öner */}
-          <div className="card p-5 bg-gradient-to-br from-navy-50 to-blue-50 border-2 border-dashed border-navy-200">
+          <div className="card p-5 bg-gradient-to-br from-navy-50 to-blue-50 dark:from-navy-900/30 dark:to-blue-900/20 border-2 border-dashed border-navy-200 dark:border-navy-700/50">
             <div className="flex items-center gap-3 mb-2">
               <HiUserGroup className="w-8 h-8 text-navy-700" />
               <div>

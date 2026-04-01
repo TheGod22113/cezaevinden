@@ -62,7 +62,7 @@ export default function PostComposer({ onPost }: Props) {
                 id="post-category"
                 value={category}
                 onChange={e => setCategory(e.target.value)}
-                className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 text-gray-600 focus:outline-none focus:ring-1 focus:ring-navy-700"
+                className="text-xs border border-gray-200 dark:border-[#2a2d3e] dark:bg-[#1a1d2e] dark:text-gray-300 rounded-lg px-2 py-1.5 text-gray-600 focus:outline-none focus:ring-1 focus:ring-navy-700"
               >
                 {categories.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
@@ -75,7 +75,7 @@ export default function PostComposer({ onPost }: Props) {
             </div>
 
             <div className="flex items-center gap-2">
-              <button aria-label="Fotoğraf ekle" className="p-1.5 rounded-lg text-gray-400 hover:text-navy-700 hover:bg-gray-100 transition-colors">
+              <button aria-label="Fotoğraf ekle" className="p-1.5 rounded-lg text-gray-400 hover:text-navy-700 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
                 <HiPhoto className="w-4 h-4" />
               </button>
               <button

@@ -227,11 +227,11 @@ export default function HukukiYardimPage() {
       </div>
 
       {/* Uyarı Banner */}
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex items-start gap-3">
-        <HiShieldCheck className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+      <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/40 rounded-xl p-4 mb-6 flex items-start gap-3">
+        <HiShieldCheck className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
         <div>
-          <p className="text-sm font-semibold text-amber-800">Önemli Bilgilendirme</p>
-          <p className="text-xs text-amber-700 mt-0.5">
+          <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">Önemli Bilgilendirme</p>
+          <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5">
             Bu platform hukuki danışmanlık hizmeti değil, bilgilendirme amaçlıdır. Verilen yanıtlar
             avukatlık hizmeti yerine geçmez. Resmi hukuki destek için baronuza veya adli yardım birimlerine başvurun.
           </p>
@@ -295,7 +295,7 @@ export default function HukukiYardimPage() {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all capitalize ${
-                  activeTab === tab ? 'bg-navy-700 text-white' : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                  activeTab === tab ? 'bg-navy-700 text-white' : 'bg-white dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/15 border border-gray-200 dark:border-[#2a2d3e]'
                 }`}
               >
                 {tab === 'sorular' ? '❓ Sorular' : '⚖️ Avukatlar'}
@@ -326,17 +326,17 @@ export default function HukukiYardimPage() {
                       {q.title}
                     </h3>
                     {q.isAnswered ? (
-                      <span className="flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full flex-shrink-0 font-medium">
+                      <span className="flex items-center gap-1 text-xs text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full flex-shrink-0 font-medium">
                         <HiCheckCircle className="w-3.5 h-3.5" /> Yanıtlandı
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-full flex-shrink-0 font-medium">
+                      <span className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded-full flex-shrink-0 font-medium">
                         <HiClock className="w-3.5 h-3.5" /> Yanıt Bekleniyor
                       </span>
                     )}
                   </div>
                   <div className="flex items-center gap-3 flex-wrap text-xs text-gray-500">
-                    <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium">{q.category}</span>
+                    <span className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full font-medium">{q.category}</span>
                     {!q.isAnonymous && q.author && <span>{q.author.name}</span>}
                     {q.isAnonymous && <span>Anonim</span>}
                     <span>{timeAgo(q.createdAt)}</span>
