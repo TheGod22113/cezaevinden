@@ -17,6 +17,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/dilekce`,           lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/gizlilik`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.3 },
     { url: `${base}/kullanim-kosullari`,lastModified: new Date(), changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${base}/avukat-ol`,         lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${base}/iletisim`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.4 },
+    { url: `${base}/kvkk`,              lastModified: new Date(), changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${base}/basin`,             lastModified: new Date(), changeFrequency: 'monthly', priority: 0.3 },
   ]
 
   try {
@@ -61,6 +65,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.5,
       })),
     ]
+
+    // Destek kaynakları
+    try {
+      const support = await prisma.supportResource.findMany({
+        where: { verified: true },
+        select: { id: true, updatedAt: true },
+        take: 50,
+      })
+      dynamicRoutes.push(...support.map(s => ({
+        url: `${base}/destek/${s.id}`,
+        lastModified: s.updatedAt,
+        changeFrequency: 'monthly' as const,
+        priority: 0.5,
+      })))
+    } catch { /* supportResource tablosu yoksa atla */ }
 
     return [...staticRoutes, ...dynamicRoutes]
   } catch {

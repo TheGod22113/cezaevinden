@@ -3,8 +3,27 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { HiArrowLeft, HiCalendar, HiUser } from 'react-icons/hi2'
 import ShareButton from '@/components/ShareButton'
+import type { Metadata } from 'next'
 
 interface Props { params: { id: string } }
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const news = await prisma.news.findUnique({
+    where: { id: params.id },
+    select: { title: true, summary: true, category: true, imageUrl: true },
+  })
+  if (!news) return { title: 'Haber Bulunamadı' }
+  return {
+    title: news.title,
+    description: news.summary?.slice(0, 160) ?? undefined,
+    openGraph: {
+      title: news.title,
+      description: news.summary?.slice(0, 160) ?? undefined,
+      type: 'article',
+      ...(news.imageUrl ? { images: [{ url: news.imageUrl }] } : {}),
+    },
+  }
+}
 
 export default async function HaberDetayPage({ params }: Props) {
   const news = await prisma.news.findUnique({
