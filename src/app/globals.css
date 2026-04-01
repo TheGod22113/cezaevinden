@@ -110,6 +110,21 @@ body {
   background-color: rgba(255,255,255,0.15);
 }
 
+/* Dark mode badge overrides */
+.dark .badge-avukat  { background-color: rgba(59,130,246,0.15); color: #93c5fd; }
+.dark .badge-mahkum  { background-color: rgba(249,115,22,0.15); color: #fdba74; }
+.dark .badge-aile    { background-color: rgba(34,197,94,0.15);  color: #86efac; }
+.dark .badge-gonullu { background-color: rgba(168,85,247,0.15); color: #d8b4fe; }
+.dark .badge-tahliye { background-color: rgba(20,184,166,0.15); color: #5eead4; }
+.dark .badge-admin   { background-color: rgba(239,68,68,0.15);  color: #fca5a5; }
+.dark .badge-blue    { background-color: rgba(59,130,246,0.15); color: #93c5fd; }
+.dark .badge-green   { background-color: rgba(34,197,94,0.15);  color: #86efac; }
+.dark .badge-orange  { background-color: rgba(249,115,22,0.15); color: #fdba74; }
+.dark .badge-teal    { background-color: rgba(20,184,166,0.15); color: #5eead4; }
+.dark .badge-purple  { background-color: rgba(168,85,247,0.15); color: #d8b4fe; }
+.dark .badge-red     { background-color: rgba(239,68,68,0.15);  color: #fca5a5; }
+.dark .badge-gray    { background-color: rgba(156,163,175,0.15); color: #d1d5db; }
+
 /* Dark mode text color overrides */
 .dark .text-gray-900 { color: #f3f4f6; }
 .dark .text-gray-800 { color: #e8eaf0; }

@@ -27,7 +27,7 @@ export default function BottomNav() {
   if (hidden) return null
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-white border-t border-gray-200 safe-area-pb">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-white dark:bg-[#1a1d2e] border-t border-gray-200 dark:border-[#2a2d3e] safe-area-pb">
       <div className="flex items-stretch h-16">
         {navItems.map(({ href, label, icon: Icon, badge, center }) => {
           const isActive = pathname === href || (href !== '/' && pathname.startsWith(href))
@@ -54,7 +54,7 @@ export default function BottomNav() {
                 <>
                   <div className="relative">
                     <Icon className={`w-6 h-6 transition-colors ${
-                      isActive ? 'text-navy-700' : 'text-gray-400'
+                      isActive ? 'text-navy-700 dark:text-blue-400' : 'text-gray-400 dark:text-gray-500'
                     }`} />
                     {badge && (
                       <span className="absolute -top-1.5 -right-1.5 min-w-[16px] h-4 bg-crimson-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-0.5 leading-none">
@@ -63,7 +63,7 @@ export default function BottomNav() {
                     )}
                   </div>
                   <span className={`text-[10px] font-medium leading-none transition-colors ${
-                    isActive ? 'text-navy-700' : 'text-gray-400'
+                    isActive ? 'text-navy-700 dark:text-blue-400' : 'text-gray-400 dark:text-gray-500'
                   }`}>
                     {label}
                   </span>

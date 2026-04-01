@@ -4,6 +4,8 @@ import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import { Resend } from 'resend'
 
+export const dynamic = 'force-dynamic'
+
 // POST — şifre sıfırlama emaili gönder
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY)
