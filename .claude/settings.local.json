@@ -42,7 +42,20 @@
       "Bash(printf '%s\\\\n' \"test output\")",
       "Bash(exit 0)",
       "Bash(echo \"exit: $?\")",
-      "Bash(env)"
+      "Bash(env)",
+      "Bash(node -c src/app/page.tsx)",
+      "Bash(npm ls:*)",
+      "Bash(dir)",
+      "Bash(git config:*)",
+      "Bash(tee build-output.txt)",
+      "Bash(npm scripts:*)",
+      "Bash(dir C:\\\\sosyal:*)",
+      "Skill(update-config)",
+      "Bash(npm list:*)",
+      "Bash(npm cache:*)",
+      "WebFetch(domain:iydb.adalet.gov.tr)",
+      "Bash(git commit:*)"
     ]
-  }
+  },
+  "model": "claude-haiku-4-5-20251001"
 }

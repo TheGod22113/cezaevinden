@@ -1,0 +1,38 @@
+
+> cezaevinden@0.1.0 build
+> prisma generate && next build
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+
+✔ Generated Prisma Client (v5.22.0) to .\node_modules\@prisma\client in 222ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Want to react to database changes in your app as they happen? Discover how with Pulse: https://pris.ly/tip-1-pulse
+
+  ▲ Next.js 14.2.5
+  - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+Error: Missing API key. Pass it to the constructor `new Resend("re_123")`
+    at new nK (C:\sosyal\.next\server\chunks\6495.js:4:87369)
+    at 30256 (C:\sosyal\.next\server\app\api\auth\reset-password\route.js:1:810)
+    at t (C:\sosyal\.next\server\webpack-runtime.js:1:143)
+    at t (C:\sosyal\.next\server\app\api\auth\reset-password\route.js:22:1310)
+    at C:\sosyal\.next\server\app\api\auth\reset-password\route.js:22:1353
+    at t.X (C:\sosyal\.next\server\webpack-runtime.js:1:1285)
+    at C:\sosyal\.next\server\app\api\auth\reset-password\route.js:22:1323
+    at Object.<anonymous> (C:\sosyal\.next\server\app\api\auth\reset-password\route.js:22:1381)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+
+> Build error occurred
+Error: Failed to collect page data for /api/auth/reset-password
+    at C:\sosyal\node_modules\next\dist\build\utils.js:1268:15
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  type: 'Error'
+}

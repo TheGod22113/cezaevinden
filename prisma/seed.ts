@@ -619,6 +619,284 @@ async function main() {
   })
   console.log('✅ Destek kaynakları güncellendi')
 
+  // ─── E-TİCARET: ÜRÜNLER ─────────────────────────────────────
+  await prisma.productCategory.deleteMany({})
+
+  const gidaCategory = await prisma.productCategory.create({
+    data: {
+      name: 'Gıda Ürünleri',
+      slug: 'gida-urunleri',
+      description: 'Adalet Bakanlığı İsyurtları tarafından üretilen kaliteli gıda ürünleri',
+    },
+  })
+
+  const tekstilCategory = await prisma.productCategory.create({
+    data: {
+      name: 'Tekstil Ürünleri',
+      slug: 'tekstil-urunleri',
+      description: 'Emeğinin karşılığını aldığınız kaliteli tekstil ürünleri',
+    },
+  })
+
+  const ahsapCategory = await prisma.productCategory.create({
+    data: {
+      name: 'Ahşap Ürünler',
+      slug: 'ahsap-urunler',
+      description: 'El işçiliğiyle yapılmış ahşap ürünleri',
+    },
+  })
+
+  const dokumaCategory = await prisma.productCategory.create({
+    data: {
+      name: 'Dokuma',
+      slug: 'dokuma',
+      description: 'Geleneksel dokuma sanatıyla yapılmış ürünler',
+    },
+  })
+
+  await prisma.product.deleteMany({})
+  await prisma.product.createMany({
+    data: [
+      // Gıda Ürünleri
+      {
+        name: 'Badem',
+        slug: 'badem',
+        description: 'İsyurtları tarafından üretilen kaliteli badem. Taze ve besleyici.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162041badem.jpg',
+      },
+      {
+        name: 'Biber Reçeli',
+        slug: 'biber-receli',
+        description: 'Ev yapımı biber reçeli. Doğal ve katkısız.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162645biber receli.jpg',
+      },
+      {
+        name: 'Biber Salçası',
+        slug: 'biber-salcasi',
+        description: 'Geleneksel yöntemle yapılmış biber salçası.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162742biber salcası.jpg',
+      },
+      {
+        name: 'Çekirdek',
+        slug: 'cekirdek',
+        description: 'İsyurtları bahçesinden taze çekirdek.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162813çekirdek.jpg',
+      },
+      {
+        name: 'Domates Salçası',
+        slug: 'domates-salcasi',
+        description: 'Doğal koşullarda kurutulmuş domates ile yapılmış salça.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162823domates salcası.jpg',
+      },
+      {
+        name: 'Fındık',
+        slug: 'findik',
+        description: 'Taze ve lezzetli fındık. Bol besleyici değer.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162828fındık.jpg',
+      },
+      {
+        name: 'Haşaş Ezme',
+        slug: 'hasas-ezme',
+        description: 'Sesam tohumundan yapılmış haşaş ezme.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162847haşaşezmesi.jpg',
+      },
+      {
+        name: 'İncir Reçeli',
+        slug: 'incir-receli',
+        description: 'Ev yapımı, doğal incir reçeli. Tatl ve besleyici.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162924incirreçeli.jpg',
+      },
+      {
+        name: 'Kuru Baklagil',
+        slug: 'kuru-baklagil',
+        description: 'Kuru nohut, fasulye ve mercimek karışımı.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162931kurubakliyat.jpg',
+      },
+      {
+        name: 'Pirinç',
+        slug: 'pirnic',
+        description: 'Kaliteli, hasıl pirinç. Pişmesi kolay.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162936pirinc.jpg',
+      },
+      {
+        name: 'Sarı Üzüm (Kuru Üzüm)',
+        slug: 'sari-uzum',
+        description: 'Kurutulmuş sarı üzüm. Doğal şeker kaynağı.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162942sarıüzüm.jpg',
+      },
+      {
+        name: 'Siyah Üzüm (Kuru Üzüm)',
+        slug: 'siyah-uzum',
+        description: 'Seçkin siyah kuru üzüm. Antioksidan açısından zengin.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162951siyahüzüm.jpg',
+      },
+      {
+        name: 'Tereyağ',
+        slug: 'tereyag',
+        description: 'Doğal yapımda, hiçbir katkı maddesi olmayan tereyağ.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022162956tereyağ.jpg',
+      },
+      {
+        name: 'Üzüm Pekmezi',
+        slug: 'uzum-pekmezi',
+        description: 'Doğal üzüm pekmezi. Şeker ilavesi yok.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022163002üzüm pekmezi.jpg',
+      },
+      {
+        name: 'Yer Fıstığı',
+        slug: 'yer-fistagi',
+        description: 'Taze yer fıstığı. Protein açısından zengin.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022163009yerfıstığı.jpg',
+      },
+      {
+        name: 'Yeşil Zeytin',
+        slug: 'yesil-zeytin',
+        description: 'İsyurtları tarımında üretilen yeşil zeytin.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022163015yeşilzeytin.jpg',
+      },
+      {
+        name: 'Zeytinyağ',
+        slug: 'zeytinyag',
+        description: 'Extra virgin zeytinyağ. Soğuk preslenmiş.',
+        categoryId: gidaCategory.id,
+        price: 0,
+        quantity: 0,
+        imageUrl: 'https://iydb.adalet.gov.tr/Resimler/Galeri/27102022163021zeytinyağ.jpg',
+      },
+      // Tekstil Ürünleri
+      {
+        name: 'Türk Bayrağı Özlü Havlu',
+        slug: 'turk-bayragi-ozlu-havlu',
+        description: 'Kaliteli pamuktan yapılmış, yüksek emici beige havlu. Her hanede olması gereken temel ev tekstili.',
+        categoryId: tekstilCategory.id,
+        price: 89.99,
+        quantity: 50,
+      },
+      {
+        name: 'Organik Pamuk Çarşaf Seti',
+        slug: 'organik-pamuk-carsaf-seti',
+        description: '100% organik pamuktan yapılmış, deri dostu çarşaf seti. Rahat uyku için ideal.',
+        categoryId: tekstilCategory.id,
+        price: 349.99,
+        quantity: 30,
+      },
+      {
+        name: 'El Dokuma Halı - 150x100cm',
+        slug: 'el-dokuma-hali-150x100',
+        description: 'Geleneksel dokuma tekniğiyle yapılmış, her biri benzersiz desenlere sahip halı.',
+        categoryId: dokumaCategory.id,
+        price: 899.99,
+        quantity: 10,
+      },
+      {
+        name: 'Ahşap Kesme Tahtası Seti',
+        slug: 'ahsap-kesme-tahtasi-seti',
+        description: 'Doğal ceviz ağacından yapılmış, sağlıklı ve dayanıklı kesme tahtası.',
+        categoryId: ahsapCategory.id,
+        price: 199.99,
+        quantity: 20,
+      },
+      {
+        name: 'Evde Dokuma Mermerli Mendil',
+        slug: 'mermerli-mendil',
+        description: 'Makinede yıkanabilir, göz dostu dizaynla yapılmış mendil. Koleksiyona değer katacak.',
+        categoryId: tekstilCategory.id,
+        price: 29.99,
+        quantity: 100,
+      },
+      {
+        name: 'Ahşap Mutfak Takımı (5 Parça)',
+        slug: 'ahsap-mutfak-takimi',
+        description: 'Kayın ağacından yapılmış, gıda güvenliği standartlarına uygun mutfak aletleri.',
+        categoryId: ahsapCategory.id,
+        price: 279.99,
+        quantity: 15,
+      },
+      {
+        name: 'İçi Pamuk Yastık',
+        slug: 'ici-pamuk-yastig',
+        description: 'Hipoalerjenik, tıbbi olarak test edilmiş pamuk yastık. Boynu destekler.',
+        categoryId: tekstilCategory.id,
+        price: 159.99,
+        quantity: 40,
+      },
+      {
+        name: 'El Sanatı Dekoratif Ahşap Kutu',
+        slug: 'dekoratif-ahsap-kutu',
+        description: 'Şifreli kilit sistemiyle güvenli saklama alanı. Ev dekorasyonuna uyum sağlayan tasarım.',
+        categoryId: ahsapCategory.id,
+        price: 249.99,
+        quantity: 25,
+      },
+      {
+        name: 'Dokuma Şal (Merino Yün)',
+        slug: 'dokuma-sal-merino-yun',
+        description: 'Merino yünden yapılmış, yazlık ve kışlık giyilebilen şal. Evrensel tasarım.',
+        categoryId: dokumaCategory.id,
+        price: 399.99,
+        quantity: 20,
+      },
+      {
+        name: 'Organik Pamuk Elbise Kumaşı (Metre)',
+        slug: 'organik-pamuk-elbise-kumasi',
+        description: 'Terzi ve dikiş severler için organik pamuk kumaş. Cilt dostu.',
+        categoryId: tekstilCategory.id,
+        price: 79.99,
+        quantity: 200,
+      },
+    ],
+  })
+
+  console.log('✅ Örnek e-ticaret ürünleri eklendi')
+
   console.log('\n✅ Seed tamamlandı!')
   console.log('─────────────────────────────────')
   console.log('Giriş bilgileri:')
