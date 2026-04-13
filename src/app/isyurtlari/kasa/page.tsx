@@ -21,12 +21,18 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
+    paymentMethod: 'CREDIT_CARD' | 'TRANSFER';
+  }>({
     fullName: '',
     email: '',
     phone: '',
     address: '',
-    paymentMethod: 'CREDIT_CARD' as const,
+    paymentMethod: 'CREDIT_CARD',
   });
 
   const [message, setMessage] = useState('');
