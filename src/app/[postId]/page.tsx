@@ -10,6 +10,10 @@ import {
 import { timeAgo, roleLabels, roleColors } from '@/lib/utils'
 import ShareButton from '@/components/ShareButton'
 import { PostSkeleton } from '@/components/Skeleton'
+import { notFound } from 'next/navigation'
+
+// Exclude these segments from [postId] catch-all
+const EXCLUDED_SEGMENTS = ['isyurtlari', 'api', 'admin']
 
 interface Comment {
   id: string
@@ -32,6 +36,12 @@ interface Post {
 
 export default function PostDetailPage() {
   const { postId } = useParams<{ postId: string }>()
+
+  // Prevent catch-all from matching excluded segments
+  if (EXCLUDED_SEGMENTS.some(seg => postId.startsWith(seg))) {
+    notFound()
+  }
+
   const [post, setPost]         = useState<Post | null>(null)
   const [comments, setComments] = useState<Comment[]>([])
   const [loading, setLoading]   = useState(true)
