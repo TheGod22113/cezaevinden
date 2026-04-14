@@ -88,95 +88,157 @@ export default function ProductDetailPage() {
   if (!product) return <div className="text-center py-8 text-red-600">Ürün bulunamadı</div>;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <Link href="/" className="text-blue-600 hover:underline mb-6 inline-block">
-        ← Geri Dön
-      </Link>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Resim */}
-        <div className="h-96 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg overflow-hidden flex items-center justify-center">
-          {product.imageUrl ? (
-            <img
-              src={product.imageUrl}
-              alt={product.name}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="text-center">
-              <span className="text-9xl">{productEmojis[product.slug] || '📦'}</span>
-              <p className="text-blue-600 text-xl mt-4">{product.name}</p>
-            </div>
-          )}
+    <div className="min-h-screen bg-gray-50">
+      {/* Breadcrumb */}
+      <div className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <Link href="/" className="text-blue-600 hover:text-blue-700 font-medium">
+            ← Geri
+          </Link>
         </div>
+      </div>
 
-        {/* Bilgiler */}
-        <div>
-          <p className="text-gray-500 mb-2">{product.category.name}</p>
-          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-
-          <p className="text-2xl font-bold text-blue-600 mb-6">
-            {product.price === 0 ? 'Fiyat Belirleniyor' : `₺${product.price.toFixed(2)}`}
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            {product.description}
-          </p>
-
-          <div className="mb-6">
-            <p className={`text-lg font-semibold ${
-              product.quantity > 0 ? 'text-green-600' : 'text-red-600'
-            }`}>
-              {product.quantity > 0 ? `${product.quantity} adet stokta` : 'Tükendi'}
-            </p>
+      {/* Product Detail */}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Product Image */}
+          <div className="flex items-center justify-center">
+            <div className="w-full aspect-square bg-white rounded-2xl shadow-lg overflow-hidden flex items-center justify-center border border-gray-100">
+              {product.imageUrl ? (
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="text-center">
+                  <span className="text-9xl drop-shadow-lg">
+                    {productEmojis[product.slug] || '📦'}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
 
-          {message && (
-            <div className="p-3 rounded mb-6 bg-blue-100 text-blue-800">
-              {message}
+          {/* Product Info */}
+          <div>
+            {/* Category Badge */}
+            <div className="inline-block">
+              <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-medium">
+                {product.category.name}
+              </span>
             </div>
-          )}
 
-          {product.price === 0 ? (
-            <div className="bg-yellow-100 border border-yellow-400 rounded p-4 text-yellow-800">
-              <p className="font-semibold">ℹ️ Bu ürünün fiyatı henüz belirlenmemiştir.</p>
+            {/* Title */}
+            <h1 className="text-4xl font-bold text-gray-900 mt-4 mb-2">
+              {product.name}
+            </h1>
+
+            {/* Stock Status */}
+            <div className="mb-6">
+              {product.quantity > 0 && product.price > 0 ? (
+                <div className="flex items-center gap-2 text-green-600 font-medium">
+                  <span className="w-2 h-2 bg-green-600 rounded-full"></span>
+                  {product.quantity} adet stokta
+                </div>
+              ) : product.quantity === 0 ? (
+                <div className="flex items-center gap-2 text-red-600 font-medium">
+                  <span className="w-2 h-2 bg-red-600 rounded-full"></span>
+                  Tükendi
+                </div>
+              ) : null}
             </div>
-          ) : product.quantity > 0 ? (
-            <div className="flex gap-4">
-              <div className="flex items-center border rounded">
+
+            {/* Description */}
+            <p className="text-gray-700 text-lg leading-relaxed mb-8">
+              {product.description}
+            </p>
+
+            {/* Divider */}
+            <div className="border-t border-gray-200 my-8"></div>
+
+            {/* Price Section */}
+            <div className="mb-8">
+              {product.price === 0 ? (
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                  <p className="text-yellow-800 font-medium">
+                    Fiyat Belirleniyor
+                  </p>
+                  <p className="text-yellow-700 text-sm mt-1">
+                    Bu ürünün fiyatı yakında açıklanacaktır.
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <span className="text-sm text-gray-500">Fiyat</span>
+                  <p className="text-5xl font-bold text-blue-600 mb-4">
+                    ₺{product.price.toFixed(2)}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Message */}
+            {message && (
+              <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-lg mb-6">
+                ✓ {message}
+              </div>
+            )}
+
+            {/* Add to Cart Section */}
+            {product.price === 0 ? (
+              <button disabled className="w-full bg-gray-400 text-white py-4 rounded-lg font-semibold text-lg cursor-not-allowed">
+                Fiyat Beklemede
+              </button>
+            ) : product.quantity > 0 ? (
+              <div className="space-y-4">
+                <div className="flex items-center gap-4 bg-gray-100 rounded-lg p-2 w-fit">
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="px-3 py-2 text-gray-700 hover:bg-gray-200 rounded transition font-bold text-lg"
+                  >
+                    −
+                  </button>
+                  <input
+                    type="number"
+                    min="1"
+                    max={product.quantity}
+                    value={quantity}
+                    onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                    className="w-16 text-center bg-transparent outline-none font-bold text-lg"
+                  />
+                  <button
+                    onClick={() => setQuantity(Math.min(product.quantity, quantity + 1))}
+                    className="px-3 py-2 text-gray-700 hover:bg-gray-200 rounded transition font-bold text-lg"
+                  >
+                    +
+                  </button>
+                </div>
                 <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-4 py-2 text-gray-600"
+                  onClick={() => setMessage(`${quantity} adet sepete eklendi!`)}
+                  className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition"
                 >
-                  −
-                </button>
-                <input
-                  type="number"
-                  min="1"
-                  max={product.quantity}
-                  value={quantity}
-                  onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                  className="w-16 text-center border-l border-r outline-none"
-                />
-                <button
-                  onClick={() => setQuantity(Math.min(product.quantity, quantity + 1))}
-                  className="px-4 py-2 text-gray-600"
-                >
-                  +
+                  🛒 Sepete Ekle ({quantity} adet)
                 </button>
               </div>
-              <button
-                onClick={() => setMessage(`${quantity} adet sepete eklendi!`)}
-                className="flex-1 bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 transition"
-              >
-                Sepete Ekle
+            ) : (
+              <button disabled className="w-full bg-gray-300 text-gray-600 py-4 rounded-lg font-semibold text-lg cursor-not-allowed">
+                Tükendi
               </button>
+            )}
+
+            {/* Info Cards */}
+            <div className="mt-12 grid grid-cols-2 gap-4">
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                <div className="text-2xl mb-2">🏭</div>
+                <p className="font-semibold text-gray-900 text-sm">İşyurtlarda Üretilmiş</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg border border-green-100">
+                <div className="text-2xl mb-2">✨</div>
+                <p className="font-semibold text-gray-900 text-sm">Yüksek Kalite</p>
+              </div>
             </div>
-          ) : (
-            <div className="bg-red-100 border border-red-400 rounded p-4 text-red-800">
-              <p className="font-semibold">Bu ürün şu anda tükendi.</p>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

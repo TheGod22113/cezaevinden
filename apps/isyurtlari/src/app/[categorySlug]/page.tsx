@@ -85,52 +85,89 @@ export default function CategoryPage() {
   const categoryName = products[0]?.category.name || 'Ürünler';
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <div className="mb-8">
-        <Link href="/" className="text-blue-600 hover:underline">
-          ← Geri
-        </Link>
-        <h1 className="text-3xl font-bold mt-2">{categoryName}</h1>
-        <p className="text-gray-600 mt-2">Adalet Bakanlığı İsyurtları tarafından üretilen {categoryName.toLowerCase()}</p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Breadcrumb & Header */}
+      <div className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <Link href="/" className="text-blue-600 hover:text-blue-700 font-medium mb-4 inline-block">
+            ← Geri
+          </Link>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">{categoryName}</h1>
+          <p className="text-gray-600 max-w-2xl">
+            Adalet Bakanlığı İsyurtları tarafından dikkatli şekilde seçilmiş ve üretilen {categoryName.toLowerCase()} ürünleri. Kalite ve sosyal sorumluluk birleştirilmiştir.
+          </p>
+          <p className="text-gray-500 text-sm mt-4">
+            Toplam {products.length} ürün
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((product) => (
-          <Link
-            key={product.id}
-            href={`/urun/${product.slug}`}
-            className="bg-white rounded-lg shadow hover:shadow-lg transition border"
-          >
-            <div className="h-48 bg-gradient-to-br from-blue-100 to-blue-200 rounded-t-lg overflow-hidden flex items-center justify-center">
-              {product.imageUrl ? (
-                <img
-                  src={product.imageUrl}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="text-center">
-                  <span className="text-6xl">{productEmojis[product.slug] || '📦'}</span>
-                  <p className="text-blue-600 text-xs mt-2 px-2">{product.name}</p>
-                </div>
-              )}
-            </div>
-            <div className="p-4">
-              <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
-              <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                {product.description}
-              </p>
-              <div className="flex justify-between items-end">
-                <span className="text-2xl font-bold text-blue-600">
-                  {product.price === 0 ? 'Fiyat Belirleniyor' : `₺${product.price.toFixed(2)}`}
-                </span>
-                <span className="text-sm text-gray-500">
-                  {product.quantity > 0 && product.price > 0 ? 'Stokta' : product.price === 0 ? 'Yakında' : 'Tükendi'}
-                </span>
+      {/* Products Grid */}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {products.map((product) => (
+            <Link
+              key={product.id}
+              href={`/urun/${product.slug}`}
+              className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-blue-200 overflow-hidden"
+            >
+              {/* Product Image */}
+              <div className="h-56 bg-gradient-to-br from-blue-50 to-indigo-50 overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-300 relative">
+                {product.imageUrl ? (
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="text-center">
+                    <span className="text-6xl drop-shadow-lg">
+                      {productEmojis[product.slug] || '📦'}
+                    </span>
+                  </div>
+                )}
+                {product.price > 0 && product.quantity > 0 && (
+                  <div className="absolute top-3 right-3 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                    Stokta
+                  </div>
+                )}
+                {product.quantity === 0 && (
+                  <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                    Tükendi
+                  </div>
+                )}
               </div>
-            </div>
-          </Link>
-        ))}
+
+              {/* Product Info */}
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition">
+                  {product.name}
+                </h3>
+                <p className="text-gray-600 text-sm mb-4 line-clamp-2 min-h-10">
+                  {product.description}
+                </p>
+
+                {/* Price & Badge */}
+                <div className="flex items-baseline justify-between pt-4 border-t border-gray-100">
+                  <div>
+                    {product.price === 0 ? (
+                      <span className="text-sm text-gray-500 italic">Fiyat Belirleniyor</span>
+                    ) : (
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-2xl font-bold text-blue-600">
+                          ₺{product.price.toFixed(2)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <span className="text-blue-600 font-medium group-hover:translate-x-1 transition-transform">
+                    →
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
