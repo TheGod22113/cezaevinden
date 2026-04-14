@@ -54,7 +54,11 @@
       "Bash(npm list:*)",
       "Bash(npm cache:*)",
       "WebFetch(domain:iydb.adalet.gov.tr)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(node:*)",
+      "Bash(PGPASSWORD=\"npg_4qNRcu6Cyzlo\" psql:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(curl -s \"https://sosyal-six.vercel.app/api/isyurtlari/products\")"
     ]
   },
   "model": "claude-haiku-4-5-20251001"
