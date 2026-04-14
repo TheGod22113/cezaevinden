@@ -1,6 +1,8 @@
 import { prisma } from '@isyurtlari/database';
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const categories = await prisma.productCategory.findMany({
