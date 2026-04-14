@@ -35,6 +35,7 @@ const productEmojis: Record<string, string> = {
   'yer-fistagi': '🥜',
   'yesil-zeytin': '🫒',
   'zeytinyag': '🫒',
+  'peynir': '🧀',
   'turk-bayragi-ozlu-havlu': '🛁',
   'organik-pamuk-carsaf-seti': '🛏️',
   'el-dokuma-hali-150x100': '🧵',
