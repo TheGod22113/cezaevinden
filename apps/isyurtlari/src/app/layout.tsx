@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
+import CartBadge from '@/components/CartBadge';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -20,14 +22,8 @@ export default function RootLayout({
           <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               {/* Logo */}
-              <Link href="/" className="flex items-center gap-3 hover:opacity-75 transition">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                  Î
-                </div>
-                <div>
-                  <h1 className="text-sm font-bold text-gray-900">İsyurtları</h1>
-                  <p className="text-xs text-gray-500">Adalet Bakanlığı</p>
-                </div>
+              <Link href="/" className="hover:opacity-75 transition">
+                <Image src="/logo.jpg" alt="İsyurtları" width={160} height={160} priority className="rounded" />
               </Link>
 
               {/* Search Bar */}
@@ -56,7 +52,7 @@ export default function RootLayout({
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
-                  <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">0</span>
+                  <CartBadge />
                 </Link>
               </nav>
             </div>
@@ -75,9 +71,9 @@ export default function RootLayout({
               <div>
                 <h3 className="text-sm font-bold mb-4 uppercase tracking-wide">Hakkında</h3>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Biz Kimiz</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Haberler</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Kariyer</a></li>
+                  <li><Link href="/hakkimizda" className="text-gray-400 hover:text-white text-sm transition">Hakkımızda</Link></li>
+                  <li><Link href="/guvenlı-aliveri" className="text-gray-400 hover:text-white text-sm transition">Güvenli Alışveriş</Link></li>
+                  <li><Link href="/kvkk" className="text-gray-400 hover:text-white text-sm transition">KVKK</Link></li>
                 </ul>
               </div>
               <div>
@@ -91,9 +87,9 @@ export default function RootLayout({
               <div>
                 <h3 className="text-sm font-bold mb-4 uppercase tracking-wide">Yardım</h3>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">İletişim</a></li>
+                  <li><Link href="/bize-ulasin" className="text-gray-400 hover:text-white text-sm transition">Bize Ulaşın</Link></li>
                   <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">SSS</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Gizlilik</a></li>
+                  <li><Link href="/kvkk" className="text-gray-400 hover:text-white text-sm transition">Gizlilik</Link></li>
                 </ul>
               </div>
               <div>
