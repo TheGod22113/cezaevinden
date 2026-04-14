@@ -15,8 +15,8 @@ const categoryEmojis: Record<string, string> = {
   'tekstil-urunleri': '🧵',
   'ahsap-urunler': '🪵',
   'dokuma': '🧣',
-  'mobilya': '🛋️',
-  'demir': '⚙️',
+  'mobilya-urunleri': '🛋️',
+  'demir-metal-urunleri': '⚙️',
 };
 
 export default function IsyurtlariPage() {
