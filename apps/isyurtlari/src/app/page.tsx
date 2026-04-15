@@ -10,13 +10,13 @@ import {
 interface Category { id: string; name: string; slug: string; }
 interface Product  { id: string; name: string; slug: string; price: number; quantity: number; imageUrl?: string; category: { name: string; slug: string }; }
 
-const categoryConfig: Record<string, { Icon: React.ElementType; gradient: string }> = {
-  'gida-urunleri':        { Icon: LuUtensils,  gradient: 'from-emerald-500 to-teal-400'   },
-  'tekstil-urunleri':     { Icon: LuShirt,     gradient: 'from-blue-600 to-indigo-400'    },
-  'ahsap-urunler':        { Icon: LuTreePine,  gradient: 'from-amber-500 to-yellow-400'   },
-  'dokuma':               { Icon: LuScissors,  gradient: 'from-violet-600 to-purple-400'  },
-  'mobilya-urunleri':     { Icon: LuSofa,      gradient: 'from-rose-500 to-pink-400'      },
-  'demir-metal-urunleri': { Icon: LuWrench,    gradient: 'from-slate-600 to-slate-400'    },
+const categoryConfig: Record<string, { Icon: React.ElementType; gradient: string; purpose: string }> = {
+  'gida-urunleri':        { Icon: LuUtensils,  gradient: 'from-emerald-500 to-teal-400',   purpose: 'Beslenme & Aşçılık Eğitimi' },
+  'tekstil-urunleri':     { Icon: LuShirt,     gradient: 'from-blue-600 to-indigo-400',    purpose: 'Derzillik Meslek Eğitimi' },
+  'ahsap-urunler':        { Icon: LuTreePine,  gradient: 'from-amber-500 to-yellow-400',   purpose: 'Marangozluk Beceri Programı' },
+  'dokuma':               { Icon: LuScissors,  gradient: 'from-violet-600 to-purple-400',  purpose: 'Dokuma & Sanat Terapisi' },
+  'mobilya-urunleri':     { Icon: LuSofa,      gradient: 'from-rose-500 to-pink-400',      purpose: 'Furniture Tasarım Eğitimi' },
+  'demir-metal-urunleri': { Icon: LuWrench,    gradient: 'from-slate-600 to-slate-400',    purpose: 'Metal İşleri Ustası Programı' },
 };
 
 const productEmojis: Record<string, string> = {
@@ -27,10 +27,10 @@ const productEmojis: Record<string, string> = {
 };
 
 const announcements = [
-  '🚚  Tüm siparişlerde ücretsiz kargo',
-  '✅  Adalet Bakanlığı onaylı kalite güvencesi',
-  '❤️  Her alışveriş sosyal projelere destek olur',
-  '🏭  Cezaevi işyurtlarında el yapımı ürünler',
+  '🎓  Her Satın Alma Bir İkinci Şans Demek',
+  '✅  Adalet Bakanlığı Onaylı Sosyal Girişim',
+  '❤️  Hükümlülerin Rehabilitasyonuna Destek Ol',
+  '🏭  İşyurtlarında El Yapımı Ürünler',
 ];
 
 export default function HomePage() {
@@ -75,25 +75,25 @@ export default function HomePage() {
           {/* Left */}
           <div>
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-orange-300 text-xs font-semibold px-4 py-2 rounded-full mb-7 tracking-wide">
-              <LuBadgeCheck size={14} /> Adalet Bakanlığı Onaylı
+              <LuBadgeCheck size={14} /> Adalet Bakanlığı Sosyal Girişimi
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-white leading-[1.1] mb-5 tracking-tight">
-              Kaliteli<br />
-              <span className="text-[#FF6000]">Yerli</span> Ürünler
+              Adalet<br />
+              <span className="text-[#FF6000]">Bakanlığı'nı</span> Destekle
             </h1>
             <p className="text-sky-300 text-base mb-9 max-w-sm leading-relaxed">
-              İşyurtlarında üretilen el yapımı ürünler. Alışverişiniz sosyal projelere katkı sağlar.
+              Hükümlülerin el emeğiyle üretilen ürünler. Her satın alma, bireyin yeniden başlamasına ve topluma kazanılmasına yardım eder.
             </p>
             <div className="flex flex-wrap gap-3 mb-12">
               <Link href="/gida-urunleri" className="bg-[#FF6000] hover:bg-[#e55500] text-white font-semibold px-7 py-3.5 rounded-xl transition-all hover:scale-[1.03] shadow-lg shadow-orange-900/25 flex items-center gap-2 text-sm">
-                Alışverişe Başla <LuArrowRight size={16} />
+                Değiştir. Satın Al. Destekle. <LuArrowRight size={16} />
               </Link>
               <Link href="/hakkimizda" className="bg-white/8 hover:bg-white/15 text-white font-semibold px-7 py-3.5 rounded-xl transition-all border border-white/15 text-sm">
-                Hakkımızda
+                Misyon & Vizyon
               </Link>
             </div>
             <div className="flex gap-10 pt-8 border-t border-white/10">
-              {[['500+', 'Ürün Çeşidi'], ['6', 'Kategori'], ['100%', 'Yerli Üretim']].map(([v, l]) => (
+              {[['500+', 'Hükümlüyü Destekledik'], ['1000+', 'Ürün Satıldı'], ['%100', 'Sosyal Amaçlı']].map(([v, l]) => (
                 <div key={l}>
                   <p className="text-2xl font-bold text-[#FF6000]">{v}</p>
                   <p className="text-blue-300 text-xs mt-0.5">{l}</p>
@@ -134,8 +134,8 @@ export default function HomePage() {
       <section className="max-w-screen-xl mx-auto px-4 py-8">
         <div className="flex items-end justify-between mb-5">
           <div>
-            <p className="text-[#FF6000] text-[11px] font-bold uppercase tracking-widest mb-1">Kategoriler</p>
-            <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Ne Arıyorsunuz?</h2>
+            <p className="text-[#FF6000] text-[11px] font-bold uppercase tracking-widest mb-1">Meslek Eğitim Programları</p>
+            <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Hangi Alanda Destek Olmak İstiyorsunuz?</h2>
           </div>
         </div>
 
@@ -152,12 +152,14 @@ export default function HomePage() {
                 <Link
                   key={cat.id}
                   href={`/${cat.slug}`}
-                  className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${cfg?.gradient ?? 'from-gray-500 to-gray-400'} p-4 flex flex-col items-center justify-center text-center min-h-[7rem] hover:scale-[1.04] hover:shadow-xl transition-all duration-200 shadow-md`}
+                  className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${cfg?.gradient ?? 'from-gray-500 to-gray-400'} p-4 flex flex-col items-center justify-center text-center min-h-[9rem] hover:scale-[1.04] hover:shadow-xl transition-all duration-200 shadow-md`}
+                  title={cfg?.purpose}
                 >
                   <div className="w-11 h-11 bg-white/20 rounded-xl flex items-center justify-center mb-2.5 group-hover:bg-white/30 transition-colors">
                     <Icon size={22} color="white" strokeWidth={1.8} />
                   </div>
-                  <p className="text-white text-xs font-semibold leading-tight">{cat.name}</p>
+                  <p className="text-white text-xs font-semibold leading-tight mb-1">{cat.name}</p>
+                  <p className="text-white/70 text-[10px] leading-tight">{cfg?.purpose}</p>
                 </Link>
               );
             })}
@@ -196,15 +198,36 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── IMPACT STATISTICS ─── */}
+      <section className="max-w-screen-xl mx-auto px-4 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-8 text-white">
+            <p className="text-5xl font-bold mb-2">500+</p>
+            <p className="text-base font-semibold mb-1">Hükümlü Desteklendi</p>
+            <p className="text-sm opacity-90">Meslek eğitimi ve yeniden başlama programı</p>
+          </div>
+          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-8 text-white">
+            <p className="text-5xl font-bold mb-2">1000+</p>
+            <p className="text-base font-semibold mb-1">Ürün Satıldı</p>
+            <p className="text-sm opacity-90">Toplam ₺250.000+ sosyal amaçlı yatırım</p>
+          </div>
+          <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl p-8 text-white">
+            <p className="text-5xl font-bold mb-2">%100</p>
+            <p className="text-base font-semibold mb-1">Kar Amacı Gütmüyor</p>
+            <p className="text-sm opacity-90">Adalet Bakanlığı Sosyal Girişimi</p>
+          </div>
+        </div>
+      </section>
+
       {/* ─── FEATURED PRODUCTS ─── */}
       <section className="max-w-screen-xl mx-auto px-4 pb-8">
         <div className="flex items-end justify-between mb-5">
           <div>
-            <p className="text-[#FF6000] text-[11px] font-bold uppercase tracking-widest mb-1">Ürünler</p>
-            <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Öne Çıkanlar</h2>
+            <p className="text-[#FF6000] text-[11px] font-bold uppercase tracking-widest mb-1">El Yapımı Ürünler</p>
+            <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Hükümlülerin Eğitimi Sayesinde Üretildi</h2>
           </div>
           <Link href="/gida-urunleri" className="flex items-center gap-1 text-[#FF6000] hover:text-[#cc4e00] text-sm font-semibold transition-colors">
-            Tümü <LuArrowRight size={15} />
+            Tüm Ürünleri Keşfet <LuArrowRight size={15} />
           </Link>
         </div>
 
@@ -255,13 +278,13 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* ─── WHY US ─── */}
+      {/* ─── SOCIAL IMPACT ─── */}
       <section className="max-w-screen-xl mx-auto px-4 pb-10">
         <div className="bg-[#0F2040] rounded-3xl p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { Icon: LuTruck,        title: 'Ücretsiz Kargo',    desc: 'Tüm siparişlerde Türkiye geneli'   },
-            { Icon: LuShieldCheck,  title: 'Kalite Güvencesi',  desc: 'Resmi denetimden geçmiş ürünler'  },
-            { Icon: LuHeart,        title: 'Sosyal Sorumluluk', desc: 'Her alışveriş fark yaratır'        },
+            { Icon: LuHeart,        title: 'Hükümlü Rehabilitasyonu', desc: 'Meslek eğitimi ve yeniden başlama'   },
+            { Icon: LuShieldCheck,  title: 'Adalet Bakanlığı Onaylı',  desc: 'Resmi program ve kalite güvencesi'  },
+            { Icon: LuTruck,        title: 'Her Satın Alma Yardım Eder', desc: 'Hükümlülerin topluma kazanılması'        },
           ].map(({ Icon, title, desc }) => (
             <div key={title} className="flex items-center gap-4">
               <div className="w-12 h-12 bg-[#FF6000]/15 rounded-xl flex items-center justify-center flex-shrink-0 border border-[#FF6000]/20">

@@ -6,8 +6,13 @@ import { LuUtensils, LuShirt, LuTreePine, LuScissors, LuSofa, LuWrench } from 'r
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'İsyurtları | Adalet Bakanlığı İşyurtları Ürünleri',
-  description: 'Cezaevi işyurtlarında üretilen yüksek kaliteli ürünler. Gıda, tekstil, mobilya ve daha fazlası.',
+  title: 'isyurtlari.com.tr | Adalet Bakanlığı Sosyal Girişimi',
+  description: 'Hükümlülerin el emeğiyle üretilen ürünler. Her satın alma, bireyin yeniden başlamasına ve topluma kazanılmasına yardım eder. Adalet Bakanlığı Onaylı Sosyal Proje.',
+  openGraph: {
+    title: 'Her Satın Alma Bir İkinci Şans Demek',
+    description: 'Adalet Bakanlığı Sosyal Girişimi - Hükümlülerin rehabilitasyonunu destekle',
+    type: 'website',
+  },
 };
 
 const categories = [

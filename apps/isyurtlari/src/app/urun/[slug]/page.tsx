@@ -3,7 +3,16 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { LuHouse, LuShoppingCart, LuBadgeCheck, LuTruck, LuFactory } from 'react-icons/lu';
+import { LuHouse, LuShoppingCart, LuBadgeCheck, LuTruck, LuHeart, LuGraduationCap, LuUsers } from 'react-icons/lu';
+
+const categoryPurpose: Record<string, { purpose: string; trainingHours: number; skillDescription: string }> = {
+  'gida-urunleri': { purpose: 'Beslenme & Aşçılık Eğitimi', trainingHours: 40, skillDescription: 'Profesyonel aşçılık ve beslenme bilgisi' },
+  'tekstil-urunleri': { purpose: 'Derzillik Meslek Eğitimi', trainingHours: 48, skillDescription: 'Kumaş işleme ve dikiş becerisi' },
+  'ahsap-urunler': { purpose: 'Marangozluk Eğitimi', trainingHours: 60, skillDescription: 'Ahşap işçiliği ve tasarım becerisi' },
+  'dokuma': { purpose: 'Dokuma & Sanat Terapisi', trainingHours: 50, skillDescription: 'Geleneksel dokuma teknikleri' },
+  'mobilya-urunleri': { purpose: 'Mobilya Tasarım Eğitimi', trainingHours: 65, skillDescription: 'Furniture tasarım ve üretim becerisi' },
+  'demir-metal-urunleri': { purpose: 'Metal İşleri Eğitimi', trainingHours: 55, skillDescription: 'Metal işleri ve tornacılık becerisi' },
+};
 
 interface Product {
   id: string;
@@ -193,14 +202,14 @@ export default function ProductDetailPage() {
                 {/* Button */}
                 {added ? (
                   <div className="w-full bg-green-500 text-white py-3.5 rounded-xl font-bold text-center flex items-center justify-center gap-2">
-                    <LuBadgeCheck size={20} strokeWidth={2} /> Sepete Eklendi!
+                    <LuBadgeCheck size={20} strokeWidth={2} /> Sepete Eklendi! Teşekkürler 🙏
                   </div>
                 ) : (
                   <button
                     onClick={handleAddToCart}
                     className="w-full bg-[#FF6000] hover:bg-[#e55500] text-white py-3.5 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-base"
                   >
-                    <LuShoppingCart size={18} strokeWidth={2} /> Sepete Ekle
+                    <LuHeart size={18} strokeWidth={2} /> Destekle ve Sepete Ekle
                   </button>
                 )}
 
@@ -224,18 +233,68 @@ export default function ProductDetailPage() {
             {/* Trust badges */}
             <div className="grid grid-cols-3 gap-3 mt-6">
               {[
-                { Icon: LuFactory,     text: 'Resmi Üretim'     },
-                { Icon: LuBadgeCheck,  text: 'Kalite Garantisi' },
-                { Icon: LuTruck,       text: 'Hızlı Kargo'      },
+                { Icon: LuGraduationCap, text: 'Meslek Eğitimi'   },
+                { Icon: LuBadgeCheck,    text: 'Adalet Bakanlığı' },
+                { Icon: LuHeart,         text: 'Sosyal Proje'     },
               ].map(({ Icon, text }) => (
-                <div key={text} className="bg-white rounded-xl border border-gray-200 p-3 flex flex-col items-center gap-1.5 text-center">
-                  <Icon size={22} color="#FF6000" />
-                  <span className="text-xs font-medium text-gray-600">{text}</span>
+                <div key={text} className="bg-blue-50 rounded-xl border border-blue-200 p-3 flex flex-col items-center gap-1.5 text-center">
+                  <Icon size={22} color="#1d4ed8" />
+                  <span className="text-xs font-medium text-blue-900">{text}</span>
                 </div>
               ))}
             </div>
 
           </div>
+        </div>
+
+        {/* ─── MISSION & IMPACT SECTIONS ─── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+
+          {/* Purpose section */}
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6">
+            <div className="flex items-start gap-3 mb-4">
+              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <LuGraduationCap size={22} color="white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900">Bu Ürün Kimden Geliyor?</h3>
+            </div>
+            <div className="space-y-3 text-sm text-gray-700">
+              <p>
+                Bu ürün, <span className="font-semibold text-blue-900">{categoryPurpose[product.category.slug]?.purpose || 'Meslek Eğitimi'}</span> alan hükümlüler tarafından el emeğiyle üretilmiştir.
+              </p>
+              <p>
+                🎯 <span className="font-semibold">Eğitim Hedefi:</span> {categoryPurpose[product.category.slug]?.skillDescription || 'Profesyonel beceri geliştirme'}
+              </p>
+              <p className="text-xs text-gray-600 italic border-l-4 border-blue-400 pl-3 mt-2">
+                Her satın alma, bu bireyin yeniden başlama yolculuğuna ve topluma kazanılmasına direkt katkı sağlar.
+              </p>
+            </div>
+          </div>
+
+          {/* Impact section */}
+          <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border border-emerald-200 p-6">
+            <div className="flex items-start gap-3 mb-4">
+              <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <LuUsers size={22} color="white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900">Yardımın Nasıl Kullanılacak?</h3>
+            </div>
+            <div className="space-y-3 text-sm text-gray-700">
+              <div className="flex items-start gap-2">
+                <span className="text-lg">📚</span>
+                <span><span className="font-semibold">Eğitim Programı:</span> {categoryPurpose[product.category.slug]?.trainingHours || 50} saat mesleki eğitime yatırım</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-lg">💼</span>
+                <span><span className="font-semibold">Istihdam Desteği:</span> Yeniden başlayan bireyin iş arayışına destek</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-lg">🤝</span>
+                <span><span className="font-semibold">Reentegrasyon:</span> Topluma başarılı dönüş için gerekli tüm destek</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
