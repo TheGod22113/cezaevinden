@@ -52,10 +52,11 @@ export default function CategoryPage() {
 
   // Update page title with mission messaging
   useEffect(() => {
-    const categoryInfo = categoryMeta[categorySlug];
-    const categoryTitle = categoryInfo ? `${categoryName} | Adalet Bakanlığı Sosyal Girişimi` : categoryName;
-    document.title = categoryTitle;
-  }, [categorySlug, categoryName]);
+    if (products.length > 0) {
+      const categoryName = products[0]?.category.name ?? 'Ürünler';
+      document.title = `${categoryName} | Adalet Bakanlığı Sosyal Girişimi`;
+    }
+  }, [products]);
 
   const sorted = [...products].sort((a, b) => {
     if (sort === 'price-asc') return a.price - b.price;
