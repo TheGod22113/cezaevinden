@@ -68,6 +68,7 @@ export async function POST(req: NextRequest) {
     // Create order first
     const order = await prisma.order.create({
       data: {
+        userId: 'guest', // Guest checkout için
         orderNumber,
         status: 'PENDING',
         totalAmount: body.totalAmount,
