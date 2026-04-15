@@ -173,6 +173,13 @@ export default function AboutPage() {
           </Link>
         </section>
 
+        {/* ─── LEGAL DISCLAIMER ─── */}
+        <div className="mt-12 pt-8 border-t border-gray-200">
+          <p className="text-xs text-gray-500 leading-relaxed">
+            <span className="font-semibold text-gray-600">Yasal Uyarı:</span> isyurtlari.com.tr, Adalet Bakanlığı veya İşyurtları Genel Müdürlüğü'nün resmi bir platformu değildir ve söz konusu kurumlarla hukuki bir bağı bulunmamaktadır. Bu platform, Adalet Bakanlığı cezaevi işyurtlarında üretilen ürünlerin müstakil olarak satışa sunulması amacıyla faaliyet göstermektedir. İşyurtları Genel Müdürlüğü tarafından üretilen ürünlerin satışından kaynaklanan tüm sorumluluk platformun işletmecisine aittir. Ürünlerin kaynağı ve orijinalliği hakkında daha detaylı bilgi için lütfen sorumlu kurumlarla iletişime geçiniz. Bu platform, Adalet Bakanlığı veya ilgili kurumlar tarafından dava açılmasına karşın tüm yasal sorumlulukları üstlenmektedir.
+          </p>
+        </div>
+
       </div>
 
       <div className="h-8" />

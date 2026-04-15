@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { LuAlertCircle, LuCheckCircle } from 'react-icons/lu';
 
 interface CartItem {
   id: string;
@@ -16,8 +17,10 @@ interface CartItem {
 export default function CheckoutPage() {
   const router = useRouter();
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [paymentMethod, setPaymentMethod] = useState<'credit_card' | 'transfer'>('credit_card');
+  const [pageLoading, setPageLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string>('');
+  const [paymentMethod, setPaymentMethod] = useState<'CREDIT_CARD' | 'TRANSFER'>('CREDIT_CARD');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,7 +35,7 @@ export default function CheckoutPage() {
       return;
     }
     setCart(savedCart);
-    setLoading(false);
+    setPageLoading(false);
   }, [router]);
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -46,24 +49,59 @@ export default function CheckoutPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
 
     if (!formData.name || !formData.email || !formData.phone || !formData.address) {
-      alert('Lütfen tüm alanları doldurunuz');
+      setError('Lütfen tüm alanları doldurunuz');
       return;
     }
 
-    if (paymentMethod === 'credit_card') {
-      // TODO: Iyzico ödeme entegrasyonu
-      alert('Kredi kartı ödeme entegrasyonu yapılıyor...');
-      console.log('Credit card payment:', { ...formData, cart, total });
-    } else {
-      // TODO: Havale ödeme
-      alert('Havale talimatları e-mailinize gönderilecektir');
-      console.log('Transfer payment:', { ...formData, cart, total });
+    setSubmitting(true);
+
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          shippingAddress: formData.address,
+          items: cart.map((item) => ({
+            id: item.id,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+          totalAmount: total,
+          paymentMethod,
+        }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        setError(errorData.error || 'Sipariş oluşturulamadı');
+        setSubmitting(false);
+        return;
+      }
+
+      const data = await res.json();
+
+      if (paymentMethod === 'CREDIT_CARD') {
+        // Redirect to payment page (Iyzico - yapılacak)
+        router.push(`/order-confirmation/${data.orderId}?payment=pending`);
+      } else {
+        // Bank transfer - show confirmation with bank details
+        localStorage.removeItem('cart');
+        window.dispatchEvent(new Event('cartUpdated'));
+        router.push(`/order-confirmation/${data.orderId}?payment=transfer`);
+      }
+    } catch (err) {
+      setError('Sipariş oluşturulurken hata oluştu: ' + (err instanceof Error ? err.message : 'Bilinmeyen hata'));
+      setSubmitting(false);
     }
   };
 
-  if (loading) {
+  if (pageLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -80,11 +118,19 @@ export default function CheckoutPage() {
             ← Geri
           </Link>
           <h1 className="text-3xl font-bold text-gray-900 mt-2">Ödeme</h1>
+          <p className="text-gray-600 text-sm mt-1">🎓 Her satın alma, hükümlülerin yeniden başlamasına destek olur</p>
         </div>
       </div>
 
       {/* Content */}
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {error && (
+          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl flex items-start gap-3">
+            <LuAlertCircle size={18} className="mt-0.5 flex-shrink-0" />
+            <div>{error}</div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Checkout Form */}
           <div className="lg:col-span-2">
@@ -162,14 +208,14 @@ export default function CheckoutPage() {
                 <h2 className="text-xl font-bold text-gray-900 mb-6">Ödeme Yöntemi</h2>
                 <div className="space-y-4">
                   <label className="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition"
-                    style={{borderColor: paymentMethod === 'credit_card' ? '#2563eb' : undefined,
-                            backgroundColor: paymentMethod === 'credit_card' ? '#eff6ff' : undefined}}>
+                    style={{borderColor: paymentMethod === 'CREDIT_CARD' ? '#2563eb' : undefined,
+                            backgroundColor: paymentMethod === 'CREDIT_CARD' ? '#eff6ff' : undefined}}>
                     <input
                       type="radio"
                       name="paymentMethod"
-                      value="credit_card"
-                      checked={paymentMethod === 'credit_card'}
-                      onChange={() => setPaymentMethod('credit_card')}
+                      value="CREDIT_CARD"
+                      checked={paymentMethod === 'CREDIT_CARD'}
+                      onChange={() => setPaymentMethod('CREDIT_CARD')}
                       className="w-4 h-4 text-blue-600"
                     />
                     <div className="ml-4 flex-1">
@@ -180,14 +226,14 @@ export default function CheckoutPage() {
                   </label>
 
                   <label className="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition"
-                    style={{borderColor: paymentMethod === 'transfer' ? '#2563eb' : undefined,
-                            backgroundColor: paymentMethod === 'transfer' ? '#eff6ff' : undefined}}>
+                    style={{borderColor: paymentMethod === 'TRANSFER' ? '#2563eb' : undefined,
+                            backgroundColor: paymentMethod === 'TRANSFER' ? '#eff6ff' : undefined}}>
                     <input
                       type="radio"
                       name="paymentMethod"
-                      value="transfer"
-                      checked={paymentMethod === 'transfer'}
-                      onChange={() => setPaymentMethod('transfer')}
+                      value="TRANSFER"
+                      checked={paymentMethod === 'TRANSFER'}
+                      onChange={() => setPaymentMethod('TRANSFER')}
                       className="w-4 h-4 text-blue-600"
                     />
                     <div className="ml-4 flex-1">
@@ -201,17 +247,42 @@ export default function CheckoutPage() {
 
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                disabled={submitting}
+                className="w-full bg-[#FF6000] hover:bg-[#e55500] disabled:bg-orange-300 text-white py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2"
               >
-                {paymentMethod === 'credit_card' ? 'Kredi Kartı ile Ödeme Yap' : 'Havale ile Devam Et'}
+                {submitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+                    İşleniyor...
+                  </>
+                ) : paymentMethod === 'CREDIT_CARD' ? (
+                  '💳 Kredi Kartı ile Destekle'
+                ) : (
+                  '🏦 Havale ile Devam Et'
+                )}
               </button>
             </form>
           </div>
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg border border-gray-200 p-6 sticky top-20">
-              <h3 className="text-lg font-bold text-gray-900 mb-6">Sipariş Özeti</h3>
+            <div className="bg-white rounded-lg border border-gray-200 p-6 sticky top-20 space-y-6">
+              {/* Impact Preview */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h4 className="text-sm font-bold text-blue-900 mb-3">🎓 Yardımın Etkisi</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-blue-900">
+                    <span>Eğitim Saati</span>
+                    <span className="font-bold">{cart.reduce((sum, item) => sum + item.quantity * 5, 0)} saat</span>
+                  </div>
+                  <div className="flex justify-between text-blue-900">
+                    <span>Desteklenen Hükümlü</span>
+                    <span className="font-bold">~{Math.ceil(cart.reduce((sum, item) => sum + item.quantity, 0) * 0.5)} kişi</span>
+                  </div>
+                </div>
+              </div>
+
+              <h3 className="text-lg font-bold text-gray-900">Sipariş Özeti</h3>
 
               {/* Cart Items */}
               <div className="space-y-4 mb-6 pb-6 border-b border-gray-200 max-h-96 overflow-y-auto">
