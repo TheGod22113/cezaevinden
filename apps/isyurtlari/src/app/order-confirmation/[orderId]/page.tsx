@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { LuCheck, LuCopy, LuShare2, LuHome, LuArrowRight } from 'react-icons/lu';
+import { LuCheck, LuCopy, LuShare2, LuHouse, LuArrowRight } from 'react-icons/lu';
 
 interface OrderData {
   id: string;
@@ -275,7 +275,7 @@ export default function OrderConfirmationPage() {
                 className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-colors group"
               >
                 <div className="flex items-center gap-2">
-                  <LuHome size={18} className="text-gray-600 group-hover:text-[#FF6000]" />
+                  <LuHouse size={18} className="text-gray-600 group-hover:text-[#FF6000]" />
                   <span className="font-medium text-gray-900 group-hover:text-[#FF6000]">Ana Sayfa</span>
                 </div>
                 <LuArrowRight size={16} className="text-gray-400" />
