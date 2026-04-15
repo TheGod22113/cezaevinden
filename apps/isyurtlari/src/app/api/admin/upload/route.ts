@@ -29,8 +29,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Upload to Vercel Blob
-    const blob = await put(file.name, file, { access: 'public' });
+    // Upload to Vercel Blob with unique filename
+    const timestamp = Date.now();
+    const filename = `products/${timestamp}-${file.name}`;
+    const blob = await put(filename, file, { access: 'public' });
 
     return NextResponse.json({ url: blob.url });
   } catch (error) {
