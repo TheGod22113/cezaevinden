@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { MdHome, MdShoppingCart, MdVerified, MdLocalShipping, MdFactory } from 'react-icons/md';
+import { LuHome, LuShoppingCart, LuBadgeCheck, LuTruck, LuFactory } from 'react-icons/lu';
 
 interface Product {
   id: string;
@@ -85,7 +85,7 @@ export default function ProductDetailPage() {
         <div className="max-w-screen-xl mx-auto px-4 py-3">
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <Link href="/" className="hover:text-[#FF6000] flex items-center gap-1 transition-colors">
-              <MdHome size={15} /> Ana Sayfa
+              <LuHome size={14} strokeWidth={2} /> Ana Sayfa
             </Link>
             <span>/</span>
             <Link href={`/${product.category.slug}`} className="hover:text-[#FF6000] transition-colors">
@@ -193,14 +193,14 @@ export default function ProductDetailPage() {
                 {/* Button */}
                 {added ? (
                   <div className="w-full bg-green-500 text-white py-3.5 rounded-xl font-bold text-center flex items-center justify-center gap-2">
-                    <MdVerified size={20} /> Sepete Eklendi!
+                    <LuBadgeCheck size={20} strokeWidth={2} /> Sepete Eklendi!
                   </div>
                 ) : (
                   <button
                     onClick={handleAddToCart}
                     className="w-full bg-[#FF6000] hover:bg-[#e55500] text-white py-3.5 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-base"
                   >
-                    <MdShoppingCart size={20} /> Sepete Ekle
+                    <LuShoppingCart size={18} strokeWidth={2} /> Sepete Ekle
                   </button>
                 )}
 
@@ -224,9 +224,9 @@ export default function ProductDetailPage() {
             {/* Trust badges */}
             <div className="grid grid-cols-3 gap-3 mt-6">
               {[
-                { Icon: MdFactory,       text: 'Resmi Üretim'    },
-                { Icon: MdVerified,      text: 'Kalite Garantisi' },
-                { Icon: MdLocalShipping, text: 'Hızlı Kargo'     },
+                { Icon: LuFactory,     text: 'Resmi Üretim'     },
+                { Icon: LuBadgeCheck,  text: 'Kalite Garantisi' },
+                { Icon: LuTruck,       text: 'Hızlı Kargo'      },
               ].map(({ Icon, text }) => (
                 <div key={text} className="bg-white rounded-xl border border-gray-200 p-3 flex flex-col items-center gap-1.5 text-center">
                   <Icon size={22} color="#FF6000" />

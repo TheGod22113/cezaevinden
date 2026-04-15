@@ -2,18 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { MdRestaurant, MdDry, MdForest, MdStyle, MdChair, MdSettings, MdLocalShipping, MdVerified, MdStar, MdArrowForward } from 'react-icons/md';
+import {
+  LuUtensils, LuShirt, LuTreePine, LuScissors, LuSofa, LuWrench,
+  LuTruck, LuShieldCheck, LuHeart, LuArrowRight, LuStar, LuBadgeCheck,
+} from 'react-icons/lu';
 
 interface Category { id: string; name: string; slug: string; }
-interface Product { id: string; name: string; slug: string; price: number; quantity: number; imageUrl?: string; category: { name: string; slug: string }; }
+interface Product  { id: string; name: string; slug: string; price: number; quantity: number; imageUrl?: string; category: { name: string; slug: string }; }
 
-const categoryConfig: Record<string, { Icon: React.ElementType; gradient: string; textColor: string }> = {
-  'gida-urunleri':        { Icon: MdRestaurant, gradient: 'from-emerald-500 to-green-400',   textColor: 'text-white' },
-  'tekstil-urunleri':     { Icon: MdDry,        gradient: 'from-blue-600 to-cyan-400',        textColor: 'text-white' },
-  'ahsap-urunler':        { Icon: MdForest,     gradient: 'from-amber-600 to-yellow-400',     textColor: 'text-white' },
-  'dokuma':               { Icon: MdStyle,      gradient: 'from-purple-600 to-pink-400',      textColor: 'text-white' },
-  'mobilya-urunleri':     { Icon: MdChair,      gradient: 'from-rose-600 to-orange-400',      textColor: 'text-white' },
-  'demir-metal-urunleri': { Icon: MdSettings,   gradient: 'from-slate-600 to-gray-400',       textColor: 'text-white' },
+const categoryConfig: Record<string, { Icon: React.ElementType; gradient: string }> = {
+  'gida-urunleri':        { Icon: LuUtensils,  gradient: 'from-emerald-500 to-teal-400'   },
+  'tekstil-urunleri':     { Icon: LuShirt,     gradient: 'from-blue-600 to-indigo-400'    },
+  'ahsap-urunler':        { Icon: LuTreePine,  gradient: 'from-amber-500 to-yellow-400'   },
+  'dokuma':               { Icon: LuScissors,  gradient: 'from-violet-600 to-purple-400'  },
+  'mobilya-urunleri':     { Icon: LuSofa,      gradient: 'from-rose-500 to-pink-400'      },
+  'demir-metal-urunleri': { Icon: LuWrench,    gradient: 'from-slate-600 to-slate-400'    },
 };
 
 const productEmojis: Record<string, string> = {
@@ -23,21 +26,21 @@ const productEmojis: Record<string, string> = {
   'havlu-beyaz':'🛁','havlu-renkli':'🛁','ahsap-sandalye':'🪑','ahsap-masa':'🪑',
 };
 
+const announcements = [
+  '🚚  Tüm siparişlerde ücretsiz kargo',
+  '✅  Adalet Bakanlığı onaylı kalite güvencesi',
+  '❤️  Her alışveriş sosyal projelere destek olur',
+  '🏭  Cezaevi işyurtlarında el yapımı ürünler',
+];
+
 export default function HomePage() {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [products, setProducts]     = useState<Product[]>([]);
-  const [loading, setLoading]       = useState(true);
-  const [ticker, setTicker]         = useState(0);
-
-  const announcements = [
-    '🚚 Tüm siparişlerde ücretsiz kargo!',
-    '✅ Adalet Bakanlığı onaylı kalite güvencesi',
-    '❤️ Her alışveriş sosyal projelere destek olur',
-    '🏭 Cezaevi işyurtlarında el yapımı ürünler',
-  ];
+  const [products,   setProducts]   = useState<Product[]>([]);
+  const [loading,    setLoading]    = useState(true);
+  const [ticker,     setTicker]     = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => setTicker((t) => (t + 1) % announcements.length), 3000);
+    const id = setInterval(() => setTicker((t) => (t + 1) % announcements.length), 3500);
     return () => clearInterval(id);
   }, []);
 
@@ -53,64 +56,77 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[#F4F5F7]">
 
       {/* ─── ANNOUNCEMENT BAR ─── */}
-      <div className="bg-[#1B2E5E] text-white text-xs font-medium py-2 text-center overflow-hidden">
-        <span className="transition-all duration-500">{announcements[ticker]}</span>
+      <div className="bg-[#FF6000] text-white py-2.5 text-center overflow-hidden">
+        <p className="text-sm font-semibold tracking-wide transition-all duration-500">
+          {announcements[ticker]}
+        </p>
       </div>
 
       {/* ─── HERO ─── */}
-      <section className="relative overflow-hidden bg-[#1B2E5E]">
-        {/* background blobs */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#FF6000] opacity-10 rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-400 opacity-10 rounded-full -translate-x-1/3 translate-y-1/3 pointer-events-none" />
+      <section className="relative overflow-hidden bg-[#111827]">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwLTkuOTQtOC4wNi0xOC0xOC0xOFYwaDQydjQySDE4YzAtOS45NCA4LjA2LTE4IDE4LTE4eiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvZz48L3N2Zz4=')] opacity-30" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FF6000] opacity-[0.07] rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none" />
 
-        <div className="relative max-w-screen-xl mx-auto px-4 py-14 md:py-20 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="relative max-w-screen-xl mx-auto px-4 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
           {/* Left */}
           <div>
-            <div className="inline-flex items-center gap-2 bg-[#FF6000]/20 border border-[#FF6000]/40 text-orange-300 text-xs font-bold px-4 py-1.5 rounded-full mb-6">
-              <MdVerified size={14} /> Adalet Bakanlığı Onaylı
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-orange-300 text-xs font-semibold px-4 py-2 rounded-full mb-7 tracking-wide">
+              <LuBadgeCheck size={14} /> Adalet Bakanlığı Onaylı
             </div>
-            <h1 className="text-5xl md:text-6xl font-black text-white leading-[1.05] mb-5">
-              Kaliteli <br />
+            <h1 className="text-5xl md:text-6xl font-bold text-white leading-[1.1] mb-5 tracking-tight">
+              Kaliteli<br />
               <span className="text-[#FF6000]">Yerli</span> Ürünler
             </h1>
-            <p className="text-blue-200 text-lg mb-8 max-w-md leading-relaxed">
+            <p className="text-gray-400 text-base mb-9 max-w-sm leading-relaxed">
               İşyurtlarında üretilen el yapımı ürünler. Alışverişiniz sosyal projelere katkı sağlar.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Link href="/gida-urunleri" className="bg-[#FF6000] hover:bg-[#e55500] text-white font-bold px-7 py-3.5 rounded-xl transition-all hover:scale-105 shadow-lg shadow-orange-900/30 flex items-center gap-2">
-                Alışverişe Başla <MdArrowForward size={18} />
+            <div className="flex flex-wrap gap-3 mb-12">
+              <Link href="/gida-urunleri" className="bg-[#FF6000] hover:bg-[#e55500] text-white font-semibold px-7 py-3.5 rounded-xl transition-all hover:scale-[1.03] shadow-lg shadow-orange-900/25 flex items-center gap-2 text-sm">
+                Alışverişe Başla <LuArrowRight size={16} />
               </Link>
-              <Link href="/hakkimizda" className="bg-white/10 hover:bg-white/20 text-white font-semibold px-7 py-3.5 rounded-xl transition-all border border-white/20">
+              <Link href="/hakkimizda" className="bg-white/8 hover:bg-white/15 text-white font-semibold px-7 py-3.5 rounded-xl transition-all border border-white/15 text-sm">
                 Hakkımızda
               </Link>
             </div>
-            {/* Stats */}
-            <div className="flex gap-8 mt-10 pt-8 border-t border-white/10">
-              {[['500+', 'Ürün'], ['6', 'Kategori'], ['100%', 'Yerli']].map(([val, label]) => (
-                <div key={label}>
-                  <p className="text-3xl font-black text-[#FF6000]">{val}</p>
-                  <p className="text-blue-300 text-sm">{label}</p>
+            <div className="flex gap-10 pt-8 border-t border-white/10">
+              {[['500+', 'Ürün Çeşidi'], ['6', 'Kategori'], ['100%', 'Yerli Üretim']].map(([v, l]) => (
+                <div key={l}>
+                  <p className="text-2xl font-bold text-[#FF6000]">{v}</p>
+                  <p className="text-gray-500 text-xs mt-0.5">{l}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right — floating cards */}
-          <div className="hidden md:grid grid-cols-2 gap-4">
-            {['Gıda Ürünleri 🍽️', 'Tekstil 🧵', 'Mobilya 🛋️', 'Ahşap 🪵'].map((item, i) => (
-              <div
-                key={item}
-                className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-5 hover:bg-white/20 transition-all cursor-default"
-                style={{ transform: i % 2 === 1 ? 'translateY(20px)' : 'translateY(0)' }}
-              >
-                <p className="text-2xl mb-2">{item.split(' ').slice(-1)[0]}</p>
-                <p className="text-white font-semibold text-sm">{item.split(' ').slice(0, -1).join(' ')}</p>
-              </div>
-            ))}
+          {/* Right — category preview grid */}
+          <div className="hidden md:grid grid-cols-2 gap-3">
+            {(loading ? [
+              { slug: 'gida-urunleri',     name: 'Gıda Ürünleri'  },
+              { slug: 'tekstil-urunleri',  name: 'Tekstil'         },
+              { slug: 'mobilya-urunleri',  name: 'Mobilya'         },
+              { slug: 'ahsap-urunler',     name: 'Ahşap Ürünler'  },
+            ] : categories.slice(0, 4)).map((cat) => {
+              const cfg = categoryConfig[cat.slug];
+              const Icon = cfg?.Icon ?? LuWrench;
+              return (
+                <Link
+                  key={cat.slug}
+                  href={`/${cat.slug}`}
+                  className={`group bg-gradient-to-br ${cfg?.gradient ?? 'from-gray-600 to-gray-500'} rounded-2xl p-5 h-36 flex flex-col justify-between hover:scale-[1.03] transition-all duration-200 shadow-lg`}
+                >
+                  <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                    <Icon size={20} color="white" strokeWidth={1.8} />
+                  </div>
+                  <p className="text-white font-semibold text-sm">{cat.name}</p>
+                </Link>
+              );
+            })}
           </div>
+
         </div>
       </section>
 
@@ -118,8 +134,8 @@ export default function HomePage() {
       <section className="max-w-screen-xl mx-auto px-4 py-8">
         <div className="flex items-end justify-between mb-5">
           <div>
-            <p className="text-[#FF6000] text-xs font-bold uppercase tracking-widest mb-1">Kategoriler</p>
-            <h2 className="text-2xl font-black text-gray-900">Ne Arıyorsunuz?</h2>
+            <p className="text-[#FF6000] text-[11px] font-bold uppercase tracking-widest mb-1">Kategoriler</p>
+            <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Ne Arıyorsunuz?</h2>
           </div>
         </div>
 
@@ -131,17 +147,17 @@ export default function HomePage() {
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
             {categories.map((cat) => {
               const cfg = categoryConfig[cat.slug];
-              const Icon = cfg?.Icon ?? MdSettings;
+              const Icon = cfg?.Icon ?? LuWrench;
               return (
                 <Link
                   key={cat.id}
                   href={`/${cat.slug}`}
-                  className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${cfg?.gradient ?? 'from-gray-500 to-gray-400'} p-4 flex flex-col items-center justify-center text-center min-h-[7rem] hover:scale-105 hover:shadow-xl transition-all duration-200 shadow-md`}
+                  className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${cfg?.gradient ?? 'from-gray-500 to-gray-400'} p-4 flex flex-col items-center justify-center text-center min-h-[7rem] hover:scale-[1.04] hover:shadow-xl transition-all duration-200 shadow-md`}
                 >
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-2 group-hover:bg-white/30 transition-colors">
-                    <Icon size={24} color="white" />
+                  <div className="w-11 h-11 bg-white/20 rounded-xl flex items-center justify-center mb-2.5 group-hover:bg-white/30 transition-colors">
+                    <Icon size={22} color="white" strokeWidth={1.8} />
                   </div>
-                  <p className="text-white text-xs font-bold leading-tight drop-shadow">{cat.name}</p>
+                  <p className="text-white text-xs font-semibold leading-tight">{cat.name}</p>
                 </Link>
               );
             })}
@@ -152,29 +168,29 @@ export default function HomePage() {
       {/* ─── CAMPAIGN BANNERS ─── */}
       <section className="max-w-screen-xl mx-auto px-4 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link href="/gida-urunleri" className="group col-span-1 md:col-span-2 relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#1B2E5E] to-[#2d4a8c] p-7 flex items-center justify-between min-h-40 hover:shadow-xl transition-all">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF6000]/10 rounded-full translate-x-1/3 -translate-y-1/3" />
+          <Link href="/gida-urunleri" className="group col-span-2 relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#111827] to-[#1e3a78] p-8 flex items-center justify-between min-h-44 hover:shadow-xl transition-all">
+            <div className="absolute top-0 right-0 w-72 h-72 bg-[#FF6000]/10 rounded-full translate-x-1/3 -translate-y-1/3" />
             <div className="relative z-10">
-              <span className="bg-[#FF6000] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full inline-block mb-3">Öne Çıkan</span>
-              <h3 className="text-white text-3xl font-black mb-1">Gıda Ürünleri</h3>
-              <p className="text-blue-200 text-sm mb-4">Doğal, taze, güvenilir</p>
-              <span className="inline-flex items-center gap-1 bg-white text-[#1B2E5E] text-xs font-black px-4 py-2 rounded-lg group-hover:bg-[#FF6000] group-hover:text-white transition-colors">
-                İncele <MdArrowForward size={14} />
+              <span className="bg-[#FF6000] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full inline-block mb-3">Öne Çıkan</span>
+              <h3 className="text-white text-3xl font-bold mb-1 tracking-tight">Gıda Ürünleri</h3>
+              <p className="text-gray-400 text-sm mb-5">Doğal, taze, güvenilir</p>
+              <span className="inline-flex items-center gap-2 bg-white text-gray-900 text-xs font-semibold px-4 py-2.5 rounded-lg group-hover:bg-[#FF6000] group-hover:text-white transition-colors">
+                İncele <LuArrowRight size={13} />
               </span>
             </div>
-            <span className="text-8xl opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all">🍽️</span>
+            <LuUtensils size={100} color="white" strokeWidth={0.8} className="opacity-10 group-hover:opacity-20 transition-opacity" />
           </Link>
 
-          <Link href="/tekstil-urunleri" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-600 to-pink-500 p-7 flex flex-col justify-between min-h-40 hover:shadow-xl transition-all">
+          <Link href="/tekstil-urunleri" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-500 p-7 flex flex-col justify-between min-h-44 hover:shadow-xl transition-all">
             <div>
-              <h3 className="text-white text-2xl font-black mb-1">Tekstil</h3>
-              <p className="text-purple-100 text-sm">El yapımı kumaşlar</p>
+              <h3 className="text-white text-2xl font-bold mb-1 tracking-tight">Tekstil</h3>
+              <p className="text-white/60 text-sm">El yapımı kumaşlar</p>
             </div>
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1 bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-lg group-hover:bg-white/30 transition-colors">
-                Görüntüle <MdArrowForward size={12} />
+              <span className="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-semibold px-3 py-2 rounded-lg group-hover:bg-white/25 transition-colors">
+                Görüntüle <LuArrowRight size={12} />
               </span>
-              <span className="text-5xl opacity-50 group-hover:scale-110 transition-transform">🧵</span>
+              <LuShirt size={48} color="white" strokeWidth={1} className="opacity-25" />
             </div>
           </Link>
         </div>
@@ -184,11 +200,11 @@ export default function HomePage() {
       <section className="max-w-screen-xl mx-auto px-4 pb-8">
         <div className="flex items-end justify-between mb-5">
           <div>
-            <p className="text-[#FF6000] text-xs font-bold uppercase tracking-widest mb-1">Ürünler</p>
-            <h2 className="text-2xl font-black text-gray-900">Öne Çıkanlar</h2>
+            <p className="text-[#FF6000] text-[11px] font-bold uppercase tracking-widest mb-1">Ürünler</p>
+            <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Öne Çıkanlar</h2>
           </div>
-          <Link href="/gida-urunleri" className="flex items-center gap-1 text-[#FF6000] hover:text-[#cc4e00] text-sm font-bold transition-colors">
-            Tümü <MdArrowForward size={16} />
+          <Link href="/gida-urunleri" className="flex items-center gap-1 text-[#FF6000] hover:text-[#cc4e00] text-sm font-semibold transition-colors">
+            Tümü <LuArrowRight size={15} />
           </Link>
         </div>
 
@@ -207,26 +223,28 @@ export default function HomePage() {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                   ) : (
-                    <span className="text-6xl group-hover:scale-110 transition-transform duration-300">{productEmojis[product.slug] ?? '📦'}</span>
+                    <span className="text-6xl group-hover:scale-110 transition-transform duration-300 select-none">
+                      {productEmojis[product.slug] ?? '📦'}
+                    </span>
                   )}
                   {product.quantity === 0 && (
                     <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                      <span className="bg-red-500 text-white text-xs font-black px-3 py-1 rounded-full">Tükendi</span>
+                      <span className="bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">Tükendi</span>
                     </div>
                   )}
                   {product.quantity > 0 && (
-                    <span className="absolute top-2 right-2 bg-[#FF6000] text-white text-[10px] font-black px-2 py-0.5 rounded-lg">YENİ</span>
+                    <span className="absolute top-2 right-2 bg-[#FF6000] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">YENİ</span>
                   )}
                 </div>
-                <div className="p-3">
-                  <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wide mb-1">{product.category.name}</p>
-                  <h3 className="text-sm font-bold text-gray-900 line-clamp-2 min-h-[2.5rem] group-hover:text-[#FF6000] transition-colors leading-snug">{product.name}</h3>
-                  <div className="flex items-center gap-1 mt-1 mb-2">
-                    {[1,2,3,4,5].map((s) => <MdStar key={s} size={11} color="#FF6000" />)}
+                <div className="p-3.5">
+                  <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-1">{product.category.name}</p>
+                  <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 min-h-[2.5rem] group-hover:text-[#FF6000] transition-colors leading-snug">{product.name}</h3>
+                  <div className="flex items-center gap-0.5 mt-1.5 mb-2">
+                    {[1,2,3,4,5].map((s) => <LuStar key={s} size={10} fill="#FF6000" color="#FF6000" />)}
                     <span className="text-[10px] text-gray-400 ml-1">5.0</span>
                   </div>
                   {product.price > 0 ? (
-                    <p className="text-lg font-black text-[#FF6000]">₺{product.price.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-[#FF6000] tracking-tight">₺{product.price.toFixed(2)}</p>
                   ) : (
                     <p className="text-xs text-gray-400 italic">Fiyat belirleniyor</p>
                   )}
@@ -237,21 +255,21 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* ─── WHY US BANNER ─── */}
+      {/* ─── WHY US ─── */}
       <section className="max-w-screen-xl mx-auto px-4 pb-10">
-        <div className="bg-gradient-to-r from-[#1B2E5E] to-[#2d4a8c] rounded-3xl p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-[#111827] rounded-3xl p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { Icon: MdLocalShipping, title: 'Ücretsiz Kargo',     desc: 'Tüm siparişlerde Türkiye geneli'     },
-            { Icon: MdVerified,      title: 'Kalite Güvencesi',   desc: 'Resmi denetimden geçmiş ürünler'    },
-            { Icon: MdStar,          title: 'Sosyal Sorumluluk',  desc: 'Her alışveriş fark yaratır'         },
+            { Icon: LuTruck,        title: 'Ücretsiz Kargo',    desc: 'Tüm siparişlerde Türkiye geneli'   },
+            { Icon: LuShieldCheck,  title: 'Kalite Güvencesi',  desc: 'Resmi denetimden geçmiş ürünler'  },
+            { Icon: LuHeart,        title: 'Sosyal Sorumluluk', desc: 'Her alışveriş fark yaratır'        },
           ].map(({ Icon, title, desc }) => (
             <div key={title} className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-[#FF6000] rounded-xl flex items-center justify-center flex-shrink-0">
-                <Icon size={24} color="white" />
+              <div className="w-12 h-12 bg-[#FF6000]/15 rounded-xl flex items-center justify-center flex-shrink-0 border border-[#FF6000]/20">
+                <Icon size={22} color="#FF6000" strokeWidth={1.8} />
               </div>
               <div>
-                <p className="text-white font-black">{title}</p>
-                <p className="text-blue-200 text-sm">{desc}</p>
+                <p className="text-white font-semibold text-sm">{title}</p>
+                <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
               </div>
             </div>
           ))}

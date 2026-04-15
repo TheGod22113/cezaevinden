@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { MdRestaurant, MdDry, MdForest, MdStyle, MdChair, MdSettings, MdShoppingCart, MdHome } from 'react-icons/md';
+import { LuUtensils, LuShirt, LuTreePine, LuScissors, LuSofa, LuWrench, LuShoppingCart, LuHome } from 'react-icons/lu';
 
 interface Product {
   id: string;
@@ -17,12 +17,12 @@ interface Product {
 }
 
 const categoryMeta: Record<string, { Icon: React.ElementType; iconColor: string; bg: string; banner: string }> = {
-  'gida-urunleri':        { Icon: MdRestaurant, iconColor: '#15803d', bg: 'bg-green-100',  banner: 'from-green-600 to-emerald-500'  },
-  'tekstil-urunleri':     { Icon: MdDry,        iconColor: '#1d4ed8', bg: 'bg-blue-100',   banner: 'from-blue-600 to-indigo-500'    },
-  'ahsap-urunler':        { Icon: MdForest,     iconColor: '#b45309', bg: 'bg-amber-100',  banner: 'from-amber-600 to-yellow-500'   },
-  'dokuma':               { Icon: MdStyle,      iconColor: '#7e22ce', bg: 'bg-purple-100', banner: 'from-purple-600 to-violet-500'  },
-  'mobilya-urunleri':     { Icon: MdChair,      iconColor: '#be123c', bg: 'bg-rose-100',   banner: 'from-rose-600 to-pink-500'      },
-  'demir-metal-urunleri': { Icon: MdSettings,   iconColor: '#334155', bg: 'bg-slate-100',  banner: 'from-slate-600 to-gray-500'    },
+  'gida-urunleri':        { Icon: LuUtensils,  iconColor: '#15803d', bg: 'bg-green-100',  banner: 'from-emerald-600 to-teal-500'   },
+  'tekstil-urunleri':     { Icon: LuShirt,     iconColor: '#1d4ed8', bg: 'bg-blue-100',   banner: 'from-blue-600 to-indigo-500'    },
+  'ahsap-urunler':        { Icon: LuTreePine,  iconColor: '#b45309', bg: 'bg-amber-100',  banner: 'from-amber-600 to-yellow-500'   },
+  'dokuma':               { Icon: LuScissors,  iconColor: '#7e22ce', bg: 'bg-purple-100', banner: 'from-violet-600 to-purple-500'  },
+  'mobilya-urunleri':     { Icon: LuSofa,      iconColor: '#be123c', bg: 'bg-rose-100',   banner: 'from-rose-600 to-pink-500'      },
+  'demir-metal-urunleri': { Icon: LuWrench,    iconColor: '#334155', bg: 'bg-slate-100',  banner: 'from-slate-600 to-gray-500'     },
 };
 
 const productPlaceholders: Record<string, string> = {
@@ -70,7 +70,7 @@ export default function CategoryPage() {
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-white/70 text-sm mb-4">
             <Link href="/" className="hover:text-white flex items-center gap-1 transition-colors">
-              <MdHome size={16} />
+              <LuHome size={14} />
               Ana Sayfa
             </Link>
             <span>/</span>
@@ -188,11 +188,11 @@ export default function CategoryPage() {
                       <span className="text-xs text-gray-400 italic">Fiyat belirleniyor</span>
                     )}
                     <button
-                      onClick={(e) => { e.preventDefault(); /* sepet işlemi */ }}
+                      onClick={(e) => { e.preventDefault(); }}
                       className="w-8 h-8 bg-[#FF6000] hover:bg-[#e55500] text-white rounded-lg flex items-center justify-center transition-colors"
                       aria-label="Sepete ekle"
                     >
-                      <MdShoppingCart size={16} />
+                      <LuShoppingCart size={15} strokeWidth={2} />
                     </button>
                   </div>
                 </div>

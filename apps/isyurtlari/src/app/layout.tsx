@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import CartBadge from '@/components/CartBadge';
-import { MdRestaurant, MdDry, MdForest, MdStyle, MdChair, MdSettings } from 'react-icons/md';
+import { LuUtensils, LuShirt, LuTreePine, LuScissors, LuSofa, LuWrench } from 'react-icons/lu';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 };
 
 const categories = [
-  { name: 'Gıda',    slug: 'gida-urunleri',        Icon: MdRestaurant },
-  { name: 'Tekstil', slug: 'tekstil-urunleri',      Icon: MdDry        },
-  { name: 'Ahşap',   slug: 'ahsap-urunler',         Icon: MdForest     },
-  { name: 'Dokuma',  slug: 'dokuma',                Icon: MdStyle      },
-  { name: 'Mobilya', slug: 'mobilya-urunleri',      Icon: MdChair      },
-  { name: 'Metal',   slug: 'demir-metal-urunleri',  Icon: MdSettings   },
+  { name: 'Gıda',    slug: 'gida-urunleri',        Icon: LuUtensils  },
+  { name: 'Tekstil', slug: 'tekstil-urunleri',      Icon: LuShirt     },
+  { name: 'Ahşap',   slug: 'ahsap-urunler',         Icon: LuTreePine  },
+  { name: 'Dokuma',  slug: 'dokuma',                Icon: LuScissors  },
+  { name: 'Mobilya', slug: 'mobilya-urunleri',      Icon: LuSofa      },
+  { name: 'Metal',   slug: 'demir-metal-urunleri',  Icon: LuWrench    },
 ];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
