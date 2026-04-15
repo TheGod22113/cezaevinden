@@ -65,10 +65,9 @@ export async function POST(req: NextRequest) {
     const trainingHoursFunded = totalItemsCount * TRAINING_HOURS_PER_ITEM;
     const prisonersSupportedCount = Math.ceil(totalItemsCount * PRISONERS_PER_ITEM);
 
-    // Create order first
+    // Create order first (guest checkout - no userId)
     const order = await prisma.order.create({
       data: {
-        userId: 'guest', // Guest checkout için
         orderNumber,
         status: 'PENDING',
         totalAmount: body.totalAmount,
