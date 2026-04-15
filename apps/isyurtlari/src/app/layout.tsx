@@ -120,10 +120,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
 
         {/* ─── FOOTER ─── */}
-        <footer className="bg-gray-900 text-white mt-8">
+        <footer className="bg-[#0A1628] text-white mt-8">
 
           {/* Trust bar */}
-          <div className="bg-gray-800">
+          <div className="bg-[#0D1B30]">
             <div className="max-w-screen-xl mx-auto px-4 py-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {[
@@ -184,7 +184,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </div>
               </div>
             </div>
-            <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="border-t border-blue-900/50 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-gray-400 text-sm">
                 © 2026 Adalet Bakanlığı İsyurtları. Tüm hakları saklıdır.
               </p>

@@ -19,7 +19,7 @@ export default function AboutPage() {
       </div>
 
       {/* ─── HERO ─── */}
-      <section className="bg-[#111827] relative overflow-hidden">
+      <section className="bg-[#0F2040] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#FF6000]/8 rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none" />
         <div className="relative max-w-screen-xl mx-auto px-4 py-16 md:py-20">
           <div className="max-w-2xl">
@@ -30,7 +30,7 @@ export default function AboutPage() {
               İşyurtları Ürünleriyle<br />
               <span className="text-[#FF6000]">Sosyal Değer</span> Yaratın
             </h1>
-            <p className="text-gray-400 text-lg leading-relaxed max-w-xl">
+            <p className="text-sky-200 text-lg leading-relaxed max-w-xl">
               Adalet Bakanlığı bünyesindeki cezaevi işyurtlarında üretilen kaliteli ürünleri sizlere
               ulaştırıyoruz. Her alışverişiniz, bireylerin topluma yeniden kazandırılması sürecine destek olur.
             </p>
@@ -163,7 +163,7 @@ export default function AboutPage() {
               <p className="text-sky-300 text-sm font-semibold">Bizimle iletişime geçin</p>
             </div>
             <h3 className="text-white text-2xl font-bold tracking-tight">Sorularınız mı var?</h3>
-            <p className="text-gray-400 text-sm mt-1">Size yardımcı olmaktan mutluluk duyarız.</p>
+            <p className="text-blue-300 text-sm mt-1">Size yardımcı olmaktan mutluluk duyarız.</p>
           </div>
           <Link
             href="/bize-ulasin"

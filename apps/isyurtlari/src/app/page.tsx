@@ -66,7 +66,7 @@ export default function HomePage() {
       </div>
 
       {/* ─── HERO ─── */}
-      <section className="relative overflow-hidden bg-[#111827]">
+      <section className="relative overflow-hidden bg-[#0F2040]">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwLTkuOTQtOC4wNi0xOC0xOC0xOFYwaDQydjQySDE4YzAtOS45NCA4LjA2LTE4IDE4LTE4eiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvZz48L3N2Zz4=')] opacity-30" />
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FF6000] opacity-[0.07] rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none" />
 
@@ -96,7 +96,7 @@ export default function HomePage() {
               {[['500+', 'Ürün Çeşidi'], ['6', 'Kategori'], ['100%', 'Yerli Üretim']].map(([v, l]) => (
                 <div key={l}>
                   <p className="text-2xl font-bold text-[#FF6000]">{v}</p>
-                  <p className="text-gray-500 text-xs mt-0.5">{l}</p>
+                  <p className="text-blue-300 text-xs mt-0.5">{l}</p>
                 </div>
               ))}
             </div>
@@ -168,7 +168,7 @@ export default function HomePage() {
       {/* ─── CAMPAIGN BANNERS ─── */}
       <section className="max-w-screen-xl mx-auto px-4 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link href="/gida-urunleri" className="group col-span-2 relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#111827] to-[#1e3a78] p-8 flex items-center justify-between min-h-44 hover:shadow-xl transition-all">
+          <Link href="/gida-urunleri" className="group col-span-2 relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#0F2040] to-[#1e4a90] p-8 flex items-center justify-between min-h-44 hover:shadow-xl transition-all">
             <div className="absolute top-0 right-0 w-72 h-72 bg-[#FF6000]/10 rounded-full translate-x-1/3 -translate-y-1/3" />
             <div className="relative z-10">
               <span className="bg-[#FF6000] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full inline-block mb-3">Öne Çıkan</span>
@@ -257,7 +257,7 @@ export default function HomePage() {
 
       {/* ─── WHY US ─── */}
       <section className="max-w-screen-xl mx-auto px-4 pb-10">
-        <div className="bg-[#111827] rounded-3xl p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-[#0F2040] rounded-3xl p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             { Icon: LuTruck,        title: 'Ücretsiz Kargo',    desc: 'Tüm siparişlerde Türkiye geneli'   },
             { Icon: LuShieldCheck,  title: 'Kalite Güvencesi',  desc: 'Resmi denetimden geçmiş ürünler'  },
@@ -269,7 +269,7 @@ export default function HomePage() {
               </div>
               <div>
                 <p className="text-white font-semibold text-sm">{title}</p>
-                <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
+                <p className="text-blue-300 text-xs mt-0.5">{desc}</p>
               </div>
             </div>
           ))}
