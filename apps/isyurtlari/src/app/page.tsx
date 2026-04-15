@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { GiKnifeFork, GiNeedleThread, GiWoodBeam, GiWool, GiWoodenChair, GiGears } from 'react-icons/gi';
 
 interface Category {
   id: string;
@@ -20,13 +21,13 @@ interface Product {
   category: { name: string; slug: string };
 }
 
-const categoryMeta: Record<string, { icon: string; color: string; bg: string }> = {
-  'gida-urunleri':       { icon: '🍽️', color: 'text-green-700',  bg: 'bg-green-50'  },
-  'tekstil-urunleri':    { icon: '🧵', color: 'text-blue-700',   bg: 'bg-blue-50'   },
-  'ahsap-urunler':       { icon: '🪵', color: 'text-amber-700',  bg: 'bg-amber-50'  },
-  'dokuma':              { icon: '🧣', color: 'text-purple-700', bg: 'bg-purple-50' },
-  'mobilya-urunleri':    { icon: '🛋️', color: 'text-rose-700',   bg: 'bg-rose-50'   },
-  'demir-metal-urunleri':{ icon: '⚙️', color: 'text-gray-700',   bg: 'bg-gray-100'  },
+const categoryMeta: Record<string, { Icon: React.ElementType; color: string; bg: string; iconColor: string }> = {
+  'gida-urunleri':        { Icon: GiKnifeFork,    color: 'text-green-700',  bg: 'bg-green-100',  iconColor: '#15803d' },
+  'tekstil-urunleri':     { Icon: GiNeedleThread, color: 'text-blue-700',   bg: 'bg-blue-100',   iconColor: '#1d4ed8' },
+  'ahsap-urunler':        { Icon: GiWoodBeam,     color: 'text-amber-700',  bg: 'bg-amber-100',  iconColor: '#b45309' },
+  'dokuma':               { Icon: GiWool,         color: 'text-purple-700', bg: 'bg-purple-100', iconColor: '#7e22ce' },
+  'mobilya-urunleri':     { Icon: GiWoodenChair,  color: 'text-rose-700',   bg: 'bg-rose-100',   iconColor: '#be123c' },
+  'demir-metal-urunleri': { Icon: GiGears,        color: 'text-slate-700',  bg: 'bg-slate-100',  iconColor: '#334155' },
 };
 
 const productEmojis: Record<string, string> = {
@@ -128,17 +129,22 @@ export default function HomePage() {
           ) : (
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
               {categories.map((cat) => {
-                const meta = categoryMeta[cat.slug] || { icon: '📦', color: 'text-gray-700', bg: 'bg-gray-50' };
+                const meta = categoryMeta[cat.slug];
+                const Icon = meta?.Icon;
                 return (
                   <Link
                     key={cat.id}
                     href={`/${cat.slug}`}
                     className="group bg-white rounded-xl border border-gray-200 hover:border-[#FF6000] hover:shadow-md transition-all p-4 flex flex-col items-center justify-center text-center"
                   >
-                    <div className={`w-14 h-14 ${meta.bg} rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-                      <span className="text-3xl">{meta.icon}</span>
+                    <div className={`w-14 h-14 ${meta?.bg ?? 'bg-gray-100'} rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+                      {Icon ? (
+                        <Icon size={28} color={meta.iconColor} />
+                      ) : (
+                        <GiGears size={28} color="#64748b" />
+                      )}
                     </div>
-                    <p className={`text-xs font-bold ${meta.color} leading-tight`}>{cat.name}</p>
+                    <p className={`text-xs font-bold ${meta?.color ?? 'text-gray-700'} leading-tight`}>{cat.name}</p>
                   </Link>
                 );
               })}

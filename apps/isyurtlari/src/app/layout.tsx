@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import CartBadge from '@/components/CartBadge';
+import { GiKnifeFork, GiNeedleThread, GiWoodBeam, GiWool, GiWoodenChair, GiGears } from 'react-icons/gi';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -10,12 +11,12 @@ export const metadata: Metadata = {
 };
 
 const categories = [
-  { name: 'Gıda', slug: 'gida-urunleri', icon: '🍽️' },
-  { name: 'Tekstil', slug: 'tekstil-urunleri', icon: '🧵' },
-  { name: 'Ahşap', slug: 'ahsap-urunler', icon: '🪵' },
-  { name: 'Dokuma', slug: 'dokuma', icon: '🧣' },
-  { name: 'Mobilya', slug: 'mobilya-urunleri', icon: '🛋️' },
-  { name: 'Metal', slug: 'demir-metal-urunleri', icon: '⚙️' },
+  { name: 'Gıda',    slug: 'gida-urunleri',        Icon: GiKnifeFork    },
+  { name: 'Tekstil', slug: 'tekstil-urunleri',      Icon: GiNeedleThread },
+  { name: 'Ahşap',   slug: 'ahsap-urunler',         Icon: GiWoodBeam     },
+  { name: 'Dokuma',  slug: 'dokuma',                Icon: GiWool         },
+  { name: 'Mobilya', slug: 'mobilya-urunleri',      Icon: GiWoodenChair  },
+  { name: 'Metal',   slug: 'demir-metal-urunleri',  Icon: GiGears        },
 ];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -95,7 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     href={`/${cat.slug}`}
                     className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 hover:text-[#FF6000] hover:bg-orange-50 border-b-2 border-transparent hover:border-[#FF6000] transition-all whitespace-nowrap flex-shrink-0"
                   >
-                    <span className="text-base">{cat.icon}</span>
+                    <cat.Icon size={16} />
                     {cat.name}
                   </Link>
                 ))}
