@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {/* Logo */}
               <Link href="/" className="flex-shrink-0">
                 <div className="bg-white rounded-lg px-3 py-1 flex items-center gap-2">
-                  <Image src="/logo.jpg" alt="İsyurtları" width={100} height={36} className="object-contain h-9 w-auto" priority />
+                  <Image src="/logo.jpg" alt="İsyurtları" width={150} height={54} className="object-contain h-14 w-auto" priority />
                 </div>
               </Link>
 

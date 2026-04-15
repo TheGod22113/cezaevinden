@@ -67,7 +67,7 @@ export default function CategoryPage() {
     fetch(`/api/products?category=${categorySlug}`)
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data);
+        setProducts(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch((error) => {
