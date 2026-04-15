@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { LuAlertCircle, LuCheckCircle } from 'react-icons/lu';
+import { LuAlertTriangle } from 'react-icons/lu';
 
 interface CartItem {
   id: string;
@@ -126,7 +126,7 @@ export default function CheckoutPage() {
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {error && (
           <div className="mb-6 bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl flex items-start gap-3">
-            <LuAlertCircle size={18} className="mt-0.5 flex-shrink-0" />
+            <LuAlertTriangle size={18} className="mt-0.5 flex-shrink-0" />
             <div>{error}</div>
           </div>
         )}
