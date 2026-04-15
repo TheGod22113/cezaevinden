@@ -493,7 +493,7 @@ enum PaymentStatus {
 
 model Order {
   id              String        @id @default(cuid())
-  userId          String
+  userId          String?       // Guest checkout için optional
   orderNumber     String        @unique
   status          OrderStatus   @default(PENDING)
   totalAmount     Float
@@ -504,7 +504,7 @@ model Order {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
-  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
   items       OrderItem[]
   payment     Payment?    @relation(fields: [paymentId], references: [id])
 
