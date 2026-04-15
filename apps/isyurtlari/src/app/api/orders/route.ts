@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
     const trainingHoursFunded = totalItemsCount * TRAINING_HOURS_PER_ITEM;
     const prisonersSupportedCount = Math.ceil(totalItemsCount * PRISONERS_PER_ITEM);
 
-    // Create order with items
+    // Create order first
     const order = await prisma.order.create({
       data: {
         orderNumber,
@@ -74,14 +74,26 @@ export async function POST(req: NextRequest) {
         paymentMethod: body.paymentMethod,
         shippingAddress: body.shippingAddress,
         notes: `Müşteri: ${body.customerName} | Email: ${body.email} | Telefon: ${body.phone}`,
-        orderItems: {
-          create: body.items.map((item) => ({
+      },
+    });
+
+    // Create order items
+    await Promise.all(
+      body.items.map((item) =>
+        prisma.orderItem.create({
+          data: {
+            orderId: order.id,
             productId: item.id,
             quantity: item.quantity,
             price: item.price,
-          })),
-        },
-      },
+          },
+        })
+      )
+    );
+
+    // Fetch order with items
+    const orderWithItems = await prisma.order.findUnique({
+      where: { id: order.id },
       include: {
         orderItems: {
           include: {
@@ -112,11 +124,11 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      orderId: order.id,
-      orderNumber: order.orderNumber,
-      status: order.status,
-      totalAmount: order.totalAmount,
-      paymentMethod: order.paymentMethod,
+      orderId: orderWithItems?.id,
+      orderNumber: orderWithItems?.orderNumber,
+      status: orderWithItems?.status,
+      totalAmount: orderWithItems?.totalAmount,
+      paymentMethod: orderWithItems?.paymentMethod,
       impact: {
         trainingHoursFunded,
         prisonersSupportedCount,
