@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { LuHouse, LuShoppingCart, LuBadgeCheck, LuTruck, LuHeart, LuGraduationCap, LuUsers } from 'react-icons/lu';
+import { LuHouse, LuBadgeCheck, LuHeart, LuGraduationCap, LuUsers } from 'react-icons/lu';
 
 const categoryPurpose: Record<string, { purpose: string; trainingHours: number; skillDescription: string }> = {
   'gida-urunleri': { purpose: 'Beslenme & Aşçılık Eğitimi', trainingHours: 40, skillDescription: 'Profesyonel aşçılık ve beslenme bilgisi' },
