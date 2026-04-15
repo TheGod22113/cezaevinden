@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import {
   LuLayoutDashboard, LuPackage, LuTag, LuShoppingBag,
-  LuLogOut, LuMenu, LuX,
+  LuLogOut, LuMenu,
 } from 'react-icons/lu';
 import { useState } from 'react';
 
