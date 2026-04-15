@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { LuUtensils, LuShirt, LuTreePine, LuScissors, LuSofa, LuWrench, LuShoppingCart, LuHome } from 'react-icons/lu';
+import { LuUtensils, LuShirt, LuTreePine, LuScissors, LuSofa, LuWrench, LuShoppingCart, LuHouse } from 'react-icons/lu';
 
 interface Product {
   id: string;
@@ -70,7 +70,7 @@ export default function CategoryPage() {
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-white/70 text-sm mb-4">
             <Link href="/" className="hover:text-white flex items-center gap-1 transition-colors">
-              <LuHome size={14} />
+              <LuHouse size={14} />
               Ana Sayfa
             </Link>
             <span>/</span>

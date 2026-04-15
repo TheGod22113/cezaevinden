@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { LuHome, LuShoppingCart, LuBadgeCheck, LuTruck, LuFactory } from 'react-icons/lu';
+import { LuHouse, LuShoppingCart, LuBadgeCheck, LuTruck, LuFactory } from 'react-icons/lu';
 
 interface Product {
   id: string;
@@ -85,7 +85,7 @@ export default function ProductDetailPage() {
         <div className="max-w-screen-xl mx-auto px-4 py-3">
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <Link href="/" className="hover:text-[#FF6000] flex items-center gap-1 transition-colors">
-              <LuHome size={14} strokeWidth={2} /> Ana Sayfa
+              <LuHouse size={14} strokeWidth={2} /> Ana Sayfa
             </Link>
             <span>/</span>
             <Link href={`/${product.category.slug}`} className="hover:text-[#FF6000] transition-colors">
