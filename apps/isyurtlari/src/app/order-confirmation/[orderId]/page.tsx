@@ -22,14 +22,6 @@ interface OrderData {
   };
 }
 
-interface BankDetails {
-  accountName: string;
-  iban: string;
-  branch: string;
-  accountNo: string;
-  message: string;
-}
-
 export default function OrderConfirmationPage() {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -37,7 +29,6 @@ export default function OrderConfirmationPage() {
   const paymentType = searchParams.get('payment') || 'pending';
 
   const [order, setOrder] = useState<OrderData | null>(null);
-  const [bankDetails, setBankDetails] = useState<BankDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
 
@@ -47,17 +38,9 @@ export default function OrderConfirmationPage() {
       .then((data) => {
         setOrder(data);
         setLoading(false);
-
-        // Fetch bank details if transfer payment
-        if (paymentType === 'transfer') {
-          fetch(`/api/bank-details`)
-            .then((r) => r.json())
-            .then((bd) => setBankDetails(bd))
-            .catch(() => {});
-        }
       })
       .catch(() => setLoading(false));
-  }, [orderId, paymentType]);
+  }, [orderId]);
 
   const handleShare = () => {
     const text = `🎉 Adalet Bakanlığı'nın sosyal girişimini destekledim! Hükümlülerin rehabilitasyonuna katkı sağladım. Sen de katıl: isyurtlari.com.tr`;
