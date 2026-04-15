@@ -1,96 +1,181 @@
-'use client';
-
 import Link from 'next/link';
+import { LuHouse, LuShieldCheck, LuTarget, LuHeart, LuBadgeCheck, LuUsers, LuLeaf, LuBuilding2, LuArrowRight } from 'react-icons/lu';
 
 export default function AboutPage() {
   return (
-    <div className="bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="bg-white border-b">
-        <div className="max-w-screen-2xl mx-auto px-4 py-8">
-          <Link href="/" className="text-blue-600 hover:text-blue-700 font-medium">
-            ← Geri
-          </Link>
-          <h1 className="text-4xl font-bold text-gray-900 mt-4">Hakkımızda</h1>
+    <div className="min-h-screen bg-[#F4F5F7]">
+
+      {/* ─── BREADCRUMB ─── */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-screen-xl mx-auto px-4 py-3">
+          <div className="flex items-center gap-2 text-sm text-gray-500">
+            <Link href="/" className="hover:text-[#FF6000] flex items-center gap-1 transition-colors">
+              <LuHouse size={14} /> Ana Sayfa
+            </Link>
+            <span>/</span>
+            <span className="text-gray-900 font-medium">Hakkımızda</span>
+          </div>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white rounded-lg border border-gray-200 p-8 space-y-8">
-          {/* Misyon */}
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Misyonumuz</h2>
-            <p className="text-gray-600 leading-relaxed">
-              İsyurtları, Adalet Bakanlığı cezaevi işyurtlarında üretilen yüksek kaliteli ürünleri
-              müşterilerimize sunarak sosyal sorumluluk taşımaktır. Her satın alma, ceza infaz kurumlarındaki
-              bireylerin rehabilitasyonunu ve sosyal entegrasyonunu desteklemeye yardımcı olur.
-            </p>
-          </section>
-
-          {/* Vizyon */}
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Vizyonumuz</h2>
-            <p className="text-gray-600 leading-relaxed">
-              Toplumun tüm kesimlerinin işyurtları ürünlerine güvenle erişebildiği, ceza infaz kurumlarında
-              üretilen ürünlerin kalitesi ve çeşitliliğinin arttığı, sosyal rehabilitasyonun ön planda
-              tutulduğu bir Türkiye'yi hedefliyoruz.
-            </p>
-          </section>
-
-          {/* Değerler */}
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Değerlerimiz</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex gap-4">
-                <span className="text-3xl">✅</span>
-                <div>
-                  <h3 className="font-bold text-gray-900 mb-2">Kalite</h3>
-                  <p className="text-sm text-gray-600">Her ürün titiz üretim süreçleri ve kalite kontrolünden geçer</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <span className="text-3xl">🤝</span>
-                <div>
-                  <h3 className="font-bold text-gray-900 mb-2">Güvenilirlik</h3>
-                  <p className="text-sm text-gray-600">Adalet Bakanlığı'nın denetimi altında işletilen işyurtları</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <span className="text-3xl">❤️</span>
-                <div>
-                  <h3 className="font-bold text-gray-900 mb-2">Sosyal Sorumluluk</h3>
-                  <p className="text-sm text-gray-600">Her satın alma sosyal programları ve rehabilitasyonu destekler</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <span className="text-3xl">🌱</span>
-                <div>
-                  <h3 className="font-bold text-gray-900 mb-2">Sürdürülebilirlik</h3>
-                  <p className="text-sm text-gray-600">Çevreye duyarlı ve sürdürülebilir üretim yöntemleri</p>
-                </div>
-              </div>
+      {/* ─── HERO ─── */}
+      <section className="bg-[#111827] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#FF6000]/8 rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none" />
+        <div className="relative max-w-screen-xl mx-auto px-4 py-16 md:py-20">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-sky-300 text-xs font-semibold px-4 py-2 rounded-full mb-6 tracking-wide">
+              <LuBadgeCheck size={14} /> Adalet Bakanlığı Onaylı Platform
             </div>
-          </section>
-
-          {/* İşyurtları */}
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">İşyurtları Nedir?</h2>
-            <p className="text-gray-600 leading-relaxed mb-4">
-              İşyurtları, Adalet Bakanlığı Ceza İnfaz Kurumları tarafından işletilen ve cezaevi
-              mahkûmlarının çalıştırıldığı işletmelerdir. Bu işletmelerde üretilen ürünler,
-              mahkûmların rehabilitasyonuna, meslek sahibi olmalarına ve topluma kazı kişi olarak
-              dönüşlerine katkı sağlar.
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-5 tracking-tight leading-tight">
+              İşyurtları Ürünleriyle<br />
+              <span className="text-[#FF6000]">Sosyal Değer</span> Yaratın
+            </h1>
+            <p className="text-gray-400 text-lg leading-relaxed max-w-xl">
+              Adalet Bakanlığı bünyesindeki cezaevi işyurtlarında üretilen kaliteli ürünleri sizlere
+              ulaştırıyoruz. Her alışverişiniz, bireylerin topluma yeniden kazandırılması sürecine destek olur.
             </p>
-            <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
-              <p className="text-blue-900 text-sm">
-                <strong>Sosyal Etki:</strong> İşyurtlarından alışveriş yaparak, ceza infaz kurumlarındaki
-                bireylerin sosyal entegrasyonunu desteklemiş olursunuz.
+          </div>
+        </div>
+      </section>
+
+      {/* ─── STATS ─── */}
+      <section className="bg-white border-b border-gray-100">
+        <div className="max-w-screen-xl mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-100">
+            {[
+              { value: '81',    label: 'İlde Faaliyet'       },
+              { value: '500+',  label: 'Ürün Çeşidi'         },
+              { value: '6',     label: 'Kategori'             },
+              { value: '100%',  label: 'Yerli & El Yapımı'   },
+            ].map(({ value, label }) => (
+              <div key={label} className="py-8 px-6 text-center">
+                <p className="text-3xl font-bold text-[#FF6000]">{value}</p>
+                <p className="text-sm text-gray-500 mt-1">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-screen-xl mx-auto px-4 py-10 space-y-6">
+
+        {/* ─── İŞYURTLARI NEDİR ─── */}
+        <section className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="p-8 md:p-10">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
+                  <LuBuilding2 size={20} color="#FF6000" strokeWidth={1.8} />
+                </div>
+                <h2 className="text-xl font-bold text-gray-900 tracking-tight">İşyurtları Nedir?</h2>
+              </div>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                İşyurtları; Adalet Bakanlığı Ceza İnfaz Kurumları bünyesinde faaliyet gösteren ve
+                hükümlülerin çalıştırıldığı üretim tesisleridir. Türkiye genelindeki 81 ilde
+                kurulu bu tesislerde gıda, tekstil, mobilya, ahşap ürünleri ve daha pek çok alanda
+                üretim gerçekleştirilmektedir.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Bu tesislerde üretilen ürünler; hükümlülerin bir meslek edinmesine, özgüvenlerini
+                kazanmalarına ve tahliye sonrasında topluma sağlıklı bir şekilde yeniden
+                entegre olmalarına önemli katkılar sağlamaktadır.
               </p>
             </div>
+            <div className="bg-gradient-to-br from-[#111827] to-[#1e3a78] p-8 md:p-10 flex flex-col justify-center">
+              <p className="text-sky-300 text-xs font-bold uppercase tracking-widest mb-3">Sosyal Etki</p>
+              <p className="text-white text-lg font-semibold leading-relaxed mb-6">
+                "Alışveriş yaparak rehabilitasyon sürecine doğrudan destek olabilirsiniz."
+              </p>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 bg-[#FF6000] hover:bg-[#e55500] text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm w-fit"
+              >
+                Ürünleri İncele <LuArrowRight size={15} />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── MİSYON & VİZYON ─── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <section className="bg-white rounded-2xl border border-gray-100 p-8">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                <LuTarget size={20} color="#3B82F6" strokeWidth={1.8} />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 tracking-tight">Misyonumuz</h2>
+            </div>
+            <p className="text-gray-600 leading-relaxed">
+              Adalet Bakanlığı cezaevi işyurtlarında üretilen kaliteli ürünleri geniş kitlelere
+              ulaştırarak sosyal sorumluluk bilinci oluşturmak ve her alışverişin bireylerin
+              rehabilitasyonuna katkı sağlamasını güvence altına almak.
+            </p>
+          </section>
+
+          <section className="bg-white rounded-2xl border border-gray-100 p-8">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
+                <LuLeaf size={20} color="#10B981" strokeWidth={1.8} />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 tracking-tight">Vizyonumuz</h2>
+            </div>
+            <p className="text-gray-600 leading-relaxed">
+              İşyurtları ürünlerinin kalitesi ve çeşitliliğinin artırıldığı, toplumun her
+              kesiminin bu ürünlere kolayca ulaşabildiği ve sosyal rehabilitasyonun öncelikli
+              hedef olarak benimsendiği bir Türkiye'yi inşa etmek.
+            </p>
           </section>
         </div>
+
+        {/* ─── DEĞERLER ─── */}
+        <section className="bg-white rounded-2xl border border-gray-100 p-8">
+          <div className="flex items-center gap-3 mb-7">
+            <div className="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center">
+              <LuHeart size={20} color="#8B5CF6" strokeWidth={1.8} />
+            </div>
+            <h2 className="text-xl font-bold text-gray-900 tracking-tight">Değerlerimiz</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+            {[
+              { Icon: LuBadgeCheck, color: '#10B981', bg: 'bg-emerald-50', title: 'Kalite',               desc: 'Her ürün titiz üretim ve kalite kontrol süreçlerinden geçer.' },
+              { Icon: LuShieldCheck, color: '#3B82F6', bg: 'bg-blue-50',   title: 'Güvenilirlik',         desc: 'Adalet Bakanlığı denetimi altında şeffaf ve güvenilir işleticilik.' },
+              { Icon: LuHeart,       color: '#EF4444', bg: 'bg-red-50',    title: 'Sosyal Sorumluluk',    desc: 'Her satın alma rehabilitasyon programlarını ve sosyal entegrasyonu destekler.' },
+              { Icon: LuLeaf,        color: '#F59E0B', bg: 'bg-amber-50',  title: 'Sürdürülebilirlik',    desc: 'Çevreye duyarlı ve sürdürülebilir üretim anlayışıyla faaliyet.' },
+            ].map(({ Icon, color, bg, title, desc }) => (
+              <div key={title} className="flex flex-col gap-3">
+                <div className={`w-11 h-11 ${bg} rounded-xl flex items-center justify-center`}>
+                  <Icon size={21} color={color} strokeWidth={1.8} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-1">{title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ─── İLETİŞİM CTA ─── */}
+        <section className="bg-gradient-to-r from-[#111827] to-[#1e3a78] rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <LuUsers size={18} color="#7DD3FC" strokeWidth={1.8} />
+              <p className="text-sky-300 text-sm font-semibold">Bizimle iletişime geçin</p>
+            </div>
+            <h3 className="text-white text-2xl font-bold tracking-tight">Sorularınız mı var?</h3>
+            <p className="text-gray-400 text-sm mt-1">Size yardımcı olmaktan mutluluk duyarız.</p>
+          </div>
+          <Link
+            href="/bize-ulasin"
+            className="flex-shrink-0 bg-[#FF6000] hover:bg-[#e55500] text-white font-semibold px-7 py-3.5 rounded-xl transition-all hover:scale-[1.03] flex items-center gap-2 text-sm"
+          >
+            Bize Ulaşın <LuArrowRight size={16} />
+          </Link>
+        </section>
+
       </div>
+
+      <div className="h-8" />
     </div>
   );
 }

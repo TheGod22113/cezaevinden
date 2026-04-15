@@ -81,7 +81,7 @@ export default function HomePage() {
               Kaliteli<br />
               <span className="text-[#FF6000]">Yerli</span> Ürünler
             </h1>
-            <p className="text-gray-400 text-base mb-9 max-w-sm leading-relaxed">
+            <p className="text-sky-300 text-base mb-9 max-w-sm leading-relaxed">
               İşyurtlarında üretilen el yapımı ürünler. Alışverişiniz sosyal projelere katkı sağlar.
             </p>
             <div className="flex flex-wrap gap-3 mb-12">
