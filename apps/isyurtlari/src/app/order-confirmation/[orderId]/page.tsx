@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { LuCheckCircle, LuCopy, LuShare2, LuHome, LuArrowRight } from 'react-icons/lu';
+import { LuCheck, LuCopy, LuShare2, LuHome, LuArrowRight } from 'react-icons/lu';
 
 interface OrderData {
   id: string;
@@ -103,7 +103,7 @@ export default function OrderConfirmationPage() {
         <div className="max-w-screen-xl mx-auto px-4 py-12 text-center">
           <div className="flex justify-center mb-4">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
-              <LuCheckCircle size={48} color="#16a34a" />
+              <LuCheck size={40} color="#16a34a" strokeWidth={3} />
             </div>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">🎉 BAŞARILI!</h1>
