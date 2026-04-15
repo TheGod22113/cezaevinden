@@ -58,7 +58,7 @@ export default function CategoryPage() {
   });
 
   const meta = categoryMeta[categorySlug];
-  const Icon = meta?.Icon ?? MdSettings;
+  const Icon = meta?.Icon ?? LuWrench;
   const categoryName = products[0]?.category.name ?? 'Ürünler';
 
   return (
