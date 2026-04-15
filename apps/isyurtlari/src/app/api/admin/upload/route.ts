@@ -9,6 +9,8 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const file = formData.get('file') as File;
 
+    console.log('Upload başladı:', { filename: file?.name, size: file?.size, type: file?.type });
+
     if (!file) {
       return NextResponse.json({ error: 'Dosya bulunamadı' }, { status: 400 });
     }
@@ -29,16 +31,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Upload to Vercel Blob with unique filename
+    // Convert file to buffer for Vercel Blob
+    const bytes = await file.arrayBuffer();
     const timestamp = Date.now();
     const filename = `products/${timestamp}-${file.name}`;
-    const blob = await put(filename, file, { access: 'public' });
 
+    console.log('Vercel Blob\'a yükleniyor:', filename);
+    const blob = await put(filename, bytes, { access: 'public' });
+
+    console.log('Upload başarılı:', blob.url);
     return NextResponse.json({ url: blob.url });
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json(
-      { error: 'Dosya yüklenirken hata oluştu' },
+      { error: 'Dosya yüklenirken hata oluştu: ' + (error instanceof Error ? error.message : String(error)) },
       { status: 500 }
     );
   }
