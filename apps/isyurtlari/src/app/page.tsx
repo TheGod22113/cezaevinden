@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { GiKnifeFork, GiNeedleThread, GiWoodBeam, GiWool, GiWoodenChair, GiGears } from 'react-icons/gi';
+import { MdRestaurant, MdDry, MdForest, MdStyle, MdChair, MdSettings } from 'react-icons/md';
 
 interface Category {
   id: string;
@@ -22,12 +22,12 @@ interface Product {
 }
 
 const categoryMeta: Record<string, { Icon: React.ElementType; color: string; bg: string; iconColor: string }> = {
-  'gida-urunleri':        { Icon: GiKnifeFork,    color: 'text-green-700',  bg: 'bg-green-100',  iconColor: '#15803d' },
-  'tekstil-urunleri':     { Icon: GiNeedleThread, color: 'text-blue-700',   bg: 'bg-blue-100',   iconColor: '#1d4ed8' },
-  'ahsap-urunler':        { Icon: GiWoodBeam,     color: 'text-amber-700',  bg: 'bg-amber-100',  iconColor: '#b45309' },
-  'dokuma':               { Icon: GiWool,         color: 'text-purple-700', bg: 'bg-purple-100', iconColor: '#7e22ce' },
-  'mobilya-urunleri':     { Icon: GiWoodenChair,  color: 'text-rose-700',   bg: 'bg-rose-100',   iconColor: '#be123c' },
-  'demir-metal-urunleri': { Icon: GiGears,        color: 'text-slate-700',  bg: 'bg-slate-100',  iconColor: '#334155' },
+  'gida-urunleri':        { Icon: MdRestaurant, color: 'text-green-700',  bg: 'bg-green-100',  iconColor: '#15803d' },
+  'tekstil-urunleri':     { Icon: MdDry,        color: 'text-blue-700',   bg: 'bg-blue-100',   iconColor: '#1d4ed8' },
+  'ahsap-urunler':        { Icon: MdForest,     color: 'text-amber-700',  bg: 'bg-amber-100',  iconColor: '#b45309' },
+  'dokuma':               { Icon: MdStyle,      color: 'text-purple-700', bg: 'bg-purple-100', iconColor: '#7e22ce' },
+  'mobilya-urunleri':     { Icon: MdChair,      color: 'text-rose-700',   bg: 'bg-rose-100',   iconColor: '#be123c' },
+  'demir-metal-urunleri': { Icon: MdSettings,   color: 'text-slate-700',  bg: 'bg-slate-100',  iconColor: '#334155' },
 };
 
 const productEmojis: Record<string, string> = {
@@ -141,7 +141,7 @@ export default function HomePage() {
                       {Icon ? (
                         <Icon size={28} color={meta.iconColor} />
                       ) : (
-                        <GiGears size={28} color="#64748b" />
+                        <MdSettings size={28} color="#64748b" />
                       )}
                     </div>
                     <p className={`text-xs font-bold ${meta?.color ?? 'text-gray-700'} leading-tight`}>{cat.name}</p>

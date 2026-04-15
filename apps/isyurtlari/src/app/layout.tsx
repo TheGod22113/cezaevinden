@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import CartBadge from '@/components/CartBadge';
-import { GiKnifeFork, GiNeedleThread, GiWoodBeam, GiWool, GiWoodenChair, GiGears } from 'react-icons/gi';
+import { MdRestaurant, MdDry, MdForest, MdStyle, MdChair, MdSettings } from 'react-icons/md';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 };
 
 const categories = [
-  { name: 'Gıda',    slug: 'gida-urunleri',        Icon: GiKnifeFork    },
-  { name: 'Tekstil', slug: 'tekstil-urunleri',      Icon: GiNeedleThread },
-  { name: 'Ahşap',   slug: 'ahsap-urunler',         Icon: GiWoodBeam     },
-  { name: 'Dokuma',  slug: 'dokuma',                Icon: GiWool         },
-  { name: 'Mobilya', slug: 'mobilya-urunleri',      Icon: GiWoodenChair  },
-  { name: 'Metal',   slug: 'demir-metal-urunleri',  Icon: GiGears        },
+  { name: 'Gıda',    slug: 'gida-urunleri',        Icon: MdRestaurant },
+  { name: 'Tekstil', slug: 'tekstil-urunleri',      Icon: MdDry        },
+  { name: 'Ahşap',   slug: 'ahsap-urunler',         Icon: MdForest     },
+  { name: 'Dokuma',  slug: 'dokuma',                Icon: MdStyle      },
+  { name: 'Mobilya', slug: 'mobilya-urunleri',      Icon: MdChair      },
+  { name: 'Metal',   slug: 'demir-metal-urunleri',  Icon: MdSettings   },
 ];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
