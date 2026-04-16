@@ -5,6 +5,9 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('🌱 İşyurtları Ürünleri Seeding Başlıyor...')
 
+  // NOT: deleteMany kaldırıldı! Diğer projelerin verilerini korumak için.
+  // Kategoriler ve ürünler sadece upsert ile güncellenir.
+
   // Create or update categories (don't delete existing ones)
   const gida = await prisma.productCategory.upsert({
     where: { slug: 'gida' },

@@ -233,7 +233,7 @@ export default function HomePage() {
 
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {Array.from({ length: 8 }).map((_, i) => <div key={i} className="bg-white rounded-2xl h-72 animate-pulse" />)}
+            {Array.from({ length: 8 }).map((_, i) => <div key={i} className="bg-gradient-to-br from-orange-100 to-amber-100 rounded-2xl h-72 animate-pulse" />)}
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -241,7 +241,7 @@ export default function HomePage() {
               <Link key={product.id} href={`/urun/${product.slug}`}
                 className="group bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
               >
-                <div className="relative h-44 bg-gradient-to-br from-orange-100 to-amber-100 flex items-center justify-center overflow-hidden">
+                <div className="relative h-44 bg-gradient-to-br from-orange-200 to-amber-200 flex items-center justify-center overflow-hidden">
                   {product.imageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
