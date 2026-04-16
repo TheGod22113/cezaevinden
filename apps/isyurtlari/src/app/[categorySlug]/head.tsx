@@ -1,5 +1,3 @@
-import { prisma } from '@isyurtlari/database';
-
 const categoryNames: Record<string, string> = {
   gida: 'Gıda Ürünleri',
   tekstil: 'Tekstil Ürünleri',
@@ -25,10 +23,6 @@ const categoryDescriptions: Record<string, string> = {
 };
 
 export default async function Head({ params }: { params: { categorySlug: string } }) {
-  const category = await prisma.productCategory.findUnique({
-    where: { slug: params.categorySlug },
-  });
-
   const catName = categoryNames[params.categorySlug] || 'Ürünler';
   const catDesc = categoryDescriptions[params.categorySlug] || 'Adalet Bakanlığı Sosyal Girişimi ürünleri';
   const url = `https://isyurtlari.com.tr/${params.categorySlug}`;
