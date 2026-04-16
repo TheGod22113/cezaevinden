@@ -39,6 +39,89 @@ const productEmojis: Record<string, string> = {
   'perde-metre':'🧵','duvar-ortüsü':'🧵','sofra-havlusu':'🧵',
 };
 
+const productValues: Record<string, string[]> = {
+  'zeytinyag': [
+    'Doğal zeytinyağı - hiçbir kimyasal katkı veya rafine işlem yapılmadan',
+    'Geleneksel soğuk presyon yöntemiyle el emeğiyle üretilmiştir',
+    'Adalet Bakanlığı Beslenme Eğitimi Alan Hükümlüler Tarafından İşlenmiş',
+    'Kar amacı gütmeden sosyal sorumluluk projesi kapsamında',
+    'Her satın alma, hükümlülerin yeniden sosyal hayata kazanılmasına destek olur'
+  ],
+  'peynir': [
+    'Saf ve pastörize sütünden geleneksel yöntemlerle yapılan peynir',
+    'Hiçbir koruyucu madde, sentetik katkı veya boyar madde içermez',
+    'Beslenme & Aşçılık Eğitimi Alan Hükümlüler Tarafından El Emeğiyle Üretildi',
+    'Adalet Bakanlığı Onaylı Sosyal Girişim Ürünü',
+    'Devlet garantili, doğal ve sağlıklı üretim sürecine sahip'
+  ],
+  'badem': [
+    'Doğal ve taze badem - kimyasal pestisit veya katkı madde kullanılmadan',
+    'Seçilmiş, temizlenmiş ve doğal yöntemlerle işlenmiştir',
+    'Beslenme Eğitim Programı Katılımcıları Tarafından El Emeğiyle Hazırlanmış',
+    'Kar amacı gütmeyen Adalet Bakanlığı sosyal projesi',
+    'Her alışveriş, hükümlülerin rehabilitasyon ve reintegrasyon programlarını destekler'
+  ],
+  'pirinc': [
+    'Kaliteli, temiz ve doğal pirinç - hiçbir kimyasal işlem yapılmaksızın',
+    'Adalet Bakanlığı İşyurtlarında depolanan, kontrol edilen ürün',
+    'Beslenme Eğitimi Alan Hükümlüler Tarafından Paketlenmiştir',
+    'Kar amacı gütmeden sunulan kaliteli beslenme ürünü',
+    'Devlet tarafından onaylanmış ve güvence altına alınan sosyal girişim'
+  ],
+  'tereyag': [
+    'Doğal sütten üretilen, hiçbir yapay maddesi olmayan tereyağ',
+    'Geleneksel yöntemlerle el emeğiyle üretilmiştir',
+    'Beslenme & Aşçılık Eğitim Programının Başarılı Ürünü',
+    'Adalet Bakanlığı Sosyal Sorumluluk Projesi',
+    'Her satın alma doğal ve sağlıklı üretimi teşvik eder'
+  ],
+  'biber-receli': [
+    'Seçilmiş, taze biber ve doğal şeker ile yapılan reçel',
+    'Pestisite maruz kalmamış kaynaklardan el emeğiyle hazırlanmıştır',
+    'Adalet Bakanlığı Beslenme Eğitim Program Mezunları Tarafından Yapılmış',
+    'Koruyucu ve katkı madde kullanılmaksızın geleneksel yöntemle konserve edilmiş',
+    'Devlet destekli sosyal girişim - her satın alma bireyin yeniden başlamasını sağlar'
+  ],
+  'findik': [
+    'Kaliteli, taze ve doğal fındık - özel seçim ve temizlik işlemi yapılmış',
+    'İşyurtlarında higienik koşullarda işlenen, kalite kontrol geçmiş ürün',
+    'Beslenme Eğitimi Alan Hükümlüler Tarafından Hazırlanmıştır',
+    'Pestisit ve kimyasal işlem olmaksızın doğal sunumu korunmuştur',
+    'Kar amacı gütmeyen Adalet Bakanlığı Sosyal Girişimi'
+  ],
+  'havlu-beyaz': [
+    'Doğal pamuk kumaştan dokumacılık eğitimi alan hükümlüler tarafından yapılan havlu',
+    'Hiçbir sentetik boya veya zararlı kimyasal kullanılmadan renglendirilmiş',
+    'Derzillik ve Tekstil Meslek Eğitim Programının Başarılı Ürünü',
+    'Adalet Bakanlığı Onaylı - Sağlık ve Çevre Dostu Üretim',
+    'El emeğinin göz kamaştırıcı sonucu, her kullanımda rehabilitasyon programını desteklersiniz'
+  ],
+  'ahsap-sandalye': [
+    'Doğal ve seçilmiş ahşap kullanılarak Marangozluk Eğitim Alan Hükümlüler Tarafından Yapılan Sandalye',
+    'Hiçbir sentetik boya veya toksik kimyasal sürü kullanılmamıştır, tamamen doğal işlenmedir',
+    'Adalet Bakanlığı El Sanatları Programı - Yüksek Kalite Garantisi',
+    'Çevre dostu, karbon ayakizi düşük, yerel üretim ürünü',
+    'Her satın alma, çatılı ve sosyal yardım alan hükümlüyü destekler'
+  ],
+  'geleneksel-hali': [
+    'Geleneksel dokuma tekniklerini kullanan Dokuma Terapisi Programı Katılımcıları Tarafından El Emeğiyle Yapılan Halı',
+    'Doğal renklendirilmiş, sentetik boya ve kimyasal işlem uygulanmamış',
+    'Adalet Bakanlığı Sosyal Girişimi - Sanat ve Terapi Programı Ürünü',
+    'Her iplik, hükümlünün sanat terapisi ve rehabilitasyon sürecinin parçasıdır',
+    'Devlet koruması altında, etik ve sosyal sorumluluk ilkesiyle üretilmiş'
+  ],
+};
+
+const getProductValues = (slug: string): string[] => {
+  return productValues[slug] || [
+    'Adalet Bakanlığı Tarafından Onaylanmış El Yapımı Ürün',
+    'Hiçbir Kimyasal Katkı Veya Yapay Madde İçermez',
+    'Kar Amacı Gütmeden, Sosyal Sorumluluk İlkesiyle Üretilmiştir',
+    'Hükümlülerin Meslek Eğitimi ve Rehabilitasyonunu Destekler',
+    'Devlet Garantili - Her Satın Alma Yeniden Başlamaya Yardım Eder'
+  ];
+};
+
 export default function ProductDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
@@ -155,6 +238,22 @@ export default function ProductDetailPage() {
             <p className="text-gray-500 leading-relaxed mb-6 text-sm">
               {product.description}
             </p>
+
+            {/* Production Values */}
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-6 mb-6">
+              <div className="flex items-center gap-2 mb-4">
+                <LuBadgeCheck size={20} className="text-blue-600" />
+                <h3 className="font-bold text-gray-900">Üretim Değerleri & Güvence</h3>
+              </div>
+              <ul className="space-y-3">
+                {getProductValues(slug).map((value, idx) => (
+                  <li key={idx} className="flex gap-3">
+                    <span className="text-blue-600 font-bold text-lg leading-none mt-0.5">✓</span>
+                    <span className="text-sm text-gray-700 leading-relaxed">{value}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             {/* Price box */}
             <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5 mb-5">
