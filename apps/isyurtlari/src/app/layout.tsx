@@ -69,9 +69,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
 
-              // Default consent - analytics_storage izni alınana kadar deactive
+              // Analytics enabled - banner sonra eklenecek
               gtag('consent', 'default', {
-                'analytics_storage': 'denied',
+                'analytics_storage': 'granted',
                 'ad_storage': 'denied'
               });
             `,
