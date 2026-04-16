@@ -158,6 +158,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <li><Link href="/hakkimizda" className="text-gray-400 hover:text-white text-sm transition">Hakkımızda</Link></li>
                   <li><Link href="/guvenlı-aliveri" className="text-gray-400 hover:text-white text-sm transition">Güvenli Alışveriş</Link></li>
                   <li><Link href="/kvkk" className="text-gray-400 hover:text-white text-sm transition">KVKK</Link></li>
+                  <li><Link href="/mesafeli-satis-sozlesmesi" className="text-gray-400 hover:text-white text-sm transition">Mesafeli Satış Sözleşmesi</Link></li>
                 </ul>
               </div>
               <div>
@@ -173,7 +174,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <h3 className="text-sm font-bold mb-4 uppercase tracking-wide text-gray-300">Yardım</h3>
                 <ul className="space-y-2">
                   <li><Link href="/bize-ulasin" className="text-gray-400 hover:text-white text-sm transition">Bize Ulaşın</Link></li>
-                  <li><Link href="/kvkk" className="text-gray-400 hover:text-white text-sm transition">Gizlilik Politikası</Link></li>
+                  <li><Link href="/teslimat-iade-sartlari" className="text-gray-400 hover:text-white text-sm transition">Teslimat & İade</Link></li>
+                  <li><Link href="/gizlilik-sozlesmesi" className="text-gray-400 hover:text-white text-sm transition">Gizlilik Sözleşmesi</Link></li>
                 </ul>
               </div>
               <div>
@@ -193,11 +195,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p className="text-gray-400 text-sm">
                 © 2026 Adalet Bakanlığı İsyurtları. Tüm hakları saklıdır.
               </p>
-              <div className="flex items-center gap-2">
-                <span className="text-gray-600 text-xs">Güvenli ödeme:</span>
-                <span className="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">VISA</span>
-                <span className="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">MC</span>
-                <span className="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">İyzico</span>
+              <div className="flex items-center gap-3">
+                <span className="text-gray-600 text-xs font-semibold">GÜVENLİ ÖDEME:</span>
+                <span className="bg-blue-600 text-white text-xs font-bold px-2.5 py-1.5 rounded">VISA</span>
+                <span className="bg-red-600 text-white text-xs font-bold px-2.5 py-1.5 rounded">MASTERCARD</span>
+                <span className="bg-amber-500 text-white text-xs font-bold px-2.5 py-1.5 rounded">İYZICO</span>
               </div>
             </div>
           </div>

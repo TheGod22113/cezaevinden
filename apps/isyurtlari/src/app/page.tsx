@@ -101,7 +101,7 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="flex gap-10 pt-8 border-t border-white/10">
-              {[['500+', 'Hükümlüyü Destekledik'], ['1000+', 'Ürün Satıldı'], ['%100', 'Sosyal Amaçlı']].map(([v, l]) => (
+              {[['70.000+', 'İşyurtlarında'], ['500+', 'Ürün & Hizmet'], ['%100', 'Sosyal Girişim']].map(([v, l]) => (
                 <div key={l}>
                   <p className="text-2xl font-bold text-[#FF6000]">{v}</p>
                   <p className="text-blue-300 text-xs mt-0.5">{l}</p>
@@ -210,14 +210,14 @@ export default function HomePage() {
       <section className="max-w-screen-xl mx-auto px-4 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-8 text-white">
-            <p className="text-5xl font-bold mb-2">500+</p>
-            <p className="text-base font-semibold mb-1">Hükümlü Desteklendi</p>
-            <p className="text-sm opacity-90">Meslek eğitimi ve yeniden başlama programı</p>
+            <p className="text-5xl font-bold mb-2">70.000+</p>
+            <p className="text-base font-semibold mb-1">Hükümlü Çalışmakta</p>
+            <p className="text-sm opacity-90">Adalet Bakanlığı İşyurtlarında aktif olarak istihdam</p>
           </div>
           <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-8 text-white">
-            <p className="text-5xl font-bold mb-2">1000+</p>
-            <p className="text-base font-semibold mb-1">Ürün Satıldı</p>
-            <p className="text-sm opacity-90">Toplam ₺250.000+ sosyal amaçlı yatırım</p>
+            <p className="text-5xl font-bold mb-2">500+</p>
+            <p className="text-base font-semibold mb-1">Ürün & Hizmet</p>
+            <p className="text-sm opacity-90">El yapımı, kaliteli, sosyal girişim ürünleri</p>
           </div>
           <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl p-8 text-white">
             <p className="text-5xl font-bold mb-2">%100</p>
