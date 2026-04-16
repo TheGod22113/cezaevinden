@@ -195,12 +195,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p className="text-gray-400 text-sm">
                 © 2026 isyurtlari.com.tr - Tüm hakları saklıdır.
               </p>
-              <div className="flex items-center gap-4">
-                <span className="text-gray-600 text-xs font-semibold">GÜVENLİ ÖDEME:</span>
-                <Image src="/visa.png" alt="Visa" width={50} height={30} className="h-6 w-auto" />
-                <Image src="/mastercard.png" alt="Mastercard" width={50} height={30} className="h-6 w-auto" />
-                <Image src="/iyzico.png" alt="iyzico" width={60} height={30} className="h-6 w-auto" />
-              </div>
+              <Image src="/logo_band_colored@1X.png" alt="Payment Methods - Visa, Mastercard, iyzico" width={280} height={40} className="h-8 w-auto" />
             </div>
           </div>
         </footer>
