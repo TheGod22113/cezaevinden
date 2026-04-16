@@ -11,12 +11,20 @@ interface Category { id: string; name: string; slug: string; }
 interface Product  { id: string; name: string; slug: string; price: number; quantity: number; imageUrl?: string; category: { name: string; slug: string }; }
 
 const categoryConfig: Record<string, { Icon: React.ElementType; gradient: string; purpose: string }> = {
+  // Eski slug format (uyumluluk için)
   'gida-urunleri':        { Icon: LuUtensils,  gradient: 'from-emerald-500 to-teal-400',   purpose: 'Beslenme & Aşçılık Eğitimi' },
   'tekstil-urunleri':     { Icon: LuShirt,     gradient: 'from-blue-600 to-indigo-400',    purpose: 'Derzillik Meslek Eğitimi' },
   'ahsap-urunler':        { Icon: LuTreePine,  gradient: 'from-amber-500 to-yellow-400',   purpose: 'Marangozluk Beceri Programı' },
   'dokuma':               { Icon: LuScissors,  gradient: 'from-violet-600 to-purple-400',  purpose: 'Dokuma & Sanat Terapisi' },
   'mobilya-urunleri':     { Icon: LuSofa,      gradient: 'from-rose-500 to-pink-400',      purpose: 'Furniture Tasarım Eğitimi' },
   'demir-metal-urunleri': { Icon: LuWrench,    gradient: 'from-slate-600 to-slate-400',    purpose: 'Metal İşleri Ustası Programı' },
+  // Yeni slug format (seed script'ten)
+  'gida':                 { Icon: LuUtensils,  gradient: 'from-emerald-500 to-teal-400',   purpose: 'Beslenme & Aşçılık Eğitimi' },
+  'tekstil':              { Icon: LuShirt,     gradient: 'from-blue-600 to-indigo-400',    purpose: 'Derzillik Meslek Eğitimi' },
+  'ahsap':                { Icon: LuTreePine,  gradient: 'from-amber-500 to-yellow-400',   purpose: 'Marangozluk Beceri Programı' },
+  'temizlik':             { Icon: LuScissors,  gradient: 'from-cyan-500 to-blue-400',      purpose: 'Temizlik & Kozmetik Eğitimi' },
+  'hediyelik':            { Icon: LuScissors,  gradient: 'from-rose-500 to-pink-400',      purpose: 'El Sanatları & Tasarım' },
+  'peyzaj-cicek':         { Icon: LuTreePine,  gradient: 'from-green-500 to-emerald-400',  purpose: 'Peyzaj & Çiçek Tasarımı' },
 };
 
 const productEmojis: Record<string, string> = {
@@ -105,10 +113,10 @@ export default function HomePage() {
           {/* Right — category preview grid */}
           <div className="hidden md:grid grid-cols-2 gap-3">
             {(loading ? [
-              { slug: 'gida-urunleri',     name: 'Gıda Ürünleri'  },
-              { slug: 'tekstil-urunleri',  name: 'Tekstil'         },
-              { slug: 'mobilya-urunleri',  name: 'Mobilya'         },
-              { slug: 'ahsap-urunler',     name: 'Ahşap Ürünler'  },
+              { slug: 'gida',     name: 'Gıda Ürünleri'  },
+              { slug: 'tekstil',  name: 'Tekstil'         },
+              { slug: 'hediyelik',     name: 'Hediyelik'  },
+              { slug: 'ahsap',     name: 'Ahşap Ürünler'  },
             ] : categories.slice(0, 4)).map((cat) => {
               const cfg = categoryConfig[cat.slug];
               const Icon = cfg?.Icon ?? LuWrench;

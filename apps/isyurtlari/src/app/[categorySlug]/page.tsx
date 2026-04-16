@@ -17,20 +17,30 @@ interface Product {
 }
 
 const categoryMeta: Record<string, { Icon: React.ElementType; iconColor: string; bg: string; banner: string; purpose: string; impact: string; imgBg: string }> = {
+  // Eski slug format
   'gida-urunleri':        { Icon: LuUtensils,  iconColor: '#15803d', bg: 'bg-green-100',  banner: 'from-emerald-600 to-teal-500',   purpose: 'Beslenme & Aşçılık Eğitimi', impact: '🎓 Aşçılık Meslek Eğitimi', imgBg: 'from-emerald-200 to-green-100' },
   'tekstil-urunleri':     { Icon: LuShirt,     iconColor: '#1d4ed8', bg: 'bg-blue-100',   banner: 'from-blue-600 to-indigo-500',    purpose: 'Derzillik Meslek Eğitimi', impact: '🎓 Derzillik Eğitimi Programı', imgBg: 'from-blue-200 to-indigo-100' },
   'ahsap-urunler':        { Icon: LuTreePine,  iconColor: '#b45309', bg: 'bg-amber-100',  banner: 'from-amber-600 to-yellow-500',   purpose: 'Marangozluk Beceri Programı', impact: '🎓 Marangozluk Eğitimi', imgBg: 'from-amber-200 to-yellow-100' },
   'dokuma':               { Icon: LuScissors,  iconColor: '#7e22ce', bg: 'bg-purple-100', banner: 'from-violet-600 to-purple-500',  purpose: 'Dokuma & Sanat Terapisi', impact: '🎓 Dokuma & Terapi Programı', imgBg: 'from-violet-200 to-purple-100' },
   'mobilya-urunleri':     { Icon: LuSofa,      iconColor: '#be123c', bg: 'bg-rose-100',   banner: 'from-rose-600 to-pink-500',      purpose: 'Furniture Tasarım Eğitimi', impact: '🎓 Mobilya Tasarım Eğitimi', imgBg: 'from-rose-200 to-pink-100' },
   'demir-metal-urunleri': { Icon: LuWrench,    iconColor: '#334155', bg: 'bg-slate-100',  banner: 'from-slate-600 to-gray-500',     purpose: 'Metal İşleri Ustası Programı', impact: '🎓 Metal İşleri Eğitimi', imgBg: 'from-slate-200 to-gray-100' },
-  'temizlik': { Icon: LuUtensils, iconColor: '#0891b2', bg: 'bg-cyan-100', banner: 'from-cyan-600 to-blue-500', purpose: 'Temizlik & Kozmetik Eğitimi', impact: '🎓 Kozmetik Eğitimi', imgBg: 'from-cyan-200 to-blue-100' },
-  'hediyelik': { Icon: LuScissors, iconColor: '#dc2626', bg: 'bg-red-100', banner: 'from-red-600 to-pink-500', purpose: 'El Sanatları & Tasarım', impact: '🎓 El Sanatları', imgBg: 'from-red-200 to-pink-100' },
+  // Yeni slug format (seed script'ten)
+  'gida':                 { Icon: LuUtensils,  iconColor: '#15803d', bg: 'bg-green-100',  banner: 'from-emerald-600 to-teal-500',   purpose: 'Beslenme & Aşçılık Eğitimi', impact: '🎓 Aşçılık Meslek Eğitimi', imgBg: 'from-emerald-200 to-green-100' },
+  'tekstil':              { Icon: LuShirt,     iconColor: '#1d4ed8', bg: 'bg-blue-100',   banner: 'from-blue-600 to-indigo-500',    purpose: 'Derzillik Meslek Eğitimi', impact: '🎓 Derzillik Eğitimi Programı', imgBg: 'from-blue-200 to-indigo-100' },
+  'ahsap':                { Icon: LuTreePine,  iconColor: '#b45309', bg: 'bg-amber-100',  banner: 'from-amber-600 to-yellow-500',   purpose: 'Marangozluk Beceri Programı', impact: '🎓 Marangozluk Eğitimi', imgBg: 'from-amber-200 to-yellow-100' },
+  'temizlik':             { Icon: LuScissors,  iconColor: '#0891b2', bg: 'bg-cyan-100',   banner: 'from-cyan-600 to-blue-500',      purpose: 'Temizlik & Kozmetik Eğitimi', impact: '🎓 Kozmetik Eğitimi', imgBg: 'from-cyan-200 to-blue-100' },
+  'hediyelik':            { Icon: LuScissors,  iconColor: '#dc2626', bg: 'bg-red-100',    banner: 'from-red-600 to-pink-500',      purpose: 'El Sanatları & Tasarım', impact: '🎓 El Sanatları', imgBg: 'from-red-200 to-pink-100' },
+  'peyzaj-cicek':         { Icon: LuTreePine,  iconColor: '#059669', bg: 'bg-green-100',  banner: 'from-green-600 to-emerald-500',  purpose: 'Peyzaj & Çiçek Tasarımı', impact: '🎓 Peyzaj Tasarım Eğitimi', imgBg: 'from-green-200 to-emerald-100' },
 };
 
 const productPlaceholders: Record<string, string> = {
+  // Eski format
   'gida-urunleri': '🍽️', 'tekstil-urunleri': '🧵',
   'ahsap-urunler': '🪵', 'dokuma': '🧣',
   'mobilya-urunleri': '🛋️', 'demir-metal-urunleri': '⚙️',
+  // Yeni format
+  'gida': '🍽️', 'tekstil': '🧵', 'ahsap': '🪵',
+  'temizlik': '🧼', 'hediyelik': '🎁', 'peyzaj-cicek': '🌸',
 };
 
 type SortOption = 'default' | 'price-asc' | 'price-desc' | 'name';
