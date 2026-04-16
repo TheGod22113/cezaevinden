@@ -57,9 +57,9 @@ export default function HomePage() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/categories').then((r) => r.json()),
-      fetch('/api/products').then((r) => r.json()),
-      fetch('/api/stats/sales').then((r) => r.json()),
+      fetch('/api/categories').then((r) => r.json()).catch(() => []),
+      fetch('/api/products').then((r) => r.json()).catch(() => []),
+      fetch('/api/stats/sales').then((r) => r.json()).catch(() => null),
     ]).then(([cats, prods, statsData]) => {
       setCategories(Array.isArray(cats) ? cats : []);
       setProducts(Array.isArray(prods) ? prods.slice(0, 8) : []);
@@ -300,7 +300,7 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {products.map((product) => (
+            {products.filter(p => p.category).map((product) => (
               <Link key={product.id} href={`/urun/${product.slug}`}
                 className="group bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
               >
@@ -323,7 +323,7 @@ export default function HomePage() {
                   )}
                 </div>
                 <div className="p-3.5">
-                  <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-1">{product.category.name}</p>
+                  <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-1">{product.category?.name}</p>
                   <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 min-h-[2.5rem] group-hover:text-[#FF6000] transition-colors leading-snug">{product.name}</h3>
                   <div className="flex items-center gap-0.5 mt-1.5 mb-2">
                     {[1,2,3,4,5].map((s) => <LuStar key={s} size={10} fill="#FF6000" color="#FF6000" />)}
