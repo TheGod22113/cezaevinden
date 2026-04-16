@@ -193,7 +193,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
             <div className="border-t border-blue-900/50 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-gray-400 text-sm">
-                © 2026 Adalet Bakanlığı İsyurtları. Tüm hakları saklıdır.
+                © 2026 isyurtlari.com.tr - Tüm hakları saklıdır.
               </p>
               <div className="flex items-center gap-4">
                 <span className="text-gray-600 text-xs font-semibold">GÜVENLİ ÖDEME:</span>
