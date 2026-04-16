@@ -185,7 +185,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <p className="text-gray-400 text-sm font-semibold mb-1">Telefon:</p>
                 <p className="text-gray-400 text-sm mb-3">+90 505 401 38 95</p>
                 <p className="text-gray-400 text-sm font-semibold mb-1">Çalışma Saatleri:</p>
-                <p className="text-gray-400 text-sm">Cumartesi - Pazar</p>
+                <p className="text-gray-400 text-sm">Her Gün 09:00 - 19:00</p>
                 <div className="flex gap-3 mt-4">
                   {['Twitter', 'Instagram', 'Facebook'].map((s) => (
                     <a key={s} href="#" className="w-8 h-8 bg-gray-700 hover:bg-[#FF6000] rounded-full flex items-center justify-center text-xs transition-colors">
