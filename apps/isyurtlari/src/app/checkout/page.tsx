@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { LuInfo } from 'react-icons/lu';
 
@@ -219,10 +220,10 @@ export default function CheckoutPage() {
                       className="w-4 h-4 text-blue-600"
                     />
                     <div className="ml-4 flex-1">
-                      <p className="font-semibold text-gray-900">Kredi Kartı</p>
+                      <p className="font-semibold text-gray-900">iyzico ile Öde</p>
                       <p className="text-sm text-gray-600">Visa, Mastercard ve daha fazla</p>
                     </div>
-                    <span className="text-2xl">💳</span>
+                    <Image src="/iyzico.png" alt="iyzico" width={60} height={24} className="h-6 w-auto" />
                   </label>
 
                   <label className="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition"
