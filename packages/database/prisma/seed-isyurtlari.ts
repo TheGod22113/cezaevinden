@@ -457,7 +457,14 @@ async function main() {
   for (const product of products) {
     await prisma.product.upsert({
       where: { slug: product.slug },
-      update: product,
+      update: {
+        name: product.name,
+        description: product.description,
+        categoryId: product.categoryId,
+        price: product.price,
+        quantity: product.quantity,
+        // imageUrl'i GÜNCELLEME - mevcut resimi koru!
+      },
       create: product
     })
   }

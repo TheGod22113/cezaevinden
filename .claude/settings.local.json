@@ -58,7 +58,9 @@
       "Bash(node:*)",
       "Bash(PGPASSWORD=\"npg_4qNRcu6Cyzlo\" psql:*)",
       "Bash(npx ts-node:*)",
-      "Bash(curl -s \"https://sosyal-six.vercel.app/api/isyurtlari/products\")"
+      "Bash(curl -s \"https://sosyal-six.vercel.app/api/isyurtlari/products\")",
+      "Bash(grep -E \"\\(utils|lib\\)$\")",
+      "Bash(ls -1 *.json)"
     ]
   },
   "model": "claude-haiku-4-5-20251001"
