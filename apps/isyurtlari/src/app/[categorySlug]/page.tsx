@@ -16,13 +16,15 @@ interface Product {
   category: { name: string; slug: string };
 }
 
-const categoryMeta: Record<string, { Icon: React.ElementType; iconColor: string; bg: string; banner: string; purpose: string; impact: string }> = {
-  'gida-urunleri':        { Icon: LuUtensils,  iconColor: '#15803d', bg: 'bg-green-100',  banner: 'from-emerald-600 to-teal-500',   purpose: 'Beslenme & Aşçılık Eğitimi', impact: '🎓 Aşçılık Meslek Eğitimi' },
-  'tekstil-urunleri':     { Icon: LuShirt,     iconColor: '#1d4ed8', bg: 'bg-blue-100',   banner: 'from-blue-600 to-indigo-500',    purpose: 'Derzillik Meslek Eğitimi', impact: '🎓 Derzillik Eğitimi Programı' },
-  'ahsap-urunler':        { Icon: LuTreePine,  iconColor: '#b45309', bg: 'bg-amber-100',  banner: 'from-amber-600 to-yellow-500',   purpose: 'Marangozluk Beceri Programı', impact: '🎓 Marangozluk Eğitimi' },
-  'dokuma':               { Icon: LuScissors,  iconColor: '#7e22ce', bg: 'bg-purple-100', banner: 'from-violet-600 to-purple-500',  purpose: 'Dokuma & Sanat Terapisi', impact: '🎓 Dokuma & Terapi Programı' },
-  'mobilya-urunleri':     { Icon: LuSofa,      iconColor: '#be123c', bg: 'bg-rose-100',   banner: 'from-rose-600 to-pink-500',      purpose: 'Furniture Tasarım Eğitimi', impact: '🎓 Mobilya Tasarım Eğitimi' },
-  'demir-metal-urunleri': { Icon: LuWrench,    iconColor: '#334155', bg: 'bg-slate-100',  banner: 'from-slate-600 to-gray-500',     purpose: 'Metal İşleri Ustası Programı', impact: '🎓 Metal İşleri Eğitimi' },
+const categoryMeta: Record<string, { Icon: React.ElementType; iconColor: string; bg: string; banner: string; purpose: string; impact: string; imgBg: string }> = {
+  'gida-urunleri':        { Icon: LuUtensils,  iconColor: '#15803d', bg: 'bg-green-100',  banner: 'from-emerald-600 to-teal-500',   purpose: 'Beslenme & Aşçılık Eğitimi', impact: '🎓 Aşçılık Meslek Eğitimi', imgBg: 'from-emerald-100 to-green-50' },
+  'tekstil-urunleri':     { Icon: LuShirt,     iconColor: '#1d4ed8', bg: 'bg-blue-100',   banner: 'from-blue-600 to-indigo-500',    purpose: 'Derzillik Meslek Eğitimi', impact: '🎓 Derzillik Eğitimi Programı', imgBg: 'from-blue-100 to-indigo-50' },
+  'ahsap-urunler':        { Icon: LuTreePine,  iconColor: '#b45309', bg: 'bg-amber-100',  banner: 'from-amber-600 to-yellow-500',   purpose: 'Marangozluk Beceri Programı', impact: '🎓 Marangozluk Eğitimi', imgBg: 'from-amber-100 to-yellow-50' },
+  'dokuma':               { Icon: LuScissors,  iconColor: '#7e22ce', bg: 'bg-purple-100', banner: 'from-violet-600 to-purple-500',  purpose: 'Dokuma & Sanat Terapisi', impact: '🎓 Dokuma & Terapi Programı', imgBg: 'from-violet-100 to-purple-50' },
+  'mobilya-urunleri':     { Icon: LuSofa,      iconColor: '#be123c', bg: 'bg-rose-100',   banner: 'from-rose-600 to-pink-500',      purpose: 'Furniture Tasarım Eğitimi', impact: '🎓 Mobilya Tasarım Eğitimi', imgBg: 'from-rose-100 to-pink-50' },
+  'demir-metal-urunleri': { Icon: LuWrench,    iconColor: '#334155', bg: 'bg-slate-100',  banner: 'from-slate-600 to-gray-500',     purpose: 'Metal İşleri Ustası Programı', impact: '🎓 Metal İşleri Eğitimi', imgBg: 'from-slate-100 to-gray-50' },
+  'temizlik': { Icon: LuUtensils, iconColor: '#0891b2', bg: 'bg-cyan-100', banner: 'from-cyan-600 to-blue-500', purpose: 'Temizlik & Kozmetik Eğitimi', impact: '🎓 Kozmetik Eğitimi', imgBg: 'from-cyan-100 to-blue-50' },
+  'hediyelik': { Icon: LuScissors, iconColor: '#dc2626', bg: 'bg-red-100', banner: 'from-red-600 to-pink-500', purpose: 'El Sanatları & Tasarım', impact: '🎓 El Sanatları', imgBg: 'from-red-100 to-pink-50' },
 };
 
 const productPlaceholders: Record<string, string> = {
@@ -172,7 +174,7 @@ export default function CategoryPage() {
                 className="group bg-white rounded-xl border border-gray-200 hover:border-[#FF6000] hover:shadow-lg transition-all overflow-hidden flex flex-col"
               >
                 {/* Image */}
-                <div className="relative h-48 bg-gradient-to-br from-orange-50 to-amber-50 flex items-center justify-center overflow-hidden">
+                <div className={`relative h-48 bg-gradient-to-br ${meta?.imgBg ?? 'from-orange-100 to-amber-100'} flex items-center justify-center overflow-hidden`}>
                   {product.imageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
