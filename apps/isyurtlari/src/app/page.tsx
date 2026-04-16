@@ -93,7 +93,7 @@ export default function HomePage() {
               Hükümlülerin el emeğiyle üretilen ürünler. Her satın alma, bireyin yeniden başlamasına ve topluma kazanılmasına yardım eder.
             </p>
             <div className="flex flex-wrap gap-3 mb-12">
-              <Link href="/gida-urunleri" className="bg-[#FF6000] hover:bg-[#e55500] text-white font-semibold px-7 py-3.5 rounded-xl transition-all hover:scale-[1.03] shadow-lg shadow-orange-900/25 flex items-center gap-2 text-sm">
+              <Link href="/gida" className="bg-[#FF6000] hover:bg-[#e55500] text-white font-semibold px-7 py-3.5 rounded-xl transition-all hover:scale-[1.03] shadow-lg shadow-orange-900/25 flex items-center gap-2 text-sm">
                 Değiştir. Satın Al. Destekle. <LuArrowRight size={16} />
               </Link>
               <Link href="/hakkimizda" className="bg-white/8 hover:bg-white/15 text-white font-semibold px-7 py-3.5 rounded-xl transition-all border border-white/15 text-sm">
@@ -178,7 +178,7 @@ export default function HomePage() {
       {/* ─── CAMPAIGN BANNERS ─── */}
       <section className="max-w-screen-xl mx-auto px-4 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link href="/gida-urunleri" className="group col-span-2 relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#0F2040] to-[#1e4a90] p-8 flex items-center justify-between min-h-44 hover:shadow-xl transition-all">
+          <Link href="/gida" className="group col-span-2 relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#0F2040] to-[#1e4a90] p-8 flex items-center justify-between min-h-44 hover:shadow-xl transition-all">
             <div className="absolute top-0 right-0 w-72 h-72 bg-[#FF6000]/10 rounded-full translate-x-1/3 -translate-y-1/3" />
             <div className="relative z-10">
               <span className="bg-[#FF6000] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full inline-block mb-3">Öne Çıkan</span>
@@ -191,7 +191,7 @@ export default function HomePage() {
             <LuUtensils size={100} color="white" strokeWidth={0.8} className="opacity-10 group-hover:opacity-20 transition-opacity" />
           </Link>
 
-          <Link href="/tekstil-urunleri" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-500 p-7 flex flex-col justify-between min-h-44 hover:shadow-xl transition-all">
+          <Link href="/tekstil" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-500 p-7 flex flex-col justify-between min-h-44 hover:shadow-xl transition-all">
             <div>
               <h3 className="text-white text-2xl font-bold mb-1 tracking-tight">Tekstil</h3>
               <p className="text-white/60 text-sm">El yapımı kumaşlar</p>
@@ -234,7 +234,7 @@ export default function HomePage() {
             <p className="text-[#FF6000] text-[11px] font-bold uppercase tracking-widest mb-1">El Yapımı Ürünler</p>
             <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Hükümlülerin Eğitimi Sayesinde Üretildi</h2>
           </div>
-          <Link href="/gida-urunleri" className="flex items-center gap-1 text-[#FF6000] hover:text-[#cc4e00] text-sm font-semibold transition-colors">
+          <Link href="/gida" className="flex items-center gap-1 text-[#FF6000] hover:text-[#cc4e00] text-sm font-semibold transition-colors">
             Tüm Ürünleri Keşfet <LuArrowRight size={15} />
           </Link>
         </div>

@@ -16,12 +16,12 @@ export const metadata: Metadata = {
 };
 
 const categories = [
-  { name: 'Gıda',    slug: 'gida-urunleri',        Icon: LuUtensils  },
-  { name: 'Tekstil', slug: 'tekstil-urunleri',      Icon: LuShirt     },
-  { name: 'Ahşap',   slug: 'ahsap-urunler',         Icon: LuTreePine  },
+  { name: 'Gıda',    slug: 'gida',        Icon: LuUtensils  },
+  { name: 'Tekstil', slug: 'tekstil',      Icon: LuShirt     },
+  { name: 'Ahşap',   slug: 'ahsap',         Icon: LuTreePine  },
   { name: 'Dokuma',  slug: 'dokuma',                Icon: LuScissors  },
-  { name: 'Mobilya', slug: 'mobilya-urunleri',      Icon: LuSofa      },
-  { name: 'Metal',   slug: 'demir-metal-urunleri',  Icon: LuWrench    },
+  { name: 'Mobilya', slug: 'mobilya',      Icon: LuSofa      },
+  { name: 'Metal',   slug: 'metal',  Icon: LuWrench    },
 ];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -164,10 +164,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div>
                 <h3 className="text-sm font-bold mb-4 uppercase tracking-wide text-gray-300">Kategoriler</h3>
                 <ul className="space-y-2">
-                  <li><Link href="/gida-urunleri" className="text-gray-400 hover:text-white text-sm transition">Gıda Ürünleri</Link></li>
-                  <li><Link href="/tekstil-urunleri" className="text-gray-400 hover:text-white text-sm transition">Tekstil</Link></li>
-                  <li><Link href="/mobilya-urunleri" className="text-gray-400 hover:text-white text-sm transition">Mobilya</Link></li>
-                  <li><Link href="/ahsap-urunler" className="text-gray-400 hover:text-white text-sm transition">Ahşap Ürünler</Link></li>
+                  <li><Link href="/gida" className="text-gray-400 hover:text-white text-sm transition">Gıda Ürünleri</Link></li>
+                  <li><Link href="/tekstil" className="text-gray-400 hover:text-white text-sm transition">Tekstil</Link></li>
+                  <li><Link href="/mobilya" className="text-gray-400 hover:text-white text-sm transition">Mobilya</Link></li>
+                  <li><Link href="/ahsap" className="text-gray-400 hover:text-white text-sm transition">Ahşap Ürünler</Link></li>
                 </ul>
               </div>
               <div>
