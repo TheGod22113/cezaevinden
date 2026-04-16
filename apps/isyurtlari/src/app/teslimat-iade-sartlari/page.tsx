@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { LuHouse, LuArrowRight } from 'react-icons/lu';
+import { LuHouse } from 'react-icons/lu';
 
 export default function ShippingReturnsPage() {
   return (
