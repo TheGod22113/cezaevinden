@@ -61,16 +61,39 @@ const categories = [
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="tr" suppressHydrationWarning>
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-TQBZ9JDV5T" />
-      <Script dangerouslySetInnerHTML={{
-        __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-TQBZ9JDV5T');
-        `,
-      }} />
+      <head>
+        <Script
+          id="gtag-consent-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
 
+              // Default consent - analytics_storage izni alınana kadar deactive
+              gtag('consent', 'default', {
+                'analytics_storage': 'denied',
+                'ad_storage': 'denied'
+              });
+            `,
+          }}
+        />
+
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-TQBZ9JDV5T" />
+
+        <Script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-TQBZ9JDV5T', {
+                'anonymize_ip': true,
+                'allow_google_signals': false
+              });
+            `,
+          }}
+        />
+      </head>
       <body className="bg-gray-100 text-gray-900">
 
         {/* ─── TOP BAR ─── */}
