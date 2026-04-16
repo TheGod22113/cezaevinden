@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   LuUtensils, LuShirt, LuTreePine, LuScissors, LuSofa, LuWrench,
   LuTruck, LuShieldCheck, LuHeart, LuArrowRight, LuStar, LuBadgeCheck,
-  LuZap, LuBarChart3, LuUsers2,
+  LuZap, LuTrendingUp, LuUsers, LuBook,
 } from 'react-icons/lu';
 
 interface Category { id: string; name: string; slug: string; }
@@ -246,7 +246,7 @@ export default function HomePage() {
             <div className="bg-white rounded-2xl border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm text-gray-600 font-medium">Satılan Ürün</p>
-                <LuBarChart3 size={18} className="text-orange-500" />
+                <LuTrendingUp size={18} className="text-orange-500" />
               </div>
               <p className="text-4xl font-bold text-gray-900 mb-1">{stats.totalItems}</p>
               <p className="text-xs text-gray-400">Hükümlüler tarafından yapılan ürün</p>
@@ -255,7 +255,7 @@ export default function HomePage() {
             <div className="bg-white rounded-2xl border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm text-gray-600 font-medium">Desteklenen Kişi</p>
-                <LuUsers2 size={18} className="text-emerald-500" />
+                <LuUsers size={18} className="text-emerald-500" />
               </div>
               <p className="text-4xl font-bold text-gray-900 mb-1">~{stats.prisonersSupportedCount}</p>
               <p className="text-xs text-gray-400">Rehabilitasyon programında destek alan</p>
@@ -264,7 +264,7 @@ export default function HomePage() {
             <div className="bg-white rounded-2xl border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm text-gray-600 font-medium">Eğitim Saati</p>
-                <LuGraduationCap size={18} className="text-blue-500" />
+                <LuBook size={18} className="text-blue-500" />
               </div>
               <p className="text-4xl font-bold text-gray-900 mb-1">{stats.totalTrainingHours}</p>
               <p className="text-xs text-gray-400">Meslek eğitimi saati</p>
