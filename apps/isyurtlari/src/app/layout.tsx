@@ -195,11 +195,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p className="text-gray-400 text-sm">
                 © 2026 Adalet Bakanlığı İsyurtları. Tüm hakları saklıdır.
               </p>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <span className="text-gray-600 text-xs font-semibold">GÜVENLİ ÖDEME:</span>
-                <span className="bg-blue-600 text-white text-xs font-bold px-2.5 py-1.5 rounded">VISA</span>
-                <span className="bg-red-600 text-white text-xs font-bold px-2.5 py-1.5 rounded">MASTERCARD</span>
-                <span className="bg-amber-500 text-white text-xs font-bold px-2.5 py-1.5 rounded">İYZICO</span>
+                <Image src="/visa.png" alt="Visa" width={50} height={30} className="h-6 w-auto" />
+                <Image src="/mastercard.png" alt="Mastercard" width={50} height={30} className="h-6 w-auto" />
+                <Image src="/iyzico.png" alt="iyzico" width={60} height={30} className="h-6 w-auto" />
               </div>
             </div>
           </div>

@@ -60,7 +60,8 @@
       "Bash(npx ts-node:*)",
       "Bash(curl -s \"https://sosyal-six.vercel.app/api/isyurtlari/products\")",
       "Bash(grep -E \"\\(utils|lib\\)$\")",
-      "Bash(ls -1 *.json)"
+      "Bash(ls -1 *.json)",
+      "Bash(ls -la *.png)"
     ]
   },
   "model": "claude-haiku-4-5-20251001"
