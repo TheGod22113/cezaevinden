@@ -180,8 +180,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
               <div>
                 <h3 className="text-sm font-bold mb-4 uppercase tracking-wide text-gray-300">İletişim</h3>
-                <p className="text-gray-400 text-sm">info@isyurtlari.com.tr</p>
-                <p className="text-gray-400 text-sm mt-1">+90 (212) 123 45 67</p>
+                <p className="text-gray-400 text-sm font-semibold mb-2">Adres:</p>
+                <p className="text-gray-400 text-sm mb-3">Büyükesat Mah. Koza 1. Cad.<br />No: 153/4, Çankaya, Ankara</p>
+                <p className="text-gray-400 text-sm font-semibold mb-1">Telefon:</p>
+                <p className="text-gray-400 text-sm mb-3">+90 505 401 38 95</p>
+                <p className="text-gray-400 text-sm font-semibold mb-1">Çalışma Saatleri:</p>
+                <p className="text-gray-400 text-sm">Cumartesi - Pazar</p>
                 <div className="flex gap-3 mt-4">
                   {['Twitter', 'Instagram', 'Facebook'].map((s) => (
                     <a key={s} href="#" className="w-8 h-8 bg-gray-700 hover:bg-[#FF6000] rounded-full flex items-center justify-center text-xs transition-colors">
@@ -195,7 +199,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p className="text-gray-400 text-sm">
                 © 2026 isyurtlari.com.tr - Tüm hakları saklıdır.
               </p>
-              <Image src="/logo_band_colored@1X.png" alt="Payment Methods - Visa, Mastercard, iyzico" width={280} height={40} className="h-8 w-auto" />
+              <Image src="/logo_band_white@1X.png" alt="Payment Methods - Visa, Mastercard, iyzico" width={280} height={40} className="h-8 w-auto" />
             </div>
           </div>
         </footer>
