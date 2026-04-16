@@ -6,14 +6,32 @@ export const dynamic = 'force-dynamic';
 export async function GET(req: NextRequest) {
   try {
     const categorySlug = req.nextUrl.searchParams.get('category');
+    const search = req.nextUrl.searchParams.get('search');
 
-    const where = categorySlug
-      ? {
-          category: {
-            slug: categorySlug,
+    const where: any = {};
+
+    if (categorySlug) {
+      where.category = {
+        slug: categorySlug,
+      };
+    }
+
+    if (search) {
+      where.OR = [
+        {
+          name: {
+            contains: search,
+            mode: 'insensitive',
           },
-        }
-      : {};
+        },
+        {
+          description: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+      ];
+    }
 
     const products = await prisma.product.findMany({
       where,

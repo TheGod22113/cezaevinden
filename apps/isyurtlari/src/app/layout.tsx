@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import Link from 'next/link';
 import Image from 'next/image';
 import CartBadge from '@/components/CartBadge';
@@ -6,12 +7,32 @@ import { LuUtensils, LuShirt, LuTreePine, LuScissors, LuSofa, LuWrench } from 'r
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://isyurtlari.com.tr'),
   title: 'isyurtlari.com.tr | Adalet Bakanlığı Sosyal Girişimi',
   description: 'Hükümlülerin el emeğiyle üretilen ürünler. Her satın alma, bireyin yeniden başlamasına ve topluma kazanılmasına yardım eder. Adalet Bakanlığı Onaylı Sosyal Proje.',
+  keywords: ['sosyal girişim', 'hükümlü rehabilitasyonu', 'adalet bakanlığı', 'el yapımı ürünler', 'türkiye'],
   openGraph: {
     title: 'Her Satın Alma Bir İkinci Şans Demek',
     description: 'Adalet Bakanlığı Sosyal Girişimi - Hükümlülerin rehabilitasyonunu destekle',
     type: 'website',
+    locale: 'tr_TR',
+    url: 'https://isyurtlari.com.tr',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'isyurtlari.com.tr | Adalet Bakanlığı Sosyal Girişimi',
+    description: 'Hükümlülerin el emeğiyle üretilen ürünler. Her satın alma, bir kişinin yeniden başlamasına yardım eder.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 
@@ -27,6 +48,16 @@ const categories = [
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="tr" suppressHydrationWarning>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-TQBZ9JDV5T" />
+      <Script dangerouslySetInnerHTML={{
+        __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-TQBZ9JDV5T');
+        `,
+      }} />
+
       <body className="bg-gray-100 text-gray-900">
 
         {/* ─── TOP BAR ─── */}
@@ -203,6 +234,40 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </footer>
+
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org/',
+              '@type': 'Organization',
+              name: 'isyurtlari.com.tr',
+              alternateName: 'Adalet Bakanlığı İşyurtları',
+              url: 'https://isyurtlari.com.tr',
+              logo: 'https://isyurtlari.com.tr/logo.jpg',
+              description: 'Adalet Bakanlığı Sosyal Girişimi - Hükümlülerin el emeğiyle üretilen ürünler',
+              sameAs: [
+                'https://twitter.com/isyurtlari',
+                'https://instagram.com/isyurtlari',
+              ],
+              contactPoint: {
+                '@type': 'ContactPoint',
+                contactType: 'Customer Service',
+                telephone: '+90-505-401-3895',
+                email: 'info@isyurtlari.com.tr',
+              },
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'Büyükesat Mah. Koza 1. Cad. No: 153/4',
+                addressLocality: 'Çankaya',
+                addressRegion: 'Ankara',
+                postalCode: '06100',
+                addressCountry: 'TR',
+              },
+            }),
+          }}
+        />
 
       </body>
     </html>
