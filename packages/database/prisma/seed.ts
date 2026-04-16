@@ -467,7 +467,7 @@ async function main() {
 
   // ─── HABERLER ───────────────────────────────────────────────
 
-  await prisma.news.deleteMany({})
+  // await prisma.news.deleteMany({}) // ⚠️ Silinmedi - mevcut haberleri koru
   await prisma.news.createMany({
     data: [
         {
@@ -547,7 +547,7 @@ async function main() {
   // ─── DESTEK KAYNAKLARI ──────────────────────────────────────
 
   // Destek kaynaklarını her zaman gerçek verilerle güncelle
-  await prisma.supportResource.deleteMany({})
+  // await prisma.supportResource.deleteMany({}) // ⚠️ Silinmedi - mevcut kaynakları koru
   await prisma.supportResource.createMany({
     data: [
       {
@@ -620,9 +620,12 @@ async function main() {
   console.log('✅ Destek kaynakları güncellendi')
 
   // ─── E-TİCARET: ÜRÜNLER ─────────────────────────────────────
-  await prisma.productCategory.deleteMany({})
+  // await prisma.productCategory.deleteMany({}) // ⚠️ Silinmedi - mevcut kategorileri koru
 
-  const gidaCategory = await prisma.productCategory.create({
+  const gidaCategory = await prisma.productCategory.upsert({
+    where: { slug: 'gida-urunleri' },
+    update: {},
+    create: {
     data: {
       name: 'Gıda Ürünleri',
       slug: 'gida-urunleri',
@@ -654,7 +657,7 @@ async function main() {
     },
   })
 
-  await prisma.product.deleteMany({})
+  // await prisma.product.deleteMany({}) // ⚠️ Silinmedi - mevcut ürünleri koru
   await prisma.product.createMany({
     data: [
       // Gıda Ürünleri
