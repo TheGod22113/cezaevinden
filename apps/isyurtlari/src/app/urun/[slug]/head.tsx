@@ -18,11 +18,13 @@ export default async function Head({ params }: { params: { slug: string } }) {
   const title = `${product.name} | isyurtlari.com.tr`;
   const description = `${product.name} - Adalet Bakanlığı'nın Sosyal Girişimi tarafından ${product.category.name} eğitimi alan hükümlüler tarafından el emeğiyle üretilmiştir.`;
   const url = `https://isyurtlari.com.tr/urun/${product.slug}`;
+  const keywords = `${product.name}, ${product.category.name}, işyurtları, adalet bakanlığı ürün, hükümlü ürünü, sosyal girişim, rehabilitasyon`;
 
   return (
     <>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
       <meta property="og:title" content={`${product.name} | isyurtlari.com.tr`} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />

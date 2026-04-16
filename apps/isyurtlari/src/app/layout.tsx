@@ -8,9 +8,22 @@ import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://isyurtlari.com.tr'),
-  title: 'isyurtlari.com.tr | Adalet Bakanlığı Sosyal Girişimi',
-  description: 'Hükümlülerin el emeğiyle üretilen ürünler. Her satın alma, bireyin yeniden başlamasına ve topluma kazanılmasına yardım eder. Adalet Bakanlığı Onaylı Sosyal Proje.',
-  keywords: ['sosyal girişim', 'hükümlü rehabilitasyonu', 'adalet bakanlığı', 'el yapımı ürünler', 'türkiye'],
+  title: 'isyurtlari.com.tr | Adalet Bakanlığı İşyurtları Online Mağaza',
+  description: 'İşyurtları online satış mağazası. Adalet Bakanlığı hükümlülerinin el emeğiyle üretilen doğal ve katkısız ürünler. Sosyal girişim, rehabilitasyon ve yeniden entegrasyon projesi.',
+  keywords: [
+    'işyurtları online mağaza',
+    'işyurtları ürün satış',
+    'adalet bakanlığı ürün satışı',
+    'hükümlü ürünleri',
+    'rehabilitasyon ürünleri',
+    'sosyal girişim ürünleri',
+    'el yapımı ürünler türkiye',
+    'doğal katkısız gıda',
+    'adalet bakanlığı',
+    'hükümlü destekle',
+    'sosyal sorumluluk',
+    'rehabilitasyon projesi',
+  ],
   openGraph: {
     title: 'Her Satın Alma Bir İkinci Şans Demek',
     description: 'Adalet Bakanlığı Sosyal Girişimi - Hükümlülerin rehabilitasyonunu destekle',

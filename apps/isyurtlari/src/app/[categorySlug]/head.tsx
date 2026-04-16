@@ -30,10 +30,13 @@ export default async function Head({ params }: { params: { categorySlug: string 
   const title = `${catName} | isyurtlari.com.tr - Adalet Bakanlığı Sosyal Girişimi`;
   const description = `${catDesc} Her satın alma, hükümlülerin yeniden başlamasına ve topluma kazanılmasına yardım eder.`;
 
+  const keywords = `${catName}, işyurtları, adalet bakanlığı, sosyal girişim, el yapımı, hükümlü ürünleri, rehabilitasyon`;
+
   return (
     <>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />

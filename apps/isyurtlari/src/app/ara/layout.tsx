@@ -3,8 +3,9 @@ import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Ürün Arama | isyurtlari.com.tr',
-  description: 'isyurtlari.com.tr üzerinde ürün ara. Adalet Bakanlığı Sosyal Girişimi\'nin tüm ürünlerinde arama yapın.',
+  title: 'Ürün Arama | İşyurtları Online Mağaza',
+  description: 'İşyurtları online mağazasında ürün ara. Adalet Bakanlığı tarafından üretilen sosyal girişim ürünlerinde arama yapın.',
+  keywords: 'işyurtları arama, ürün ara, işyurtları ürünleri, adalet bakanlığı ürün',
   robots: 'noindex',
 };
 
