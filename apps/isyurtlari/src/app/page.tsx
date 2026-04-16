@@ -5,10 +5,12 @@ import Link from 'next/link';
 import {
   LuUtensils, LuShirt, LuTreePine, LuScissors, LuSofa, LuWrench,
   LuTruck, LuShieldCheck, LuHeart, LuArrowRight, LuStar, LuBadgeCheck,
+  LuZap, LuBarChart3, LuUsers2,
 } from 'react-icons/lu';
 
 interface Category { id: string; name: string; slug: string; }
 interface Product  { id: string; name: string; slug: string; price: number; quantity: number; imageUrl?: string; category: { name: string; slug: string }; }
+interface SalesStats { totalOrders: number; totalItems: number; totalRevenue: number; totalTrainingHours: number; prisonersSupportedCount: number; }
 
 const categoryConfig: Record<string, { Icon: React.ElementType; gradient: string; purpose: string }> = {
   // Eski slug format (uyumluluk için)
@@ -44,6 +46,7 @@ const announcements = [
 export default function HomePage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [products,   setProducts]   = useState<Product[]>([]);
+  const [stats,      setStats]      = useState<SalesStats | null>(null);
   const [loading,    setLoading]    = useState(true);
   const [ticker,     setTicker]     = useState(0);
 
@@ -56,9 +59,11 @@ export default function HomePage() {
     Promise.all([
       fetch('/api/categories').then((r) => r.json()),
       fetch('/api/products').then((r) => r.json()),
-    ]).then(([cats, prods]) => {
+      fetch('/api/stats/sales').then((r) => r.json()),
+    ]).then(([cats, prods, statsData]) => {
       setCategories(Array.isArray(cats) ? cats : []);
       setProducts(Array.isArray(prods) ? prods.slice(0, 8) : []);
+      setStats(statsData?.totalOrders !== undefined ? statsData : null);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
@@ -226,6 +231,56 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ─── LIVE IMPACT DASHBOARD ─── */}
+      {stats && (
+        <section className="max-w-screen-xl mx-auto px-4 pb-12">
+          <div className="mb-5">
+            <div className="flex items-center gap-2 mb-1">
+              <LuZap size={18} className="text-[#FF6000]" />
+              <p className="text-[#FF6000] text-[11px] font-bold uppercase tracking-widest">Canlı Etki</p>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Sizin Katkınızın Etkisi</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm text-gray-600 font-medium">Satılan Ürün</p>
+                <LuBarChart3 size={18} className="text-orange-500" />
+              </div>
+              <p className="text-4xl font-bold text-gray-900 mb-1">{stats.totalItems}</p>
+              <p className="text-xs text-gray-400">Hükümlüler tarafından yapılan ürün</p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm text-gray-600 font-medium">Desteklenen Kişi</p>
+                <LuUsers2 size={18} className="text-emerald-500" />
+              </div>
+              <p className="text-4xl font-bold text-gray-900 mb-1">~{stats.prisonersSupportedCount}</p>
+              <p className="text-xs text-gray-400">Rehabilitasyon programında destek alan</p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm text-gray-600 font-medium">Eğitim Saati</p>
+                <LuGraduationCap size={18} className="text-blue-500" />
+              </div>
+              <p className="text-4xl font-bold text-gray-900 mb-1">{stats.totalTrainingHours}</p>
+              <p className="text-xs text-gray-400">Meslek eğitimi saati</p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm text-gray-600 font-medium">Toplam Destek</p>
+                <LuHeart size={18} className="text-rose-500" />
+              </div>
+              <p className="text-4xl font-bold text-gray-900 mb-1">₺{stats.totalRevenue.toLocaleString('tr-TR')}</p>
+              <p className="text-xs text-gray-400">Sosyal program finansmanı</p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ─── FEATURED PRODUCTS ─── */}
       <section className="max-w-screen-xl mx-auto px-4 pb-8">
