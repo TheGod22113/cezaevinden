@@ -88,8 +88,34 @@ export default function CheckoutPage() {
       const data = await res.json();
 
       if (paymentMethod === 'CREDIT_CARD') {
-        // Redirect to payment page (Iyzico - yapılacak)
-        router.push(`/order-confirmation/${data.orderId}?payment=pending`);
+        // Iyzico payment
+        const paymentRes = await fetch('/api/checkout/iyzico', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderId: data.orderId,
+            orderNumber: data.orderNumber,
+            totalAmount: total,
+            customerEmail: formData.email,
+            customerName: formData.name,
+          }),
+        });
+
+        if (!paymentRes.ok) {
+          const paymentError = await paymentRes.json();
+          setError(paymentError.error || 'Ödeme formu oluşturulamadı');
+          setSubmitting(false);
+          return;
+        }
+
+        const paymentData = await paymentRes.json();
+
+        // Iyzico checkout form HTML'ini DOM'a ekle
+        if (paymentData.checkoutFormContent) {
+          const checkoutForm = document.createElement('div');
+          checkoutForm.innerHTML = paymentData.checkoutFormContent;
+          document.body.appendChild(checkoutForm);
+        }
       } else {
         // Bank transfer - show confirmation with bank details
         localStorage.removeItem('cart');
