@@ -90,8 +90,8 @@ export async function POST(req: NextRequest) {
     const requestString = JSON.stringify(requestBody);
     const signature = generateSignature(requestString, secretKey);
 
-    // Call Iyzico REST API
-    const response = await fetch('https://api.iyzipay.com/v2/checkoutform/initialize', {
+    // Call Iyzico REST API (Sandbox)
+    const response = await fetch('https://sandbox-api.iyzipay.com/v2/checkoutform/initialize', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
