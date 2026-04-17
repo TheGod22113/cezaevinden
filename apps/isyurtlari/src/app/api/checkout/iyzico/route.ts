@@ -101,7 +101,21 @@ export async function POST(req: NextRequest) {
       body: requestString,
     });
 
-    const result = await response.json();
+    const responseText = await response.text();
+
+    console.log('Iyzico Response Status:', response.status);
+    console.log('Iyzico Response Body:', responseText);
+
+    let result;
+    try {
+      result = JSON.parse(responseText);
+    } catch {
+      console.error('Failed to parse JSON. Raw response:', responseText);
+      return NextResponse.json(
+        { error: 'Iyzico API yanıt hatası' },
+        { status: 500 }
+      );
+    }
 
     if (!response.ok) {
       console.error('Iyzico API Error:', result);
