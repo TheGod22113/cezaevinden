@@ -45,50 +45,7 @@ export default function ContactPage() {
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* İletişim Bilgileri */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Email */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h3 className="flex items-center gap-3 font-bold text-gray-900 mb-2">
-                <span className="text-2xl">📧</span> E-posta
-              </h3>
-              <a href="mailto:info@isyurtlari.com.tr" className="text-blue-600 hover:text-blue-700">
-                info@isyurtlari.com.tr
-              </a>
-            </div>
-
-            {/* Telefon */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h3 className="flex items-center gap-3 font-bold text-gray-900 mb-2">
-                <span className="text-2xl">📱</span> Telefon
-              </h3>
-              <a href="tel:+902121234567" className="text-blue-600 hover:text-blue-700">
-                +90 (212) 123 45 67
-              </a>
-            </div>
-
-            {/* Konum */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h3 className="flex items-center gap-3 font-bold text-gray-900 mb-2">
-                <span className="text-2xl">📍</span> Adres
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Adalet Bakanlığı<br />
-                İsyurtları Koordinatörlüğü<br />
-                Ankara, Türkiye
-              </p>
-            </div>
-
-            {/* Çalışma Saatleri */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h3 className="flex items-center gap-3 font-bold text-gray-900 mb-2">
-                <span className="text-2xl">⏰</span> Çalışma Saatleri
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Pazartesi - Cuma: 09:00 - 17:00<br />
-                Cumartesi - Pazar: Kapalı
-              </p>
-            </div>
-          </div>
+          <div className="lg:col-span-1" />
 
           {/* İletişim Formu */}
           <div className="lg:col-span-2">
