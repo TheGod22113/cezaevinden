@@ -1,19 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Iyzipay from 'iyzipay';
+import crypto from 'crypto';
 
-function checkoutFormInitializePromise(
-  iyzipay: Iyzipay,
-  request: any
-): Promise<{ checkoutFormContent: string }> {
-  return new Promise((resolve, reject) => {
-    iyzipay.checkoutFormInitialize(request, (err: any, result: any) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
-      }
-    });
-  });
+function generateSignature(request: string, secretKey: string): string {
+  return crypto.createHmac('sha1', secretKey).update(request).digest('base64');
 }
 
 export async function POST(req: NextRequest) {
@@ -27,19 +16,23 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const iyzipay = new Iyzipay({
-      apiKey: process.env.IYZICO_API_KEY,
-      secretKey: process.env.IYZICO_SECRET_KEY,
-      uri: 'https://api.iyzipay.com',
-    });
+    const apiKey = process.env.IYZICO_API_KEY;
+    const secretKey = process.env.IYZICO_SECRET_KEY;
+
+    if (!apiKey || !secretKey) {
+      return NextResponse.json(
+        { error: 'Iyzico credentials eksik' },
+        { status: 500 }
+      );
+    }
 
     const [firstName, ...lastNameParts] = customerName.split(' ');
 
-    const request = {
+    const requestBody = {
       locale: 'tr',
       conversationId: orderId,
-      price: totalAmount.toString(),
-      paidPrice: totalAmount.toString(),
+      price: totalAmount.toFixed(2),
+      paidPrice: totalAmount.toFixed(2),
       currency: 'TRY',
       installment: '1',
       basketId: orderId,
@@ -88,13 +81,35 @@ export async function POST(req: NextRequest) {
           name: `Sipariş #${orderNumber}`,
           category1: 'Sosyal Girişim',
           itemType: 'PHYSICAL',
-          price: totalAmount.toString(),
+          price: totalAmount.toFixed(2),
         },
       ],
     };
 
-    // Create payment form
-    const result = await checkoutFormInitializePromise(iyzipay, request);
+    // Serialize request body for signature
+    const requestString = JSON.stringify(requestBody);
+    const signature = generateSignature(requestString, secretKey);
+
+    // Call Iyzico REST API
+    const response = await fetch('https://api.iyzipay.com/v2/checkoutform/initialize', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${Buffer.from(`${apiKey}:${secretKey}`).toString('base64')}`,
+        'X-IYZIPAY-REQUEST-SIGNATURE': signature,
+      },
+      body: requestString,
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.error('Iyzico API Error:', result);
+      return NextResponse.json(
+        { error: result.errorMessage || 'Ödeme formu oluşturulamadı' },
+        { status: response.status }
+      );
+    }
 
     if (!result?.checkoutFormContent) {
       return NextResponse.json(
