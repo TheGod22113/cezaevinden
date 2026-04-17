@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import iyzipay from 'iyzipay';
-
-const Iyzico = iyzipay.default;
+import Iyzipay from 'iyzipay';
 
 function checkoutFormInitializePromise(
-  iyzicol: any,
+  iyzipay: Iyzipay,
   request: any
 ): Promise<{ checkoutFormContent: string }> {
   return new Promise((resolve, reject) => {
-    iyzicol.checkoutFormInitialize(request, (err: any, result: any) => {
+    iyzipay.checkoutFormInitialize(request, (err: any, result: any) => {
       if (err) {
         reject(err);
       } else {
@@ -29,7 +27,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const iyzicol = new Iyzico({
+    const iyzipay = new Iyzipay({
       apiKey: process.env.IYZICO_API_KEY,
       secretKey: process.env.IYZICO_SECRET_KEY,
       uri: 'https://api.iyzipay.com',
@@ -96,7 +94,7 @@ export async function POST(req: NextRequest) {
     };
 
     // Create payment form
-    const result = await checkoutFormInitializePromise(iyzicol, request);
+    const result = await checkoutFormInitializePromise(iyzipay, request);
 
     if (!result?.checkoutFormContent) {
       return NextResponse.json(

@@ -1,5 +1,5 @@
 declare module 'iyzipay' {
-  export default class Iyzipay {
+  class Iyzipay {
     constructor(config: {
       apiKey: string | undefined;
       secretKey: string | undefined;
@@ -7,4 +7,5 @@ declare module 'iyzipay' {
     });
     checkoutFormInitialize(request: any, callback: (err: any, result: any) => void): void;
   }
+  export = Iyzipay;
 }
