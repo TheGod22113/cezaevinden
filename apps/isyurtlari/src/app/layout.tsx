@@ -245,7 +245,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <li><Link href="/gizlilik-sozlesmesi" className="text-gray-400 hover:text-white text-sm transition">Gizlilik Sözleşmesi</Link></li>
                 </ul>
               </div>
-              <div />
+              <div>
+                <h3 className="text-sm font-bold mb-4 uppercase tracking-wide text-gray-300">İletişim</h3>
+                <p className="text-gray-400 text-sm font-semibold mb-2">Adres:</p>
+                <p className="text-gray-400 text-sm mb-3">Büyükesat Mah. Koza 1. Cad.<br />No: 153/4, Çankaya, Ankara</p>
+                <p className="text-gray-400 text-sm font-semibold mb-1">Telefon:</p>
+                <p className="text-gray-400 text-sm mb-3">+90 505 401 38 95</p>
+                <p className="text-gray-400 text-sm font-semibold mb-1">Çalışma Saatleri:</p>
+                <p className="text-gray-400 text-sm">Her Gün 09:00 - 19:00</p>
+                <div className="flex gap-3 mt-4">
+                  {['Twitter', 'Instagram', 'Facebook'].map((s) => (
+                    <a key={s} href="#" className="w-8 h-8 bg-gray-700 hover:bg-[#FF6000] rounded-full flex items-center justify-center text-xs transition-colors">
+                      {s[0]}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
             <div className="border-t border-blue-900/50 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-gray-400 text-sm">
@@ -272,6 +287,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 'https://twitter.com/isyurtlari',
                 'https://instagram.com/isyurtlari',
               ],
+              contactPoint: {
+                '@type': 'ContactPoint',
+                contactType: 'Customer Service',
+                telephone: '+90-505-401-3895',
+                email: 'info@isyurtlari.com.tr',
+              },
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'Büyükesat Mah. Koza 1. Cad. No: 153/4',
+                addressLocality: 'Çankaya',
+                addressRegion: 'Ankara',
+                postalCode: '06100',
+                addressCountry: 'TR',
+              },
             }),
           }}
         />
